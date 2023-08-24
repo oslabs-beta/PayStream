@@ -14,3 +14,5 @@ const clientOptions = {
 };
 
 export const client = createClient(clientOptions);
+
+console.log(process.env["REDIS_KEY"])
