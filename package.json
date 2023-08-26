@@ -15,9 +15,11 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
+    "axios": "^1.4.0",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
     "mongodb": "^5.8.1",
+    "nanoid": "^4.0.2",
     "next": "13.4.19",
     "postcss": "8.4.28",
     "prisma": "^5.2.0",
@@ -25,6 +27,11 @@
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
     "tailwindcss": "3.3.3",
+    "ts-node": "^10.9.1",
     "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "redis": "^4.6.8",
+		"nanoid": "4.0.2"
   }
 }
