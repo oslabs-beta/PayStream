@@ -1,21 +1,23 @@
 "use client"
-import axios from "axios";
-
+import axios from "axios"
+import React from "react"
+import { redisConnect } from "../lib/redis"
 
 export default function Home() {
 
 	const newData = async () => {
 		const { data } = await axios.post('api/redis', {
 			text: 'hello',
-			tags: ['TypeScript']
+			tags: ['TypeScript', 'CSS']
 		})
 		console.log(data)
 	}
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Bill bot baggins
-			<button onClick={newData}> billbot </button>
+		<>
+    <main className="class">
+      <button onClick={newData}>bill-bot</button>
     </main>
+		</>
   )
 }

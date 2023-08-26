@@ -1,7 +1,7 @@
 import './globals.css'
+import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 import { Toaster } from 'react-hot-toast';
 

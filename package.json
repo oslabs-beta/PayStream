@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.2.0",
     "@radix-ui/themes": "^1.1.2",
+    "@types/node": "20.5.3",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
@@ -29,8 +31,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@types/node": "^20.5.4",
-    "node-redis": "^0.1.7",
-    "redis": "^4.6.8"
+    "redis": "^4.6.8",
+		"nanoid": "4.0.2"
   }
 }

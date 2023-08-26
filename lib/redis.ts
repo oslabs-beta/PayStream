@@ -1,6 +1,4 @@
 
-
-// import dotenv from 'dotenv';
 import { createClient } from 'redis';
 
 // config access to ProcessEnv objest
@@ -15,12 +13,16 @@ const clientOptions = {
 	}
 };
 
-const client = createClient(clientOptions);
-client.on('error', err => console.log('Redis Client Error', err));
+export const client = createClient(clientOptions);
+client.on('error', (err: Object) => console.log('Redis Client Error', err));
 
-await client.connect();
-console.log("connected to redis")
-await client.set('key', 'value');
-const value = await client.get('key');
+export const redisConnect = async () => {
+	await client.connect();
+	console.log("connected to redis")
+}
+
+
+// await client.set('key', 'value');
+// const value = await client.get('key');
 // await client.disconnect();
 
