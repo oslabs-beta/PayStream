@@ -1,4 +1,5 @@
-import { NextRequest } from "next/server";
+// NextRequest object from 
+import { NextRequest, NextResponse } from "next/server";
 
 // id generator used below for tutorial
 import { nanoid } from "nanoid"
@@ -8,7 +9,7 @@ import { client, redisConnect } from "../../../lib/redis";
 
 
 // hard-coded post request for adding information to redis
-export const POST = async (req: NextRequest) => {
+export const POST = async (req: NextRequest): Promise<NextResponse | undefined> => {
 	try {
 		// need to implement handling to identify if the socket is open; this works for hot reload, but will need to be stable when in production
 		await redisConnect() //open redis connection on hot reload
@@ -27,9 +28,10 @@ export const POST = async (req: NextRequest) => {
 		console.log("redis test list", await client.lRange("newList", 0, -1))
 		console.log("redis test set", await client.SMEMBERS(`tags:${newInfoId}`))
 
-		return new Response('OK');
+		return new NextResponse('OK');
 	}
 	catch (err) {
 		console.log(err)
+		return new NextResponse("Internal Server Error", { status: 500 })
 	}
 }
