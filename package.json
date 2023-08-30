@@ -18,6 +18,7 @@
     "axios": "^1.4.0",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
+    "graphql": "^16.8.0",
     "mongodb": "^5.8.1",
     "nanoid": "^4.0.2",
     "next": "13.4.19",
@@ -31,7 +32,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "redis": "^4.6.8",
-		"nanoid": "4.0.2"
+    "nanoid": "4.0.2",
+    "redis": "^4.6.8"
   }
 }
