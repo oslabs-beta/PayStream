@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 // use graphQL to manage api calls to Salesforce
 const axios = require('axios');
 
+const { SF_COOKIE_AUTH, SF_AUTH, SF_SANDBOX_URL } = process.env
+
 let data = JSON.stringify({
 	query: `query accounts {
   uiapi {
@@ -41,18 +43,17 @@ let data = JSON.stringify({
 	variables: {}
 });
 
-
 // need to see how authorization headers gt refreshed to confirm access
 // need to move all credential headers to .env
 let config = {
 	method: 'post',
 	maxBodyLength: Infinity,
-	url: 'https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql',
+	url: SF_SANDBOX_URL,
 	headers: {
 		'X-Chatter-Entity-Encoding': 'false',
 		'Content-Type': 'application/json',
-		'Authorization': 'Bearer 00DEi000000QlCz!AQEAQPHNVpdi0ghLiwUIDUvt3hAixt2p1K4wej_mGnTQpCHkoXLvYCvliGwJBS31YpFm2pKISLmPVFPOp3z3gMdAz26FRHfJ',
-		'Cookie': 'BrowserId=zo1yHUbnEe6OrN8Bc2JzEg; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1'
+		'Authorization': SF_AUTH,
+		'Cookie': SF_COOKIE_AUTH,
 	},
 	data: data
 };
