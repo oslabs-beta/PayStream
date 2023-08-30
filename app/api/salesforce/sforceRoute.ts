@@ -1,1 +1,0 @@
-// use graphQL to manage api calls to Salesforce
