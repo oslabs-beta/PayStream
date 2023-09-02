@@ -5,6 +5,19 @@ const axios = require('axios');
 
 const { SF_COOKIE_AUTH, SF_AUTH, SF_SANDBOX_URL } = process.env
 
+/*
+overview of API field names and what they reference
+Opportunity_18_Digit_ID__c: 18 character unique ID
+ npe01__Opportunity__c: references opportunity by name from the payment record
+ID: unique reference id for the object
+Invoice_Sent_Date__c: date sent
+Invoice__c: Invoice number
+Opportunity_Account_Name__c: account name of the opportunity (project) the payment is for
+npe01__Payment_Amount__c: amount on invoice
+npe01__Payment_Date__c: date invoice paid
+npe01__Payment_Method__c: method of payment (cc, check, etc.)
+*/
+
 let data = JSON.stringify({
 	query: `query accounts {
   uiapi {
@@ -25,7 +38,7 @@ let data = JSON.stringify({
             Opportunity_Account_Name__c {
                 value
             }
-            npe01__Opportunity__c {
+            Opportunity_18_Digit_ID__c {
                 value
             }
             npe01__Payment_Method__c {

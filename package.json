@@ -11,6 +11,7 @@
   "dependencies": {
     "@prisma/client": "^5.2.0",
     "@radix-ui/themes": "^1.1.2",
+    "@salesforce/cli": "^2.6.7",
     "@types/node": "20.5.3",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
