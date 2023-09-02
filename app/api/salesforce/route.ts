@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 // use graphQL to manage api calls to Salesforce
 const axios = require('axios');
 
+// need to code way to refresh / generate new token when expired - do not need for MVP
 const { SF_COOKIE_AUTH, SF_AUTH, SF_SANDBOX_URL } = process.env
 
 /*
