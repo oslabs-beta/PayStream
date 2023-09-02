@@ -1,34 +1,26 @@
 import axios from "axios";
-// import { NextResponse } from "next/server";z
 import React, { useEffect, useState } from "react";
 import { ServerResponse } from "../interfaces";
 
 // payment display/record component
 const PaymentRecord = () => {
   // define variablwe to give us access to this data betwen API calls
-  let sfInvoiceData: ServerResponse | undefined;
   const fetchInvoiceData = async (): Promise<ServerResponse> => {
     const { data } = await axios.request<ServerResponse>({
       url: "api/salesforce",
       method: "post",
     });
     console.log(data);
-    sfInvoiceData = data;
-
-    return sfInvoiceData;
+    return data;
   };
 
-  console.log(sfInvoiceData);
-
+  // retrieves cached invoice records and puts them in a more readble object format to display as payment records
   const redisConnect = async (): Promise<ServerResponse> => {
+    // need to refactor to pass req params with redis key information
     const { data } = await axios.request<ServerResponse>({
       url: "/api/redis",
-      method: "post",
-      data: {
-        sfInvoiceData: sfInvoiceData,
-      },
+      method: "get",
     });
-
     console.log(data);
     return data;
   };

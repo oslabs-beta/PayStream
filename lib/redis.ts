@@ -8,7 +8,7 @@ import { createClient } from 'redis';
 const clientOptions = {
 	password: process.env.REDIS_KEY,
 	socket: {
-		host: 'redis-15326.c289.us-west-1-2.ec2.cloud.redislabs.com',
+		host: process.env.REDIS_URI,
 		port: 15326
 	}
 };

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { redisConnect, client } from "@/lib/redis";
 
 // use graphQL to manage api calls to Salesforce
 const axios = require('axios');
@@ -72,10 +73,18 @@ let config = {
 	data: data
 };
 
+
+// POST function gets data from salesforce and caches to redis, all subsequent calls are from redis
 export const POST = async (req: NextRequest): Promise<NextResponse | undefined> => {
 	try {
 		const data = await axios.request(config);
 		const paymentInfo = JSON.stringify(data.data.data.uiapi.query.npe01__OppPayment__c.edges);
+		await redisConnect() //open redis connection on hot reload
+
+		// add salesforce data to redis cache | need to update "invoices" to a unique identifier
+		await client.set("newest invoices", paymentInfo)
+		console.log("newest invoices: ", await client.get("newer invoices"))
+
 		return new NextResponse(paymentInfo)
 	}
 	catch (err) {
