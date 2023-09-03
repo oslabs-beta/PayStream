@@ -1,12 +1,17 @@
 "use client";
-
-import Login from "@/components/Login";
-
+import axios from "axios";
+import React from "react";
+import { redisConnect } from "../lib/redis";
+import PaymentsDisplay from "./payments/PaymentsDisplay";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <Login />
-    </main>
-  )
+    <>
+      <main className="class">
+        {/* conditionally render Payments display */}
+        {/* Added "paymentsdisplay" in anticipation of component - button is in here to make API call, you can move this wherever */}
+        <PaymentsDisplay />
+      </main>
+    </>
+  );
 }
