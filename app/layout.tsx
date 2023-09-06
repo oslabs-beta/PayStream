@@ -4,6 +4,10 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Theme } from '@radix-ui/themes';
 import { Toaster } from 'react-hot-toast';
+import AuthProvider from '@/app/AuthProvider';
+import { SessionProvider } from "next-auth/react";
+import type { AppProps } from "next/app"
+import type { Session } from "next-auth"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,10 +18,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  Session
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
+  Session: any
 }) {
   return (
+    <AuthProvider session={Session}>
     <html lang="en">
       <body className={inter.className}>
         <Theme>
@@ -26,5 +33,6 @@ export default function RootLayout({
         </Theme>
       </body>
     </html>
+    </AuthProvider>
   )
 }

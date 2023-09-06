@@ -1,6 +1,10 @@
+
 "use client"
 import axios from "axios"
+//import  { Hero } from '@/components';
 import React from "react"
+import Link from "next/link"
+import { Theme } from '@radix-ui/themes';
 import { redisConnect } from "../lib/redis"
 
 export default function Home() {
@@ -17,6 +21,12 @@ export default function Home() {
 		<>
     <main className="class">
       <button onClick={newData}>bill-bot</button>
+	  <>
+		<p><Link href="/clientLogin">
+        Client Login
+      </Link></p>
+	  {/* <p><Hero /></p> */}
+		</>
     </main>
 		</>
   )
