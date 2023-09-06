@@ -1,33 +1,19 @@
-
-"use client"
-import axios from "axios"
-//import  { Hero } from '@/components';
-import React from "react"
-import Link from "next/link"
-import { Theme } from '@radix-ui/themes';
-import { redisConnect } from "../lib/redis"
+"use client";
+import axios from "axios";
+import { redisConnect } from "../lib/redis";
+import PaymentsDisplay from "./payments/PaymentsDisplay";;
+import React from "react";
+import StripeContainer from '../components/StripeContainer';
 
 export default function Home() {
-
-	const newData = async () => {
-		const { data } = await axios.post('api/redis', {
-			text: 'hello',
-			tags: ['TypeScript', 'CSS']
-		})
-		console.log(data)
-	}
-
   return (
-		<>
-    <main className="class">
-      <button onClick={newData}>bill-bot</button>
-	  <>
-		<p><Link href="/clientLogin">
-        Client Login
-      </Link></p>
-	  {/* <p><Hero /></p> */}
-		</>
+    <>
+      <main className="class">
+        {/* conditionally render Payments display */}
+        {/* Added "paymentsdisplay" in anticipation of component - button is in here to make API call, you can move this wherever */}
+        <PaymentsDisplay />
+        <StripeContainer/>
     </main>
-		</>
-  )
+    </>
+  );
 }
