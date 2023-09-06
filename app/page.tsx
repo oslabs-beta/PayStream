@@ -1,8 +1,9 @@
 "use client";
 import axios from "axios";
-import React from "react";
 import { redisConnect } from "../lib/redis";
-import PaymentsDisplay from "./payments/PaymentsDisplay";
+import PaymentsDisplay from "./payments/PaymentsDisplay";;
+import React from "react";
+import StripeContainer from '../components/StripeContainer';
 
 export default function Home() {
   return (
@@ -11,7 +12,8 @@ export default function Home() {
         {/* conditionally render Payments display */}
         {/* Added "paymentsdisplay" in anticipation of component - button is in here to make API call, you can move this wherever */}
         <PaymentsDisplay />
-      </main>
+        <StripeContainer/>
+    </main>
     </>
   );
 }
