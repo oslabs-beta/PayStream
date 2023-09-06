@@ -3,7 +3,7 @@ import axios from "axios";
 import { redisConnect } from "../lib/redis";
 import PaymentsDisplay from "./payments/PaymentsDisplay";;
 import React from "react";
-import StripeContainer from '@/components/StripeContainer';
+import StripeContainer from '../components/StripeContainer';
 
 export default function Home() {
   return (

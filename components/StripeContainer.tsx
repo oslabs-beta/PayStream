@@ -1,8 +1,9 @@
 "use client"
 
 import axios from "axios";
+import React from "react";
 import { useState, useEffect, use } from "react";
-import InvoiceButton from '@/components/InvoiceButton';
+import InvoiceButton from './InvoiceButton';
 
 export default function StripeContainer() {
 
