@@ -4,6 +4,7 @@ import { ServerResponse } from "../types";
 
 // payment display/record component
 const PaymentRecord = () => {
+  const [invoice, setInvoice] = useState();
   // define variablwe to give us access to this data betwen API calls
   const fetchInvoiceData = async (): Promise<ServerResponse> => {
     const { data } = await axios.request<ServerResponse>({

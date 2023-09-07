@@ -78,14 +78,20 @@ let config = {
 export const POST = async (req: NextRequest): Promise<NextResponse | undefined> => {
 	try {
 		const data = await axios.request(config);
-		const paymentInfo = JSON.stringify(data.data.data.uiapi.query.npe01__OppPayment__c.edges);
+		const paymentInfo = data.data.data.uiapi.query.npe01__OppPayment__c.edges[0];
 		await redisConnect() //open redis connection on hot reload
+		console.log("paymentInfo: ", paymentInfo)
+		const invoiceNumber: string | null = JSON.stringify(paymentInfo.node.Invoice__c.value)
+		const invoiceDetails: string | null = JSON.stringify(paymentInfo)
+		/* 
+		add each invoice to a unique key-value pair
+		key should be invoice number
+		value should be all other invoice data
+		*/
+		await client.set(invoiceNumber, invoiceDetails)
+		console.log("invoices: ", await client.get(invoiceNumber))
 
-		// add salesforce data to redis cache | need to update "invoices" to a unique identifier
-		await client.set("newest invoices", paymentInfo)
-		console.log("newest invoices: ", await client.get("newer invoices"))
-
-		return new NextResponse(paymentInfo)
+		return new NextResponse(invoiceNumbers)
 	}
 	catch (err) {
 		console.log(err)
