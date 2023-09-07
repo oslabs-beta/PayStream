@@ -1,9 +1,9 @@
 
 // declaring an interface to reassign AxiosResponse implicit "any" return to acess array properties
 
-export interface ServerResponse {
+export type ServerResponse = {
 	data: ServerData | null;
 }
-interface ServerData {
+type ServerData = {
 	node: string[];
 }

@@ -2,7 +2,7 @@
 import axios from "axios";
 import React from "react";
 import { redisConnect } from "../lib/redis";
-import PaymentsDisplay from "./payments/PaymentsDisplay";
+import PaymentsDisplay from "./payments/page";
 
 export default function Home() {
   return (

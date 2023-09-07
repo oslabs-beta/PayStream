@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { ServerResponse } from "../interfaces";
+import { ServerResponse } from "../types";
 
 // payment display/record component
 const PaymentRecord = () => {
