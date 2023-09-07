@@ -91,7 +91,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse | undefined> 
 		await client.set(invoiceNumber, invoiceDetails)
 		console.log("invoices: ", await client.get(invoiceNumber))
 
-		return new NextResponse(invoiceNumbers)
+		return new NextResponse(invoiceNumber)
 	}
 	catch (err) {
 		console.log(err)
