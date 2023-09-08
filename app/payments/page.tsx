@@ -8,7 +8,7 @@ type paymentProps = {
 
 // payment display/record component
 const PaymentRecord = (props: paymentProps) => {
-  const [invoice, setInvoice] = useState();
+  let invoice: ServerResponse;
   /**
    * define variablwe to give us access to this data betwen API calls
    * need to transition this to webhook
@@ -18,10 +18,13 @@ const PaymentRecord = (props: paymentProps) => {
       url: "api/salesforce",
       method: "post",
     });
-    console.log(data);
-    return data;
+    console.log("data: ", data);
+    /**
+     * need to set invoice or assign to props
+     */
+    invoice = data;
+    return invoice;
   };
-
   // retrieves cached invoice records and puts them in a more readble object format to display as payment records
   const redisConnect = async (): Promise<ServerResponse> => {
     /**
@@ -30,6 +33,7 @@ const PaymentRecord = (props: paymentProps) => {
     const { data } = await axios.request<ServerResponse>({
       url: "/api/redis",
       method: "get",
+      params: invoice,
     });
     console.log(data);
     return data;

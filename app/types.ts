@@ -5,5 +5,5 @@ export type ServerResponse = {
 	data: ServerData | null;
 }
 type ServerData = {
-	node: string[];
+	node: string;
 }

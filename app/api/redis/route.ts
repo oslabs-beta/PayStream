@@ -10,9 +10,10 @@ export const GET = async (req: NextRequest): Promise<NextResponse | undefined> =
 	try {
 		await redisConnect() //open redis connection on hot reload
 		/**
-		 * retrieve cached invoice records from redisDB passed as body from props?
+		 * retrieve cached invoice records from redisDB passed as params on axios request - need to access from nextreq obj
 		 */
-		const cachedInvoicesParse = await client.get("newest invoices")
+		// const { invoice } = req.params;
+		const cachedInvoicesParse = await client.get("invoice")
 
 		// type check for if what returns from client.get is a string to account for potential null
 		if (typeof cachedInvoicesParse === 'string') {
@@ -49,7 +50,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse | undefined> =
 			console.log("cachedInvoices", cachedInvoices)
 			return new NextResponse(JSON.stringify(cachedInvoices))
 		}
-		return new NextResponse('No new invoices to report');
+		return new NextResponse('Invoice not found');
 	}
 	catch (err) {
 		console.log(err)
