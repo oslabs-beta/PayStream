@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+/**
+ * we shouldn't need to open the redis connection in production - the socket closes everytiem the this app's code recompiles (on hot reload)
+ */
 import { redisConnect, client } from "@/lib/redis";
 
 // use graphQL to manage api calls to Salesforce

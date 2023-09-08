@@ -2,10 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ServerResponse } from "../types";
 
+type paymentProps = {
+  invoice_number: string;
+};
+
 // payment display/record component
-const PaymentRecord = () => {
+const PaymentRecord = (props: paymentProps) => {
   const [invoice, setInvoice] = useState();
-  // define variablwe to give us access to this data betwen API calls
+  /**
+   * define variablwe to give us access to this data betwen API calls
+   * need to transition this to webhook
+   */
   const fetchInvoiceData = async (): Promise<ServerResponse> => {
     const { data } = await axios.request<ServerResponse>({
       url: "api/salesforce",
@@ -17,7 +24,9 @@ const PaymentRecord = () => {
 
   // retrieves cached invoice records and puts them in a more readble object format to display as payment records
   const redisConnect = async (): Promise<ServerResponse> => {
-    // need to refactor to pass req params with redis key information
+    /**
+     * need to refactor to pass req params with redis key information
+     */
     const { data } = await axios.request<ServerResponse>({
       url: "/api/redis",
       method: "get",

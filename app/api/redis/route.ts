@@ -9,8 +9,9 @@ import { client, redisConnect } from "../../../lib/redis";
 export const GET = async (req: NextRequest): Promise<NextResponse | undefined> => {
 	try {
 		await redisConnect() //open redis connection on hot reload
-
-		// retrieve caches invoice reqords from redisDB
+		/**
+		 * retrieve cached invoice records from redisDB passed as body from props?
+		 */
 		const cachedInvoicesParse = await client.get("newest invoices")
 
 		// type check for if what returns from client.get is a string to account for potential null
