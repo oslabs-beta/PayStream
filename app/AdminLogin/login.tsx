@@ -2,10 +2,11 @@
 import { signIn } from "next-auth/react";
 import React, { useState } from 'react';
 import Link from "next/link";
-import { Text, Button, Heading } from "@radix-ui/themes";
+import { Text, Heading } from "@radix-ui/themes";
+//import { Form } from "@radix-ui/react-form";
 
 
-export const ClientLogin: React.FC = () => {
+export const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -25,7 +26,6 @@ export const ClientLogin: React.FC = () => {
 
   return (
     <div className="bg-bgGray w-screen h-screen flex justify-center">
-
       <Heading>Welcome to BillBot Baggins</Heading>
      
       <form onSubmit={handleSubmit}>
@@ -47,13 +47,12 @@ export const ClientLogin: React.FC = () => {
             required
           />
         </div>
-        <Button><button type="submit">Login</button></Button>
+        <button type="submit">Login</button>
         <div>
           <Link href="clientRegister">Register</Link> / <Link href="">Forgot Password?</Link>
         </div>
       </form>
-      </div>
+     
+    </div>
   );
 };
-
-//export default ClientLogin;

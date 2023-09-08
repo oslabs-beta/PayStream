@@ -1,10 +1,10 @@
-import { ClientLogin } from "./login";
+import { Dashboard } from "./dashboard";
 import Navbar from "@/components/Navbar";
 
 const page = () => {
   return (
     <>
-    <ClientLogin />
+    <Dashboard />
     </>
   )
 }

@@ -1,10 +1,10 @@
-import { ClientLogin } from "./login";
+import { AdminLogin } from "./login";
 import Navbar from "@/components/Navbar";
 
 const page = () => {
   return (
     <>
-    <ClientLogin />
+    <AdminLogin />
     </>
   )
 }
