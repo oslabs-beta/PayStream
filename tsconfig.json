@@ -35,7 +35,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "components/FormRow.jsx"  ],
   "exclude": [
     "node_modules"
   ]
