@@ -1,4 +1,7 @@
-import '@/globals.css';
+import '@/app/globals.css';
+import { Navbar, Footer } from '@/components';
+import SessionProvider from '@/components/SessionProvider';
+
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -6,9 +9,6 @@ import { getServerSession } from 'next-auth';
 import { Theme, ThemePanel } from '@radix-ui/themes';
 import { Toaster } from 'react-hot-toast';
 import type { AppProps } from 'next/app';
-
-import SessionProvider from '@/components/SessionProvider';
-import { Navbar, Footer } from '@/components';
 
 const inter = Inter({ subsets: ['latin'] });
 
