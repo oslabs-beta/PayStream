@@ -1,13 +1,14 @@
-import './globals.css';
+import '@/globals.css';
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { getServerSession } from 'next-auth';
 import { Theme, ThemePanel } from '@radix-ui/themes';
 import { Toaster } from 'react-hot-toast';
+import type { AppProps } from 'next/app';
+
 import SessionProvider from '@/components/SessionProvider';
 import { Navbar, Footer } from '@/components';
-import type { AppProps } from 'next/app';
-import { getServerSession, type Session } from 'next-auth';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,17 +19,15 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  Session,
 }: {
   children: React.ReactNode;
-  Session: any;
 }) {
   const session = await getServerSession();
 
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <SessionProvider session={Session}>
+        <SessionProvider session={session}>
           <Theme
             appearance='dark'
             accentColor='iris'
