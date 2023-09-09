@@ -8,16 +8,16 @@ export interface CustButtonProps {
 }
 
 export interface PaymentProps {
-	sf_unique_id?: string,
-	account_name: string;
-	project_name: string;
+	sf_unique_id?: string;
+	account_name?: string;
+	project_name?: string;
 	payment_method?: string;
-	invoice_sent_date: string;
-	invoice_due_date: string;//due 14 days from invoice date
+	invoice_sent_date?: string;
+	invoice_due_date?: string;//due 14 days from invoice date
 	payment_date?: string; //invoice_paid_date
 	amount: number;
 	invoice_id: string;
-	stripe_invoice_id: string,
+	stripe_invoice_id: string;
 }
 
 export interface PaymentContProps {
