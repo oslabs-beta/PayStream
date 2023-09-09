@@ -25,7 +25,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 	 */
 	const invoiceId = "in_1NlzoQHT7cVdV2e0To8zJ080"
 	const invoice = await stripe.invoices.retrieve(invoiceId);
-	console.log('invoice info from getting invoice data is: ', invoice)
+	// console.log('invoice info from getting invoice data is: ', invoice)
 
 	return NextResponse.json(invoice)
 }
