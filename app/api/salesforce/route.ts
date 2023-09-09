@@ -52,6 +52,9 @@ let data = JSON.stringify({
             npe01__Payment_Date__c {
                 value
             }
+						npe01__Scheduled_Date__c{
+							value
+						}
           }
         }
       }
@@ -91,8 +94,8 @@ export const POST = async (req: NextRequest): Promise<NextResponse | undefined> 
 		key should be invoice number
 		value should be all other invoice data
 		*/
-		await client.set(invoiceNumber, invoiceDetails)
-		console.log("invoices: ", await client.get(invoiceNumber))
+		await client.set("11585", invoiceDetails)
+		console.log("invoice stored in redis from salesforce POST: ", await client.get("11585"))
 
 		return new NextResponse(invoiceNumber)
 	}

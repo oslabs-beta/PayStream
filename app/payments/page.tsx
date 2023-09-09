@@ -1,6 +1,8 @@
+"use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ServerResponse } from "../types";
+import { StripeContainer } from "@/components";
 
 type paymentProps = {
   invoice_number: string;
@@ -8,7 +10,7 @@ type paymentProps = {
 
 // payment display/record component
 const PaymentRecord = (props: paymentProps) => {
-  let invoice: ServerResponse;
+  const [invoice, setInvoice] = useState<string>("");
   /**
    * define variablwe to give us access to this data betwen API calls
    * need to transition this to webhook
@@ -22,8 +24,8 @@ const PaymentRecord = (props: paymentProps) => {
     /**
      * need to set invoice or assign to props
      */
-    invoice = data;
-    return invoice;
+    // setInvoice(data);
+    return data;
   };
   // retrieves cached invoice records and puts them in a more readble object format to display as payment records
   const redisConnect = async (): Promise<ServerResponse> => {
@@ -33,7 +35,7 @@ const PaymentRecord = (props: paymentProps) => {
     const { data } = await axios.request<ServerResponse>({
       url: "/api/redis",
       method: "get",
-      params: invoice,
+      // params: invoice,
     });
     console.log(data);
     return data;
@@ -61,7 +63,7 @@ const PaymentRecord = (props: paymentProps) => {
       >
         bill-bot-baggins x redis
       </button>
-
+      <StripeContainer />
       {/* <button onClick={webhook}>bill-bot-baggins x webhook ???</button> */}
     </div>
   );
