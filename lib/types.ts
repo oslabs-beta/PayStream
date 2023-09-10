@@ -1,3 +1,4 @@
+import { type } from "os";
 import { MouseEventHandler } from "react";
 
 export interface CustButtonProps {
@@ -7,7 +8,7 @@ export interface CustButtonProps {
 	handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-export interface PaymentProps {
+export type PaymentProps = {
 	sf_unique_id?: string;
 	account_name?: string;
 	project_name?: string;

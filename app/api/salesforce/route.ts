@@ -82,6 +82,7 @@ let config = {
 
 
 // POST function gets data from salesforce and caches to redis, all subsequent calls are from redis
+
 export const POST = async (req: NextRequest): Promise<NextResponse | undefined> => {
 	try {
 		const data = await axios.request(config);
@@ -92,7 +93,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse | undefined> 
 
 		/**
 		 * fetch stripe invoice ID to store on object stored in redis
-		 * may need to move this to salesforce routes to create the invoice when get the update from salesforce and then store in redis cache
 		 */
 		const stripeInvoiceId = await axios.request({
 			url: "http://localhost:3000/api/webhook",
@@ -119,18 +119,22 @@ export const POST = async (req: NextRequest): Promise<NextResponse | undefined> 
 
 
 		await redisConnect() //open redis connection on hot reload
+
 		// console.log("invoice details to store in redis POST request: ", cachedInvoices);
 		const account_name: string | null = JSON.stringify(Opportunity_Account_Name__c.value);
 		const invoiceDetails: string | null = JSON.stringify(cachedInvoices);
-		/* 
-		add each invoice to a unique key-value pair
-		key should be invoice number
-		value should be all other invoice data
-		*/
-		await client.set("Aimbu", invoiceDetails)
-		console.log("invoice stored in redis from salesforce POST: ", await client.get("Aimbu"))
 
-		return new NextResponse(account_name)
+		/**
+		 * add each salesforce invoice to the redis cache at the key for the organization
+		 * key: acount_name variable (client org)
+		 * value: Set that stores list of invoice details - if the invoice is already there, no duplicates
+		 * if the org doesn't exist, it will create duplicates
+		 */
+
+		await client.SADD(account_name, invoiceDetails)
+		console.log("invoice stored in redis from salesforce POST request: ", await client.SMEMBERS(account_name))
+
+		return NextResponse.json(cachedInvoices)
 	}
 	catch (err) {
 		console.log(err)

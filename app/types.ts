@@ -1,11 +1,11 @@
 
 // declaring an interface to reassign AxiosResponse implicit "any" return to acess array properties
 
-import { SetStateAction } from "react";
+import { PaymentProps } from "@/lib/types";
 
 export type ServerResponse = {
-	data: ServerData | null;
+	data: ServerData | PaymentProps | null;
 }
 type ServerData = {
-	node: string | SetStateAction<string>;
+	node: string;
 }

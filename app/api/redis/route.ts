@@ -10,22 +10,26 @@ import { PaymentProps } from "@/lib/types";
 /* 
  * GET request for retrieving invoice data from redis cache
 */
-export const GET = async (req: NextRequest): Promise<NextResponse | undefined> => {
+export const POST = async (req: NextRequest): Promise<NextResponse | undefined> => {
 	try {
-		await redisConnect() //open redis connection on hot reload
+		// await redisConnect() //open redis connection on hot reload
 		/**
 		 * retrieve cached invoice records from redisDB passed as params on axios request - need to access from nextreq obj
 		 */
-		// const { invoice } = req.params;
-		const cachedInvoicesParse = await client.get("Aimbu")
-		console.log(cachedInvoicesParse)
+		// console.log(req)
+		const request = await req.json()
+		console.log(request)
+		const account_name: string = JSON.stringify(request.account_name);
+
+		const cachedInvoices = await client.SMEMBERS(account_name)
+		console.log(cachedInvoices)
 		// type check for if what returns from client.get is a string to account for potential null
-		if (typeof cachedInvoicesParse === 'string') {
+		if (Array.isArray(cachedInvoices)) {
 
 			// parse string
-			const parsed = JSON.parse(cachedInvoicesParse)
+			// const parsed = JSON.parse(cachedInvoicesParse)
 
-			return NextResponse.json(parsed)
+			return NextResponse.json(cachedInvoices)
 		}
 		// if invoice doesn't exist
 		return new NextResponse('Invoice not found');
