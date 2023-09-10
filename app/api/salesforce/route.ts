@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
  * we shouldn't need to open the redis connection in production - the socket closes everytiem the this app's code recompiles (on hot reload)
  */
 import { redisConnect, client } from "@/lib/redis";
+import { PaymentProps } from "@/lib/types";
 
 // use graphQL to manage api calls to Salesforce
 const axios = require('axios');
@@ -85,19 +86,51 @@ export const POST = async (req: NextRequest): Promise<NextResponse | undefined> 
 	try {
 		const data = await axios.request(config);
 		const paymentInfo = data.data.data.uiapi.query.npe01__OppPayment__c.edges[0];
+
+		// destructure assignment for node object
+		const { Id, Invoice__c, Invoice_Sent_Date__c, npe01__Payment_Amount__c, Opportunity_Account_Name__c, Opportunity_18_Digit_ID__c, npe01__Payment_Method__c, npe01__Payment_Date__c, npe01__Scheduled_Date__c } = paymentInfo.node
+
+		/**
+		 * fetch stripe invoice ID to store on object stored in redis
+		 * may need to move this to salesforce routes to create the invoice when get the update from salesforce and then store in redis cache
+		 */
+		const stripeInvoiceId = await axios.request({
+			url: "http://localhost:3000/api/webhook",
+			method: 'post',
+			data: {
+				amount: npe01__Payment_Amount__c.value,
+				customer: Opportunity_Account_Name__c.value,
+				due_date: npe01__Scheduled_Date__c.value
+			}
+		})
+
+		const cachedInvoices: PaymentProps = {
+			sf_unique_id: Id.value,
+			invoice_id: Invoice__c.value,
+			amount: npe01__Payment_Amount__c.value,
+			invoice_sent_date: Invoice_Sent_Date__c.value,
+			payment_date: npe01__Payment_Date__c.value,
+			invoice_due_date: npe01__Scheduled_Date__c.value,
+			payment_method: npe01__Payment_Method__c.value,
+			project_name: Opportunity_18_Digit_ID__c.value,
+			account_name: Opportunity_Account_Name__c.value,
+			stripe_invoice_id: stripeInvoiceId.data,
+		}
+
+
 		await redisConnect() //open redis connection on hot reload
-		console.log("paymentInfo: ", paymentInfo)
-		const invoiceNumber: string | null = JSON.stringify(paymentInfo.node.Invoice__c.value)
-		const invoiceDetails: string | null = JSON.stringify(paymentInfo)
+		// console.log("invoice details to store in redis POST request: ", cachedInvoices);
+		const account_name: string | null = JSON.stringify(Opportunity_Account_Name__c.value);
+		const invoiceDetails: string | null = JSON.stringify(cachedInvoices);
 		/* 
 		add each invoice to a unique key-value pair
 		key should be invoice number
 		value should be all other invoice data
 		*/
-		await client.set("11585", invoiceDetails)
-		console.log("invoice stored in redis from salesforce POST: ", await client.get("11585"))
+		await client.set("Aimbu", invoiceDetails)
+		console.log("invoice stored in redis from salesforce POST: ", await client.get("Aimbu"))
 
-		return new NextResponse(invoiceNumber)
+		return new NextResponse(account_name)
 	}
 	catch (err) {
 		console.log(err)

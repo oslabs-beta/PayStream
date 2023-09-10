@@ -37,7 +37,7 @@ const PaymentRecord = (props: paymentProps) => {
       method: "get",
       // params: invoice,
     });
-    // console.log(data);
+    console.log(data);
     return data;
   };
 

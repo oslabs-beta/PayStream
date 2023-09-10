@@ -1,7 +1,7 @@
 'use client';
 import axios from 'axios';
 import { redisConnect } from '../lib/redis';
-import PaymentsDisplay from './payments/PaymentsDisplay';
+import PaymentsDisplay from '../app/payments/page';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -19,13 +19,6 @@ import { Navbar } from '@/components';
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 export default function Home() {
-  const newData = async () => {
-    const { data } = await axios.post('api/redis', {
-      text: 'hello',
-      tags: ['TypeScript', 'CSS'],
-    });
-    console.log(data);
-  };
   const { data: session } = useSession();
   if (!session) {
     return (
@@ -51,9 +44,7 @@ export default function Home() {
         {/* <Navbar /> */}
         {/* conditionally render Payments display */}
         {/* Added "paymentsdisplay" in anticipation of component - button is in here to make API call, you can move this wherever */}
-        <PaymentsDisplay />
         <StripeContainer />
-        <button onClick={newData}>bill-bot</button>
         <>
           <Button onClick={() => signOut()}>
             {/* <Text color='gray'>Clients Login</Text> */}
