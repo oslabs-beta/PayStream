@@ -1,12 +1,12 @@
-import Stripe from "stripe";
-import { NextRequest, NextResponse } from "next/server";
+import Stripe from 'stripe';
+import { NextRequest, NextResponse } from 'next/server';
 
 //create invoice. Will be ran when something from salesforce is recieved
 
 export async function POST(request) {
   const req = await request.json();
 
-  console.log("REQUEST object in webhook route: ", req);
+  console.log('REQUEST object in webhook route: ', req);
 
   /**
    * open stripe connection
@@ -32,10 +32,10 @@ export async function POST(request) {
    */
   if (!customerId) {
     // Create a new Customer
-    console.log("req.customer: ", req.customer);
+    console.log('req.customer: ', req.customer);
     const customer = await stripe.customers.create({
       name: req.customer,
-      email: "lcchrty@gmail.com",
+      email: 'lcchrty@gmail.com',
     });
 
     customerId = customer.id;
@@ -47,20 +47,20 @@ export async function POST(request) {
   const newInvoice = await stripe.invoices.create({
     customer: customerId,
     auto_advance: false,
-    collection_method: "send_invoice",
+    collection_method: 'send_invoice',
     // amount: request.amount * 100,
     days_until_due: 30,
   });
 
-  console.log("new stripe invoice created in webhook route: ", newInvoice);
+  console.log('new stripe invoice created in webhook route: ', newInvoice);
 
   /**
    * need project type from salesforce/redis/props to create the "product type" and then assign a deafult price
    */
   const product = await stripe.products.create({
-    name: "Leadership Coaching",
+    name: 'Leadership Coaching',
     default_price_data: {
-      currency: "usd",
+      currency: 'usd',
       unit_amount: req.amount,
     },
   });
@@ -80,7 +80,7 @@ export async function POST(request) {
   const finalInvoice = await stripe.invoices.finalizeInvoice(newInvoice.id);
 
   console.log(
-    "final stripe invoice created in webhook route: ",
+    'final stripe invoice created in webhook route: ',
     finalInvoice.id
   );
 

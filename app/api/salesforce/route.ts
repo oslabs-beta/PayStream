@@ -95,7 +95,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse | undefined> 
 		 * fetch stripe invoice ID to store on object stored in redis
 		 */
 		const stripeInvoiceId = await axios.request({
-			url: "http://localhost:3000/api/webhook",
+			url: "http://localhost:3000/api/stripe",
 			method: 'post',
 			data: {
 				amount: npe01__Payment_Amount__c.value,
