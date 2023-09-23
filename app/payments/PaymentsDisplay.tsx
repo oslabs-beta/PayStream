@@ -33,7 +33,11 @@ const PaymentRecord = () => {
 
   return (
     <>
-      <button onClick={invoiceData}>bill-bot-baggins</button>
+    <div className='flex h-screen w-screen items-center'>
+      <div className='w-full text-center'>
+      <button onClick={invoiceData}>Pay Invoice</button>
+      </div>
+      </div>
     </>
   );
 };

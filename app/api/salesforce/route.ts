@@ -72,13 +72,14 @@ let config = {
 };
 
 export const POST = async (req: NextRequest): Promise<NextResponse | undefined> => {
-	try {
-		const data = await axios.request(config);
-		const paymentInfo = JSON.stringify(data.data.data.uiapi.query.npe01__OppPayment__c.edges);
-		return new NextResponse(paymentInfo)
-	}
-	catch (err) {
-		console.log(err)
-		return new NextResponse("Internal Server Error", { status: 500 })
-	}
+  return NextResponse.json({message: 'test'});
+	// try {
+	// 	const data = await axios.request(config);
+	// 	const paymentInfo = JSON.stringify(data.data.data.uiapi.query.npe01__OppPayment__c.edges);
+	// 	return new NextResponse(paymentInfo)
+	// }
+	// catch (err) {
+	// 	console.log(err)
+	// 	return new NextResponse("Internal Server Error", { status: 500 })
+	// }
 }

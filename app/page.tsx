@@ -53,18 +53,8 @@ export default function Home() {
         {/* Added "paymentsdisplay" in anticipation of component - button is in here to make API call, you can move this wherever */}
         <PaymentsDisplay />
         <StripeContainer />
-        <button onClick={newData}>bill-bot</button>
+ 
         <>
-          <Button onClick={() => signOut()}>
-            {/* <Text color='gray'>Clients Login</Text> */}
-            Client Login
-          </Button>
-
-          <Link href='/AdminLogin'>
-            <Button>
-              <Text color='gray'>Admin Login</Text>
-            </Button>
-          </Link>
         </>
       </main>
     </>

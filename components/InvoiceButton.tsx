@@ -16,7 +16,10 @@ const InvoiceButton = ({invoice} : any) => {
         })
         window.location.assign(data)    
     }
-
+async function test() {
+    const res = await axios.post('/api/payment', {})
+    console.log(res);
+}
 
     return (
         <button className = "mt-8 flex w-full justify-center border border-transparent py-2 px-4 text-sm font-medium" onClick={handlePayment}>

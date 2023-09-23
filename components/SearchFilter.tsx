@@ -8,7 +8,7 @@ import { Listbox } from '@headlessui/react';
 import { SearchFilterProps } from '@/lib/types';
 import { updateSearchParams } from '@/lib/utils';
 
-export default function SearchFilter({ title, options }: SearchFilterProps) {
+export default function SearchFilter({ title, options, onFilter }: SearchFilterProps) {
   const router = useRouter();
   const [selected, setSelected] = useState(options[0]);
 
@@ -24,6 +24,8 @@ export default function SearchFilter({ title, options }: SearchFilterProps) {
         value={selected}
         onChange={(e) => {
           setSelected(e);
+          onFilter(e.value);
+          console.log(e.value);
           handleUpdateParams(e);
         }}
       >

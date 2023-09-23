@@ -19,9 +19,11 @@ export interface PaymentProps {
 }
 
 export interface PaymentContProps {
-  
-    payment_date: string;
-    amount: number;
+    project_name?: string;    
+    invoice_id: string;
+    invoice_sent_date?: string;
+    invoice_due_date?: string;
+    amount: number
     }
 
       
@@ -33,6 +35,7 @@ export interface PaymentContProps {
       export interface SearchFilterProps {
         title: string;
         options: OptionProps[];
+        onFilter: (value: string) => void;
       }
       
       export interface SearchProps {
