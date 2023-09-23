@@ -8,6 +8,7 @@ export async function POST(request) {
 
     const cost = request.amount * 100;
     const newInvoice = await stripe.invoices.create({
+        //id: try to put the salesforce ID in here
         customer: request.customer,
         auto_advance: false,
         collection_method: "send_invoice",
