@@ -15,6 +15,8 @@ const config: Stripe.StripeConfig = {
 	apiVersion: "2023-08-16",
 }
 
+// need invoice id from salesforce from pdf invoice link
+
 export async function POST(req: NextRequest): Promise<NextResponse> {
 
 	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, config);

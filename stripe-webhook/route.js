@@ -41,6 +41,11 @@ app.post(
       case 'payment_intent.succeeded':
         const paymentIntentSucceeded = event.data.object;
         // Then define and call a function to handle the event payment_intent.succeeded
+        /**
+         * authorization token request
+         * send a request to salesforce
+         *
+         */
         break;
       // ... handle other event types
       default:

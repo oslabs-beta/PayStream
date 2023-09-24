@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 //create invoice. Will be ran when something from salesforce is recieved
 
-export async function POST(request) {
-  const req = await request.json();
+export async function POST(NextRequest) {
+  const req = await NextRequest.json();
 
   console.log('REQUEST object in webhook route: ', req);
 
