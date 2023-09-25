@@ -33,6 +33,7 @@ export interface PaymentContProps {
       export interface SearchFilterProps {
         title: string;
         options: OptionProps[];
+        onFilter: (value: string) => void;
       }
       
       export interface SearchProps {

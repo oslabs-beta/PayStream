@@ -1,12 +1,11 @@
-import { Dashboard } from "./dashboard";
-import Navbar from "@/components/Navbar";
+import { Dashboard } from '@/components/dashboard';
 
 const page = () => {
   return (
     <>
-    <Dashboard />
+      <Dashboard />
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;
