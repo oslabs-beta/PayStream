@@ -10,7 +10,7 @@ const PaymentRecord = () => {
   const [invoice, setInvoice] = useState<string>('');
   let paymentprops: PaymentProps;
   /**
-   * define variablwe to give us access to this data betwen API calls
+   * define variable to give us access to this data betwen API calls
    * need to transition this to webhook
    */
   const fetchInvoiceData = async (): Promise<PaymentProps> => {
@@ -18,10 +18,7 @@ const PaymentRecord = () => {
       url: 'api/salesforce',
       method: 'post',
     });
-    console.log(
-      'fetched invoice data from salesforce via salesforce route: ',
-      data
-    );
+    console.log('data: ', data);
     /**
      * need to set invoice or assign to props
      */
