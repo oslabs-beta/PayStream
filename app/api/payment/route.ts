@@ -29,7 +29,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 		mode: 'payment',
 		// customer: id add customer ID for easier checkout for returning customer
 		// invoice_creation: true,
-		success_url: 'http://localhost:3000/success/[invoice_id]', //redirect to sucessfully paid invoice with button to download  page
+		success_url: 'http://localhost:3000/success/', //redirect link should pass invoice number as url parameter to sucessfully paid invoice with button to download page
 		cancel_url: 'http://localhost:3000' // redirect to homepage when cancelled
 
 	})

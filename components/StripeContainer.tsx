@@ -11,6 +11,7 @@ export default function StripeContainer() {
 
     const [id, setId] = useState([]); // need to discuss when this is set (getting id from link sent from salesforce?)
 
+		// on page load, fetch stripe invoice data to store as props on button
     useEffect(() => {
         fetchInvoice(id)
     },[])
