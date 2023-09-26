@@ -1,74 +1,79 @@
-'use client';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+
 import CustButton from './CustButton';
-import { useRouter } from 'next/router';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { UserButton } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import { Button } from '@radix-ui/themes';
 
 const Navbar = () => {
-  const { data: session } = useSession();
-  // const router = useRouter();
-  // const {pathname} = router;
-  // async function logout() {
-  //   await router.push('/');
-  //   await signOut();
-  // }
+  const { isLoaded, isSignedIn, user } = useUser();
 
-  // const { data: session } = useSession();
-  // if (!session) {
-  //     return;
-  // }
   return (
-    <header className='sticky w-full'>
-      <nav className='mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4 sm:px-16'>
-        <Image
-          src='/logo.png'
-          alt='Billbot Baggins logo'
-          width={500}
-          height={85}
-          quality={95}
-          className='object-contain'
-        />
-
-        <Link href='/ClientDashboard'>
-          <CustButton
-            title='Dashboard'
-            btnType='button'
-            // containerStyles=''
-          />
-        </Link>
-
+    <nav className='flex w-full items-center justify-between border border-x-0 border-t-0 border-neutral-700 px-16 py-4'>
+      <header className='sticky top-0 flex w-full items-center justify-between text-neutral-400'>
         <Link href='/'>
-          <CustButton
-            title='Previous Payments'
-            btnType='button'
-            // containerStyles=''
+          <Image
+            src='/logo.png'
+            alt='Billbot Baggins logo'
+            width={500}
+            height={85}
+            quality={95}
+            className='object-contain'
+            priority={true}
           />
         </Link>
+        {user ? (
+          <>
+            <Link
+              className='rounded-lg p-2 hover:bg-neutral-800 hover:text-neutral-300'
+              href='/clientDashboard'
+            >
+              <CustButton
+                title='Dashboard'
+                btnType='button'
+                // containerStyles=''
+              />
+            </Link>
 
-        <Link href='/'>
-          <CustButton
-            title='Upcoming Payments'
-            btnType='button'
-            // containerStyles=''
-          />
-        </Link>
+            <Link
+              className='rounded-lg p-2 hover:bg-neutral-800 hover:text-neutral-300'
+              href='/'
+            >
+              <CustButton
+                title='Previous Payments'
+                btnType='button'
+                // containerStyles=''
+              />
+            </Link>
 
-        {session ? (
-          <Button onClick={() => signOut()}>Logout</Button>
+            <Link
+              className='rounded-lg p-2 hover:bg-neutral-800 hover:text-neutral-300'
+              href='/'
+            >
+              <CustButton
+                title='Upcoming Payments'
+                btnType='button'
+                // containerStyles=''
+              />
+            </Link>
+            <div className='flex items-center space-x-2 text-white/90'>
+              <UserButton afterSignOutUrl='/invoice' />
+            </div>
+          </>
         ) : (
-          <Button onClick={() => signIn()}>Login</Button>
+          <Link
+            href='/sign-in'
+            className='transition-all hover:scale-105 active:scale-100'
+          >
+            <Button size='3' variant='outline'>
+              Login
+            </Button>
+          </Link>
         )}
-
-        {/* <button onClick={logout}><CustButton
-        title='Logout'
-        btnType='button'
-        containerStyles=''
-      /></button> */}
-      </nav>
-    </header>
+      </header>
+    </nav>
   );
 };
 

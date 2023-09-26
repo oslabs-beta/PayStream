@@ -7,8 +7,13 @@ import { Listbox } from '@headlessui/react';
 
 import { SearchFilterProps } from '@/lib/types';
 import { updateSearchParams } from '@/lib/utils';
+import { Select } from '@radix-ui/themes';
 
-export default function SearchFilter({ title, options }: SearchFilterProps) {
+export default function SearchFilter({
+  title,
+  options,
+  onFilter,
+}: SearchFilterProps) {
   const router = useRouter();
   const [selected, setSelected] = useState(options[0]);
 
@@ -20,10 +25,26 @@ export default function SearchFilter({ title, options }: SearchFilterProps) {
 
   return (
     <div className='w-fit'>
+      {/* <Select.Root>
+        <Select.Trigger placeholder='Select a project…' />
+        <Select.Content>
+          <Select.Group>
+            <Select.Label>Projects</Select.Label>
+            <Select.Item value='project1'>Project 1</Select.Item>
+            <Select.Item value='project2'>Project 2</Select.Item>
+            <Select.Item value='project3' disabled>
+              Project 3
+            </Select.Item>
+          </Select.Group>
+        </Select.Content>
+      </Select.Root> */}
+
       <Listbox
         value={selected}
         onChange={(e) => {
           setSelected(e);
+          onFilter(e.value);
+          console.log(e.value);
           handleUpdateParams(e);
         }}
       >

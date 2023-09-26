@@ -1,16 +1,15 @@
 import '@/app/globals.css';
 import { Navbar, Footer } from '@/components';
-import SessionProvider from '@/components/SessionProvider';
 
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { getServerSession } from 'next-auth';
+import { Open_Sans } from 'next/font/google';
 import { Theme, ThemePanel } from '@radix-ui/themes';
 import { Toaster } from 'react-hot-toast';
-import type { AppProps } from 'next/app';
+import { ClerkProvider } from '@clerk/nextjs';
+import { dark } from '@clerk/themes';
 
-const inter = Inter({ subsets: ['latin'] });
+const font = Open_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Bill-Bot-Baggins',
@@ -22,12 +21,17 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-
   return (
-    <html lang='en'>
-      <body className={inter.className}>
-        <SessionProvider session={session}>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <html lang='en'>
+        <head>
+          <link rel='icon' href='/favicon.ico' />
+        </head>
+        <body className={font.className}>
           <Theme
             appearance='dark'
             accentColor='iris'
@@ -35,14 +39,15 @@ export default async function RootLayout({
             panelBackground='solid'
             radius='full'
             scaling='90%'
+            className='h-screen'
           >
             <Navbar />
             {children}
             <Footer />
             <Toaster />
           </Theme>
-        </SessionProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
