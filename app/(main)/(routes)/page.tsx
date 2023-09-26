@@ -1,15 +1,14 @@
 import axios from 'axios';
-// import { redisConnect } from '../lib/redis';
-// import PaymentsDisplay from './payments/PaymentsDisplay';
+
 import React from 'react';
 import Link from 'next/link';
 import { Button, Flex, Heading, Section } from '@radix-ui/themes';
 import StripeContainer from '@/components/StripeContainer';
 import InvoiceDisplay from '@/components/InvoiceDisplay';
-import { auth, useAuth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs';
 
 export default function Home() {
-  const { userId, sessionId, getToken } = auth();
+  const { userId, sessionId } = auth();
 
   const newData = async () => {
     const { data } = await axios.post('api/redis', {

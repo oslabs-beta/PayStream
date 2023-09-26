@@ -21,8 +21,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const session = await getServerSession();
-
   return (
     <ClerkProvider
       appearance={{
@@ -33,9 +31,7 @@ export default async function RootLayout({
         <head>
           <link rel='icon' href='/favicon.ico' />
         </head>
-
-        <body className={`${font.className}`}>
-          {/* <SessionProvider session={session}> */}
+        <body className={font.className}>
           <Theme
             appearance='dark'
             accentColor='iris'
@@ -50,7 +46,6 @@ export default async function RootLayout({
             <Footer />
             <Toaster />
           </Theme>
-          {/* </SessionProvider> */}
         </body>
       </html>
     </ClerkProvider>

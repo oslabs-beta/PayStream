@@ -43,3 +43,12 @@ export interface SearchProps {
 	invoice_ID: string;
 	setInvoice_ID: (account: string) => void;
 }
+
+// declaring an interface to reassign AxiosResponse implicit "any" return to acess array properties
+
+export type ServerResponse = {
+	data: ServerData | PaymentProps | null;
+}
+type ServerData = {
+	node: string;
+}

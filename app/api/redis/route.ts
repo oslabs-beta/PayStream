@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
 // import client object to interact with redis and DB connection function from our redis.ts file
-import { client, redisConnect } from "../../../lib/redis";
+import { client, redisConnect } from "@/lib/redis";
 import { PaymentProps } from "@/lib/types";
 
 /* 
