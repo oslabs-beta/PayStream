@@ -8,7 +8,7 @@ const {
 } = process.env;
 
 const accessToken =
-  'Bearer 00DEi000000QlCz!AQEAQCLDGwsl9lO3a29ZQn_QbG1_2rmERR_c3QfK6KgNDNxzqDxgTpXn3yXeVPoU5EOr5YqxWNk8GRqA_4BPyHikcJCtgmHV';
+  'Bearer 00DEi000000QlCz!AQEAQA.xt0sBlBbNl_Ni08pkC3mpwfN5v4v2L._B.YWAX.pSigO.zBCRMC20510Gjct8XHOHw9LycW6clJUXbVb5kzNAFSz.';
 const instanceUrl = 'https://escsocal--lc001.sandbox.my.salesforce.com';
 const organizationId = '00DEi000000QlCz';
 const username = 'admin@escsc.org';
@@ -25,10 +25,17 @@ async function run() {
       username
     );
 
-    // Subscribe to a single incoming account change event
-    const eventEmitter = await client.subscribe('/event/Payment_Change__e', 4);
+    const eventEmitter = await client.subscribe(
+      '/data/npe01__OppPayment__ChangeEvent',
+      2
+    );
 
     // Handle incoming events
+    /**
+     * info that we need from payment event
+     * record ID
+     * change field
+     */
     eventEmitter.on('data', (event) => {
       console.log(
         `Handling ${event.payload.ChangeEventHeader.entityName} change event ${event.replayId}`
@@ -36,7 +43,7 @@ async function run() {
       console.log(JSON.stringify(event, null, 2));
       console.log(
         'changed fields: ',
-        JSON.stringify(event.payload.ChangeEventHeader.changedFields)
+        JSON.stringify(event.payload.ChangeEventHeader.diffFields)
       );
     });
   } catch (error) {

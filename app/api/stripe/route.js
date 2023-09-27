@@ -58,7 +58,7 @@ export async function POST(NextRequest) {
    * need project type from salesforce/redis/props to create the "product type" and then assign a deafult price
    */
   const product = await stripe.products.create({
-    name: 'Leadership Coaching',
+    name: req.invoice_number,
     default_price_data: {
       currency: 'usd',
       unit_amount: req.amount,
@@ -80,7 +80,7 @@ export async function POST(NextRequest) {
   const finalInvoice = await stripe.invoices.finalizeInvoice(newInvoice.id);
 
   console.log(
-    'final stripe invoice created in webhook route: ',
+    'final stripe invoice created in stripe route: ',
     finalInvoice.id
   );
 

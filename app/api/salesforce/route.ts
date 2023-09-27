@@ -118,7 +118,8 @@ export const POST = async (req: NextRequest): Promise<NextResponse | undefined> 
 			data: {
 				amount: npe01__Payment_Amount__c.value,
 				customer: Opportunity_Account_Name__c.value,
-				due_date: npe01__Scheduled_Date__c.value
+				due_date: npe01__Scheduled_Date__c.value,
+				invoice_number: Invoice__c.value
 			}
 		})
 
