@@ -4,6 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { StripeContainer } from '@/components';
 import { PaymentProps, ServerResponse } from '@/lib/types';
 
+/**
+ * this componenet is currently housing buttons to test REST API routes for salesforce and redis.
+ * the salesforce webhook works, so this code may need to be modularized and moved to other relevant components
+ */
+
 // payment display/record component
 const PaymentRecord = () => {
   const [invoice, setInvoice] = useState<string>('');

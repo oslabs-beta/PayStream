@@ -13,6 +13,7 @@ import { NextRequest, NextResponse } from "next/server";
 // get invoice data once link is clicked (unsure at the moment what data is sent along with link)
 const config: Stripe.StripeConfig = {
 	apiVersion: "2023-08-16",
+	typescript: true
 }
 
 // need invoice id from salesforce from pdf invoice link
