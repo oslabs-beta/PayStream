@@ -17,6 +17,8 @@ const config: Stripe.StripeConfig = {
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
 
+	const data = await req.json()
+
 	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, config);
 	//const invoiceId = await request.json();
 	/**
@@ -24,7 +26,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 	 * currently, hard coded to reference existing ID
 	 */
 	const invoiceId = "in_1NlzoQHT7cVdV2e0To8zJ080"
-	const invoice = await stripe.invoices.retrieve(invoiceId);
+	const invoice = await stripe.invoices.retrieve(data.invoiceId);
 	// console.log('invoice info from getting invoice data is: ', invoice)
 
 	return NextResponse.json(invoice)
