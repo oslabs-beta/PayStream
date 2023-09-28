@@ -1,5 +1,6 @@
 import PubSubApiClient from "salesforce-pubsub-api-client";
 import dotenv from "dotenv";
+import path from "path";
 dotenv.config()
 // require("dotenv").config
 
@@ -10,11 +11,6 @@ const {
 	SALESFORCE_ORG_ID,
 } = process.env;
 
-const accessToken =
-	"Bearer 00DEi000000QlCz!AQEAQO60ydwSyvboeWsKFt53pGpPHrMzCOTxHu0h0w8Yived3FvlVds91MfzWgF5Ldl0jZ3NXbIb1UqzFa4iUvbrBGJ0zQg3";
-const instanceUrl = "https://escsocal--lc001.sandbox.my.salesforce.com";
-const organizationId = "00DEi000000QlCz";
-const username = "admin@escsc.org";
 
 const salesforceController: any = {};
 

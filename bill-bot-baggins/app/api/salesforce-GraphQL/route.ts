@@ -9,7 +9,7 @@ import { PaymentProps } from "@/lib/types";
 const axios = require('axios');
 
 // need to code way to refresh / generate new token when expired - do not need for MVP
-const { SALESFORCE_LOGIN_URI, SALESFORCE_CLIENT_ID, SALESFORCE_CLIENT_SECRET, SALESFORCE_COOKIE_AUTH, SALESFORCE_TOKEN, SALESFORCE_GRAPHQL_URI } = process.env
+const { SALESFORCE_COOKIE_AUTH, SALESFORCE_TOKEN, SALESFORCE_GRAPHQL_URI } = process.env
 
 // let sfConfig = {
 // 	url: SALESFORCE_LOGIN_URI,
