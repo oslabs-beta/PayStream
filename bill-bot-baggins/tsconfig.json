@@ -35,7 +35,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "components/FormRow.jsx"  ],
+, "components/FormRow.jsx", "stripe-webhook/route.js"  ],
   "exclude": [
     "node_modules"
   ]

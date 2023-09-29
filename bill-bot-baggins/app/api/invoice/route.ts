@@ -13,8 +13,14 @@ import { NextRequest, NextResponse } from "next/server";
 // get invoice data once link is clicked (unsure at the moment what data is sent along with link)
 const config: Stripe.StripeConfig = {
 	apiVersion: "2023-08-16",
+<<<<<<< HEAD:app/api/invoice/route.ts
 	typescript: true,
+=======
+	typescript: true
+>>>>>>> dev:bill-bot-baggins/app/api/invoice/route.ts
 }
+
+// need invoice id from salesforce from pdf invoice link
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
 

@@ -1,20 +1,15 @@
+// 09/27/2023 test link: http://localhost:3000/invoice?stripeInvoice=in_1Nv2UoHT7cVdV2e0iJEYuirV
 import axios from 'axios';
-
 import React from 'react';
 import Link from 'next/link';
 import { Button, Flex, Heading, Section } from '@radix-ui/themes';
 import { auth } from '@clerk/nextjs';
 
 export default function Home() {
+  /**
+   * @Robert - reefactoring to remove clerk from this?
+   */
   const { userId, sessionId } = auth();
-
-  const newData = async () => {
-    const { data } = await axios.post('api/redis', {
-      text: 'hello',
-      tags: ['TypeScript', 'CSS'],
-    });
-    console.log(data);
-  };
 
   if (!userId) {
     return null;
