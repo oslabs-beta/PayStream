@@ -8,7 +8,7 @@ const InvoiceButton = ({ invoice }: any) => {
     const { data } = await axios.post(
       '/api/payment',
       {
-        invoiceId: invoice,
+        invoice: invoice,
       },
       {
         headers: {
