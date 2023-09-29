@@ -5,6 +5,12 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import axios from 'axios';
 
 export default function Successful() {
+  // using stripe id, get salesforce id
+
+  // use effect that hits the postman route to update salesforce record
+  // app updates salesforce
+  // pass stripe info to this app to update salesforce
+
   const animationURL = '/payment-success.json';
 
   useEffect(() => {
