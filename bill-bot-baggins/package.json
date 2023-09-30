@@ -2,7 +2,6 @@
   "name": "bill-bot-baggins",
   "version": "0.1.0",
   "private": true,
-	
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -26,8 +25,10 @@
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "axios": "^1.5.0",
+    "crypto": "^1.0.1",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
+    "form-data": "4.0.0",
     "graphql": "^16.8.0",
     "mongodb": "^5.8.1",
     "nanoid": "^4.0.2",
@@ -41,7 +42,8 @@
     "redis-cli": "^2.1.2",
     "stripe": "^13.7.0",
     "tailwindcss": "3.3.3",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "xhr": "^2.6.0"
   },
   "devDependencies": {
     "@types/node": "^20.5.8",
