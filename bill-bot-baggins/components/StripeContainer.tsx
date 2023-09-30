@@ -1,54 +1,43 @@
 'use client';
 
-import axios from 'axios';
-import React from 'react';
-import { useState, useEffect } from 'react';
-import InvoiceButton from './InvoiceButton';
-import { useSearchParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Flex } from '@radix-ui/themes';
+import { useSearchParams } from 'next/navigation';
+import axios from 'axios';
+import Stripe from 'stripe';
 
-type invoiceProps = {
-  id: string;
-  customer_name: string;
-  customer_email: string;
-  lines: {
-    data: {
-      description: string;
-    }[];
-  };
-  amount_due: number;
-  invoice_pdf: string;
-  account_name: string;
-  created: number;
-  due_date: number;
-};
+import InvoiceButton from '@/components/InvoiceButton';
 
 export default function StripeContainer() {
   const searchParams = useSearchParams();
-  const [invoice, setInvoice] = useState<invoiceProps | null>(null);
+  const [invoice, setInvoice] =
+    useState<Stripe.Response<Stripe.Invoice> | null>(null);
   const [invoiceId, setInvoiceId] = useState<string | null>(
     searchParams.get('stripeInvoice')
   ); // need to discuss when this is set (getting id from link sent from salesforce?)
 
   useEffect(() => {
-    fetchInvoice(invoiceId);
+    fetchInvoice();
   }, []);
 
-  const fetchInvoice = async (id: any) => {
-    const { data }: any = await axios.post(
-      '/api/invoice',
-      {
-        invoiceId,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
+  const fetchInvoice = async () => {
+    const { data }: { data: Stripe.Response<Stripe.Invoice> } =
+      await axios.post(
+        '/api/invoice',
+        {
+          invoiceId,
         },
-      }
-    );
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
     console.log('data back from fetch invoice is: ', data);
     setInvoice(data);
   };
+
+  // convert the dates from stripes format to human readable format
 
   let invoiceDate;
   let dueDate;
@@ -61,7 +50,7 @@ export default function StripeContainer() {
       year: 'numeric',
     });
 
-    const due = new Date(invoice.due_date * 1000);
+    const due = new Date(invoice.due_date! * 1000);
     dueDate = due.toLocaleString(undefined, {
       month: 'short',
       day: 'numeric',
@@ -69,12 +58,12 @@ export default function StripeContainer() {
     });
   }
 
-  return (
+  return invoice ? (
     <>
       <Flex justify='between' width='100%'>
         <Box>
           <p className='text-xl'>
-            #<span className='font-bold text-white/90'>{invoice?.id}</span>
+            #<span className='font-bold text-white/90'>{invoice.id}</span>
           </p>
         </Box>
         <p>{invoice?.account_name}</p>
@@ -92,18 +81,18 @@ export default function StripeContainer() {
         </div>
         <div className='space-y-2'>
           <h3 className='text-xs'>Bill to</h3>
-          <p className='font-bold'>{invoice?.customer_name}</p>
+          <p className='font-bold'>{invoice.customer_name}</p>
         </div>
         <div className='space-y-2'>
           <h3 className='text-xs'>Sent to</h3>
-          <p className=' font-bold'>{invoice?.customer_email}</p>
+          <p className=' font-bold'>{invoice.customer_email}</p>
         </div>
       </Flex>
       <div className='flex justify-between rounded-md bg-gray-400/10 p-10'>
         <Flex justify='between'>
           <div className='space-y-2'>
             <h3 className='text-xs'>Item Name</h3>
-            <p className='font-bold'>{invoice?.lines.data[0].description}</p>
+            <p className='font-bold'>{invoice.lines.data[0].description}</p>
           </div>
         </Flex>
         <Flex justify='between' className='space-x-12' align='center'>
@@ -113,11 +102,11 @@ export default function StripeContainer() {
           </div>
           <div className='flex flex-col items-end space-y-2'>
             <h3 className='text-xs'>Price</h3>
-            <p className='font-bold'>${invoice?.amount_due! / 100}.00</p>
+            <p className='font-bold'>${invoice.amount_due! / 100}.00</p>
           </div>
           <div className='flex flex-col items-end space-y-2'>
             <h3 className='text-xs'>Total</h3>
-            <p className='font-bold'>${invoice?.amount_due! / 100}.00</p>
+            <p className='font-bold'>${invoice.amount_due! / 100}.00</p>
           </div>
         </Flex>
       </div>
@@ -128,9 +117,12 @@ export default function StripeContainer() {
           variant='outline'
           className='transition-all hover:scale-105 active:scale-100'
         >
-          <a href={invoice?.invoice_pdf}>Download Invoice</a>
+          <a href={invoice.invoice_pdf!}>Download Invoice</a>
         </Button>
       </div>
     </>
+  ) : (
+    // only temporary, should be a skeleton instead of a loading div
+    <div>Loading...</div>
   );
 }

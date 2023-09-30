@@ -11,7 +11,7 @@ const Navbar = () => {
   const { isLoaded, isSignedIn, user } = useUser();
 
   return (
-    <nav className='flex w-full items-center justify-between border border-x-0 border-t-0 border-neutral-700 px-16 py-4'>
+    <nav className='flex w-full items-center justify-between border border-x-0 border-t-0 border-neutral-700 bg-black/50 px-16 py-4'>
       <header className='sticky top-0 flex w-full items-center justify-between text-neutral-400'>
         <Link href='/'>
           <Image

@@ -31,7 +31,9 @@ export default async function RootLayout({
         <head>
           <link rel='icon' href='/favicon.ico' />
         </head>
-        <body className={font.className}>
+        <body
+          className={`bg-[url("/bg-pattern.jpeg")] bg-cover bg-no-repeat ${font.className}`}
+        >
           <Theme
             appearance='dark'
             accentColor='iris'
