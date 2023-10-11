@@ -37,7 +37,7 @@ var code_challenge = base64URLEncode(sha256(code_verifier));
 let codeConfig = {
   method: 'get',
   maxBodyLength: Infinity,
-  url: `https://test.salesforce.com/services/oauth2/authorize?response_type=code&client_id=3MVG9xfrbKQ6hBytByscaxk3UqZ4mFLvo0nP3U7oPIB4VO9rpgPuo6yp8zFkmAcJ9PUcjECjdGR72QS7DW2CL&redirect_uri=https://test.salesforce.com&code_challenge_method=S256&code_challenge=${code_challenge}&scope=refresh_token api`,
+  url: `https://test.salesforce.com/services/oauth2/authorize?response_type=code&client_id=${SALESFORCE_CLIENT_ID}&redirect_uri=https://test.salesforce.com&code_challenge_method=S256&code_challenge=${code_challenge}&scope=refresh_token api`,
   headers: {
     Cookie:
       'BrowserId=Bda6AUedEe6auBt_rSvqKg; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1',
