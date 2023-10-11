@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 		// check if there is a token in the search params
 		if (token) {
 			// verify the JWT
-			const decoded = jwt.verify(token, process.env.SECRET_API_KEY) as JwtPayload;
+			const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
 			const stripe = new Stripe(STRIPE_SECRET_KEY, config);
 
 		    // The invoiceId from the req searchParams should be the ID in the URL sent to the client
