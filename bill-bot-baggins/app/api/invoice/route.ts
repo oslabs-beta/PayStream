@@ -1,37 +1,40 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
 
-// export async function GET(request) {
-//     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-//     const invoices = await stripe.invoices.list({
-//         limit: 1
-//     });
 
-//     return NextResponse.json(invoices.data)
-// }
-
-// get invoice data once link is clicked (unsure at the moment what data is sent along with link)
+// added typescript option to the stripe config so we have types for the stripe objects (RH)
 const config: Stripe.StripeConfig = {
 	apiVersion: "2023-08-16",
 	typescript: true,
 }
 
-// need invoice id from salesforce from pdf invoice link
+// this was necessary for typescript issue I was having (RH)
+type JwtPayload = {
+	invoiceId: string
+}
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+// Changed this to a GET request (RH)
+export async function GET(req: NextRequest) {
+	try {
+		const { STRIPE_SECRET_KEY } = process.env
+		const token = req.nextUrl.searchParams.get("token"); // now a GET request so need this to get the invoiceId
+		
+		// check if there is a token in the search params
+		if (token) {
+			// verify the JWT
+			const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
+			const stripe = new Stripe(STRIPE_SECRET_KEY, config);
 
-	const { invoiceId }: { invoiceId: string } = await req.json()
+		    // The invoiceId from the req searchParams should be the ID in the URL sent to the client
+		    const invoice = await stripe.invoices.retrieve(decoded.invoiceId);
+			return NextResponse.json(invoice)
+		}
 
-	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, config);
-	//const invoiceId = await request.json();
-	/**
-	 * want the invoice ID to come from salesforce data OR req params
-	 * currently, hard coded to reference existing ID
-	 */
-	// The invoiceId from the req should be the ID in the URL sent to the client
-	const invoice = await stripe.invoices.retrieve(invoiceId);
-	// console.log('invoice info from getting invoice data is: ', invoice)
-
-	return NextResponse.json(invoice)
+		return NextResponse.json({ error: "Not authorized"}, { status: 401 });
+	} catch (err) {
+	  return NextResponse.json({ error: err }, { status: 500 });
+	}
+	
 }
 
