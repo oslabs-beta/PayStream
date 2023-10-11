@@ -1,6 +1,6 @@
 import express from "express";
-import salesforceController from "./salesforce-pub-sub-api.js";
-import { getToken } from "./token-refresh.js";
+import salesforceController from "../salesforce-pub-sub-api.js";
+// import { getToken } from "./token-refresh.js";
 
 const app = express();
 app.use(express.json());
@@ -8,7 +8,7 @@ app.use(express.json());
 /**
  * open salesforce pub-sub API connection
  */
-await getToken();
+// await getToken();
 salesforceController.run();
 // app.use()
 

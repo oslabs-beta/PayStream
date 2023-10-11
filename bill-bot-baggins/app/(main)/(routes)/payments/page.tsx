@@ -34,11 +34,15 @@ const PaymentRecord = () => {
    * need to transition this to webhook
    */
   const fetchInvoiceData = async (): Promise<any> => {
+    /**
+     * fetching code (key) from redirect login for salesforce access token
+     */
     const { data } = await axios.request<any>({
       method: 'get',
       maxBodyLength: Infinity,
-      url: `https://test.salesforce.com/services/oauth2/authorize?response_type=code&client_id=3MVG9xfrbKQ6hBytByscaxk3UqZ4mFLvo0nP3U7oPIB4VO9rpgPuo6yp8zFkmAcJ9PUcjECjdGR72QS7DW2CL&redirect_uri=https://test.salesforce.com&code_challenge_method=S256&code_challenge=${code_challenge}&scope=refresh_token api`,
+      url: `https://test.salesforce.com/services/oauth2/authorize?response_type=code&client_id=${process.env.SALESFORCE_CLIENT_ID}&redirect_uri=https://test.salesforce.com&code_challenge_method=S256&code_challenge=${code_challenge}&scope=refresh_token api`,
       headers: {
+        // 'Access-Control-Allow-Origin':
         // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         Cookie:
           'BrowserId=Bda6AUedEe6auBt_rSvqKg; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1',

@@ -26,6 +26,7 @@
 		"@types/node": "^17.0.8",
 		"babel-loader": "^8.2.3",
 		"nodemon": "^2.0.15",
+		"redis": "^4.6.10",
 		"ts-loader": "^9.2.6",
 		"typescript": "^5.2.2"
 	}

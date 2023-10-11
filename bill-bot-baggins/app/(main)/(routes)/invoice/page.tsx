@@ -10,6 +10,7 @@ function InvoicePage() {
    */
   return (
     <Section className='flex h-5/6 flex-col items-center justify-center'>
+			{/* invoice display renders the stripe container, stripe container fetches data from stripe to display on this page */}
       <InvoiceDisplay />
     </Section>
   );

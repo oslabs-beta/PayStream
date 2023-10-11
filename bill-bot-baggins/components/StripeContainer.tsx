@@ -34,6 +34,7 @@ export default function StripeContainer() {
     fetchInvoice(invoiceId);
   }, []);
 
+  // stripe invoice id is based on teh request body to fetch dta about that specific invboice record
   const fetchInvoice = async (id: any) => {
     const { data }: any = await axios.post(
       '/api/invoice',
