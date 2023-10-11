@@ -14,7 +14,7 @@ const InvoiceButton = ({ invoice }: InvoiceButtonProps) => {
     const { data } = await axios.post(
       '/api/payment',
       {
-        invoiceId: invoice,
+        invoice: invoice,
       },
       {
         headers: {
