@@ -9,6 +9,7 @@ const {
   SALESFORCE_CLIENT_ID,
   SALESFORCE_CLIENT_SECRET,
   _SALESFORCE_TOKEN,
+  SALESFORCE_COOKIE_AUTH,
 } = process.env;
 
 /**
@@ -39,8 +40,7 @@ let codeConfig = {
   maxBodyLength: Infinity,
   url: `https://test.salesforce.com/services/oauth2/authorize?response_type=code&client_id=${SALESFORCE_CLIENT_ID}&redirect_uri=https://test.salesforce.com&code_challenge_method=S256&code_challenge=${code_challenge}&scope=refresh_token api`,
   headers: {
-    Cookie:
-      'BrowserId=Bda6AUedEe6auBt_rSvqKg; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1',
+    Cookie: SALESFORCE_COOKIE_AUTH,
   },
   // data: data,
 };
@@ -84,8 +84,7 @@ export const GET = () => {
     maxBodyLength: Infinity,
     url: 'https://test.salesforce.com/services/oauth2/token',
     headers: {
-      Cookie:
-        'BrowserId=Bda6AUedEe6auBt_rSvqKg; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1',
+      Cookie: SALESFORCE_COOKIE_AUTH,
       ...data.getHeaders(),
     },
     data: data,
