@@ -1,3 +1,5 @@
+import { ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export const updateSearchParams = (type: string, value: string) => {
   // Get the current URL search params
@@ -11,3 +13,7 @@ export const updateSearchParams = (type: string, value: string) => {
 
   return newPathname;
 };
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}

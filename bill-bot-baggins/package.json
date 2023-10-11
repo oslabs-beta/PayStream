@@ -2,7 +2,6 @@
   "name": "bill-bot-baggins",
   "version": "0.1.0",
   "private": true,
-	
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -21,14 +20,12 @@
     "@salesforce/cli": "^2.6.7",
     "@stripe/react-stripe-js": "^2.1.2",
     "@stripe/stripe-js": "^2.1.0",
-    "@types/node": "20.5.3",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "axios": "^1.5.0",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
     "graphql": "^16.8.0",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^5.8.1",
     "nanoid": "^4.0.2",
     "next": "^13.4.19",
@@ -44,15 +41,18 @@
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "^20.5.8",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "clsx": "^2.0.0",
     "eslint-config-prettier": "^9.0.0",
     "express": "^4.18.2",
     "nanoid": "4.0.2",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4",
     "redis": "^4.6.8",
+    "tailwind-merge": "^1.14.0",
     "typescript": "^5.2.2"
   }
 }

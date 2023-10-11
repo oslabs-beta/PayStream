@@ -1,7 +1,7 @@
 import { type } from "os";
 import { MouseEventHandler } from "react";
 
-export interface CustButtonProps {
+export type CustButtonProps = {
 	btnType?: "button" | "submit";
 	title: string;
 	containerStyles?: string;
@@ -21,25 +21,25 @@ export type PaymentProps = {
 	stripe_invoice_id: string;
 }
 
-export interface PaymentContProps {
+export type PaymentContProps = {
 
 	payment_date: string;
 	amount: number;
 }
 
 
-export interface OptionProps {
+export type OptionProps = {
 	title: string;
 	value: string;
 }
 
-export interface SearchFilterProps {
+export type SearchFilterProps = {
 	title: string;
 	options: OptionProps[];
         onFilter: (value: string) => void;
 }
 
-export interface SearchProps {
+export type SearchProps = {
 	invoice_ID: string;
 	setInvoice_ID: (account: string) => void;
 }
@@ -51,4 +51,8 @@ export type ServerResponse = {
 }
 type ServerData = {
 	node: string;
+}
+
+export type InvoiceId = {
+	invoiceId: string
 }
