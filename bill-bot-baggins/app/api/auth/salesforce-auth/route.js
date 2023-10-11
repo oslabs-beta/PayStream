@@ -69,7 +69,7 @@ export const GET = () => {
    */
   let data = new FormData();
   data.append('grant_type', 'authorization_code');
-  data.append('code_verifier', 'eyIxIjoyMCwiMiI6MTg5LCIzIjoxNDgsIjQiOjExM30');
+  data.append('code_verifier', code_verifier);
   data.append(
     'code',
     'aPrxIYzqQUQ4x9524VvwDJh9ZhciCJz0Rzd6BbLwlWb6C9FqFZ4ZyYbI.qdgpW7itzjFXNuJTw=='
