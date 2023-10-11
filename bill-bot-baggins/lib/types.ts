@@ -56,3 +56,7 @@ type ServerData = {
 export type InvoiceId = {
 	invoiceId: string
 }
+
+export type Token = {
+	token: string;
+  };

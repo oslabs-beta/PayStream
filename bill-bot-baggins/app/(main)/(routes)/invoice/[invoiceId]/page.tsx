@@ -10,6 +10,7 @@ const secretKey = process.env.SECRET_API_KEY;
 function InvoicePage({ params }: { params: InvoiceId }) {
   const { invoiceId } = params;
 
+  // creates the JWT using the invoiceId in the params and a secretKey
   const token = jwt.sign({ invoiceId }, secretKey, { expiresIn: '1h' });
   /**
    * renders invoice display component that holds invoice information from stripe

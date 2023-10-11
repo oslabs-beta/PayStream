@@ -28,7 +28,6 @@ export async function GET(req: NextRequest) {
 
 		    // The invoiceId from the req searchParams should be the ID in the URL sent to the client
 		    const invoice = await stripe.invoices.retrieve(decoded.invoiceId);
-			console.log("In the API invoice route ", invoice)
 			return NextResponse.json(invoice)
 		}
 

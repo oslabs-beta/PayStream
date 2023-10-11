@@ -4,11 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Badge, Box, Button, Flex } from '@radix-ui/themes';
 import axios, { AxiosError } from 'axios';
 import Stripe from 'stripe';
-import InvoiceHeading from '@/components/InvoiceHeading';
-
-type Token = {
-  token: string;
-};
+import InvoiceSection from '@/components/InvoiceSection';
+import { Token } from '@/lib/types';
 
 export default function StripeContainer({ token }: Token) {
   const [invoice, setInvoice] =
@@ -99,11 +96,11 @@ export default function StripeContainer({ token }: Token) {
         </Flex>
         <Flex justify='between' className='pr-12'>
           <div className='flex flex-col space-y-8'>
-            <InvoiceHeading title='Invoice Date' invoiceData={invoiceDate!} />
-            <InvoiceHeading title='Payment Due' invoiceData={dueDate!} />
+            <InvoiceSection title='Invoice Date' invoiceData={invoiceDate!} />
+            <InvoiceSection title='Payment Due' invoiceData={dueDate!} />
           </div>
           <div className='flex flex-col'>
-            <InvoiceHeading
+            <InvoiceSection
               title='Bill to'
               invoiceData={invoice.customer_name}
             />
@@ -119,25 +116,25 @@ export default function StripeContainer({ token }: Token) {
               </div>
             )}
           </div>
-          <InvoiceHeading
+          <InvoiceSection
             title='Sent to'
             invoiceData={invoice.customer_email}
           />
         </Flex>
         <div className='flex justify-between rounded-md bg-gray-400/10 p-10'>
           <Flex justify='between'>
-            <InvoiceHeading
+            <InvoiceSection
               title='Item Name'
               invoiceData={invoice.lines.data[0].description}
             />
           </Flex>
           <Flex justify='between' className='space-x-12' align='center'>
-            <InvoiceHeading
+            <InvoiceSection
               title='QTY'
               invoiceData={invoice.lines.data[0].quantity}
               variant={true}
             />
-            <InvoiceHeading
+            <InvoiceSection
               title='Price'
               invoiceData={(
                 (invoice.lines.data[0].price?.unit_amount as number) / 100
@@ -147,7 +144,7 @@ export default function StripeContainer({ token }: Token) {
               })}
               variant={true}
             />
-            <InvoiceHeading
+            <InvoiceSection
               title='Total'
               invoiceData={(
                 (invoice.amount_remaining as number) / 100

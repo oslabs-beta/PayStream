@@ -1,11 +1,8 @@
 import React from 'react';
 import { StripeContainer } from '@/components';
+import { Token } from '@/lib/types';
 
-type tokenProps = {
-  token: string;
-};
-
-export default function InvoiceDisplay({ token }: tokenProps) {
+export default function InvoiceDisplay({ token }: Token) {
   return (
     <main className='flex h-full w-full flex-col items-center justify-center space-y-4'>
       <StripeContainer token={token} />
