@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PaymentDetails } from "../type";
+import { PaymentDetails } from "./type";
 /**
  * GET invoice id from stripe
  * use this to read the invoice, then can use this basically as helper functions in other functions
@@ -28,7 +28,7 @@ export const getOppRecordType = async (id: { type: string, id: string }): Promis
 	const data = await axios.request(oppIdConfig)
 	const oppId = {
 		type: "opportunity",
-		id: data.npe01__Opportunity__c,
+		id: "opp id"//data.npe01__Opportunity__c,
 	}
 	return getOppRecordType(oppId)
 }

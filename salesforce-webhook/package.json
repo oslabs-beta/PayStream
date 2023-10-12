@@ -1,14 +1,15 @@
 {
 	"name": "bbb-pubsub-api",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "server.js",
 	"type": "module",
 	"scripts": {
-		"start": "nodemon ./src/server/server.js",
+		"start": "nodemon server.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
 		"axios": "^1.5.1",
+		"concurrently": "^8.2.1",
 		"crypto": "^1.0.1",
 		"express": "^4.17.2",
 		"form-data": "4.0.0",

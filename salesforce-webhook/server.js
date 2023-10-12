@@ -1,5 +1,5 @@
 import express from "express";
-import salesforceController from "../salesforce-pub-sub-api.js";
+import salesforceController from "./src/salesforce-pub-sub-api.js";
 // import { getToken } from "./token-refresh.js";
 
 const app = express();
