@@ -3,12 +3,13 @@ import Stripe from "stripe";
 
 const config: Stripe.StripeConfig = {
 	apiVersion: "2023-08-16",
+	typescript: true,
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
 	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, config);
 	let data = await req.json()
-	let invoice = data.invoiceId
+	let invoice = data.invoice
 	console.log('data sent to checkout session is: ', invoice)
 
 	// const data = {clientSecret: paymentIntent.client_secret,}

@@ -1,10 +1,10 @@
 import '@/app/globals.css';
-import { Navbar, Footer } from '@/components';
+import { Footer, Header } from '@/components';
 
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
-import { Theme, ThemePanel } from '@radix-ui/themes';
+import { Theme } from '@radix-ui/themes';
 import { Toaster } from 'react-hot-toast';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
@@ -31,7 +31,9 @@ export default async function RootLayout({
         <head>
           <link rel='icon' href='/favicon.ico' />
         </head>
-        <body className={font.className}>
+        <body
+          className={`bg-[url("/bg-pattern.jpeg")] bg-cover bg-no-repeat ${font.className}`}
+        >
           <Theme
             appearance='dark'
             accentColor='iris'
@@ -41,7 +43,7 @@ export default async function RootLayout({
             scaling='90%'
             className='h-screen'
           >
-            <Navbar />
+            <Header />
             {children}
             <Footer />
             <Toaster />

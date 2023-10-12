@@ -1,51 +1,40 @@
-// server.js
-//
-// Use this sample code to handle webhook events in your integration.
-//
-// 1) Paste this code into a new file (server.js)
-//
-// 2) Install dependencies
-//   npm install stripe
-//   npm install express
-//
-// 3) Run the server on http://localhost:4242
-//   node server.js
+require("dotenv").config()
 
-// The library needs to be configured with your account's secret key.
-// Ensure the key is kept out of any version control system you might be using.
-const stripe = require('stripe')('sk_test_...');
+//start stripe session with stripe specific key
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 const express = require('express');
 const app = express();
+const bodyparser = require('body-parser')
 
-// This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret =
-  'whsec_8f54bc71f23f4f0c9310ea136dd8ec146d3f9594fbb202dd59e013e530428e5c';
+// create the route that is going to be hit by Stripe when an event takes place
+// this will require stripe login and stripe listen --forward-to localhost:4242/webhook into the CLI
+// will be temporary until we get our application on a public server
 
-app.post(
-  '/webhook',
-  express.raw({ type: 'application/json' }),
-  (request, response) => {
+app.post('/webhook', bodyparser.raw({ type: 'application/json' }), async (request, response) => {
+    const payload = request.body;
+    const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
     const sig = request.headers['stripe-signature'];
-
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+      console.log(event.type)
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
+  
+
+
 
     // Handle the event
     switch (event.type) {
-      case 'payment_intent.succeeded':
-        const paymentIntentSucceeded = event.data.object;
-        // Then define and call a function to handle the event payment_intent.succeeded
-        /**
-         * authorization token request
-         * send a request to salesforce
-         *
-         */
+      case 'invoice.paid':
+        const invoicePaid = event.data.object;
+        // this is where we would tap into the Salesforce webhook to update an invoice as paid (logic made just need to tie it in)
+        console.log(invoicePaid)
+
         break;
       // ... handle other event types
       default:
@@ -58,4 +47,3 @@ app.post(
 );
 
 app.listen(4242, () => console.log('Running on port 4242'));
-// acct_1NgHpDGAlWBMdPc3

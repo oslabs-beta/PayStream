@@ -1,14 +1,20 @@
 import React from 'react';
 import axios from 'axios';
+import Stripe from 'stripe';
 import { Button } from '@radix-ui/themes';
 
-const InvoiceButton = ({ invoice }: any) => {
-  const handlePayment = async (e: any) => {
+type InvoiceButtonProps = {
+  invoice: Stripe.Response<Stripe.Invoice>;
+};
+
+const InvoiceButton = ({ invoice }: InvoiceButtonProps) => {
+  console.log('Invoice Button: ', invoice);
+  const handlePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { data } = await axios.post(
       '/api/payment',
       {
-        invoiceId: invoice,
+        invoice: invoice,
       },
       {
         headers: {

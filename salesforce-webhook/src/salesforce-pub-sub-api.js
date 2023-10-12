@@ -1,6 +1,5 @@
 import PubSubApiClient from "salesforce-pubsub-api-client";
 import dotenv from "dotenv";
-import path from "path";
 dotenv.config();
 // require("dotenv").config
 
