@@ -1,5 +1,6 @@
 import PubSubApiClient from "salesforce-pubsub-api-client";
 import dotenv from "dotenv";
+import { getOppRecordType } from "./server/controller";
 dotenv.config();
 // require("dotenv").config
 
@@ -54,6 +55,7 @@ salesforceController.run = async () => {
       /**
        * switch statement to handle cases based on "changeType" of event
        */
+      let id;
       switch (event.payload.ChangeEventHeader.changeType) {
         /**
          *  if changeType is "create" need to store all collected fields amount, invoice due date, name/invoice number, opportunity id,
@@ -63,6 +65,22 @@ salesforceController.run = async () => {
             "CREATE case changeType: ",
             event.payload.ChangeEventHeader.changeType
           );
+          // receive invoice record Id AND opp record Id
+          if (event.payload.npe01__Opportunity__c !== null) {
+            id = {
+              type: "opportunity",
+              id: event.payload.npe01__Opportunity__c,
+            };
+          } else {
+            id = {
+              type: "invoice",
+              id: event.payload.ChangeEventHeader.recordIds[0],
+            };
+          }
+          const oppType = getOppRecordType(id);
+          if (oppType === "Consulting Engagment" || oppType === "Institute") {
+            // create invoice in stripe - create function in controller module
+          }
           break;
         }
         /**
@@ -74,6 +92,7 @@ salesforceController.run = async () => {
             "UPDATE case changeType: ",
             event.payload.ChangeEventHeader.changeType
           );
+          // only have invoice record id
           break;
         }
         case "DELETE": {
