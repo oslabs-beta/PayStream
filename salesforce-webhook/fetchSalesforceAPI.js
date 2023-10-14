@@ -179,7 +179,7 @@ export const createStripeInvoice = async (paymentInfo) => {
    * need project type from salesforce/redis/props to create the "product type" and then assign a deafult price
    */
   const product = await stripe.products.create({
-    name: paymentInfo.invoice_number,
+    name: (paymentInfo.invoice_number, paymentInfo.project_type),
     default_price_data: {
       currency: "usd",
       unit_amount: paymentInfo.amount,

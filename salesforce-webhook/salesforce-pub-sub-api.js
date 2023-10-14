@@ -31,6 +31,8 @@ const recordTypes = [
   "Customized",
   "SM",
   "CC",
+  "EDLI",
+  "DDP",
 ];
 
 const salesforceController = {};
@@ -124,7 +126,7 @@ salesforceController.run = async () => {
              * use changed fields to identify which properties to data capture and then find relevant invoice in stripe to update
              */
             case "UPDATE": {
-              //currently
+              //currently updating with stripe id is added, will need to make an array of changes that are acceptable and want to do
               console.log(
                 "UPDATE case changeType: ",
                 event.payload.ChangeEventHeader.changeType
