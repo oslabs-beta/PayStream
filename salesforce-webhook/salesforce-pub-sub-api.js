@@ -1,6 +1,10 @@
 import PubSubApiClient from "salesforce-pubsub-api-client";
 import dotenv from "dotenv";
-import { getOppRecordId, retreiveOppType } from "./fetchSalesforceAPI.js";
+import {
+  retreiveOppType,
+  createStripeInvoice,
+  updateSalesforceStripeId,
+} from "./fetchSalesforceAPI.js";
 // import { getOppRecordType } from "./controller";
 dotenv.config();
 // require("dotenv").config
@@ -67,58 +71,70 @@ salesforceController.run = async () => {
       // );
 
       // initialize variable to payment record ID
-      const recordId = event.payload.ChangeEventHeader.recordIds[0];
+      if (event.payload.ChangeEventHeader.changeType !== "DELETE") {
+        // initialize oppType variable to the evaluated result of retrieveOppType function passing in recordId
+        const recordId = event.payload.ChangeEventHeader.recordIds[0];
+        const opportunity = await retreiveOppType(recordId);
 
-      // initialize oppType variable to the evaluated result of retrieveOppType function passing in recordId
-      const oppType = await retreiveOppType(recordId);
+        // if the opp type that corresponds to the updated payment record is in our record types array AND the payment type is cost to client; the switch statement should run
+        if (recordTypes.includes(opportunity.type)) {
+          /**
+           * switch statement to handle cases based on "changeType" of event
+           */
+          switch (event.payload.ChangeEventHeader.changeType) {
+            /**
+             *  if changeType is "create" need to create object for stripe invoice details:
+             * customer name
+             * customer email
+             * payment invoice number
+             * payment amount
+             *
+             * creates invoice in stripe
+             */
+            case "CREATE": {
+              console.log(
+                "CREATE case changeType: ",
+                event.payload.ChangeEventHeader.changeType
+              );
+              //save the opportunity Id record for easier querying
+              const paymentType = event.payload.For_Chart__c;
+              const paymentAmount = event.payload.npe01__Payment_Amount__c;
+              const invoice_number = event.payload.Name;
+              console.log("payment amount: ", paymentAmount.double);
+              console.log("payment type: ", paymentType.string);
+              // console.log("CREATE id: ", oppType);
+              if (paymentType.string === "Cost to Client") {
+                const paymentDetails = {
+                  account_name: opportunity.account_name,
+                  amount: paymentAmount.double,
+                  project_type: opportunity.project_type,
+                  invoice_number: invoice_number.string,
+                };
+                //create invoice in stripe
+                const stripeInvoice = await createStripeInvoice(paymentDetails);
 
-      // if the opp type that corresponds to the updated payment record is in our record types array AND the payment type is cost to client; the switch statement should run
-      if (recordTypes.includes(oppType)) {
-        /**
-         * switch statement to handle cases based on "changeType" of event
-         */
-        switch (event.payload.ChangeEventHeader.changeType) {
-          /**
-           *  if changeType is "create" need to store all collected fields amount, invoice due date, name/invoice number, opportunity id,
-           */
-          case "CREATE": {
-            console.log(
-              "CREATE case changeType: ",
-              event.payload.ChangeEventHeader.changeType
-            );
-            // receive invoice record Id AND opp record Id
-            const paymentType = event.payload.For_Chart__c;
-            const paymentAmount = event.payload.npe01__Payment_Amount__c;
-            console.log("payment amount: ", paymentAmount.double);
-            console.log("payment type: ", paymentType.string);
-            console.log("CREATE id: ", oppId);
-            // const oppType = getOppRecordType(id);
-            // if (oppType === "Consulting Engagment" || oppType === "Institute") {
-            // 	// create invoice in stripe - create function in controller module
-            // }
-            break;
-          }
-          /**
-           * if changeType is "update" /**
-           * use changed fields to identify which properties to data capture and then find relevant invoice in stripe to update
-           */
-          case "UPDATE": {
-            console.log(
-              "UPDATE case changeType: ",
-              event.payload.ChangeEventHeader.changeType
-            );
-            // only have invoice record id
-            break;
-          }
-          case "DELETE": {
-            console.log(
-              "DELETE case changeType: ",
-              event.payload.ChangeEventHeader.changeType
-            );
-            break;
-          }
-          default: {
-            console.log("default case hit: ", JSON.stringify(event, null, 2));
+                //update salesforce record with stripe invoice id
+                await updateSalesforceStripeId(recordId, stripeInvoice.id);
+              }
+
+              break;
+            }
+            /**
+             * if changeType is "update" /**
+             * use changed fields to identify which properties to data capture and then find relevant invoice in stripe to update
+             */
+            case "UPDATE": {
+              //currently
+              console.log(
+                "UPDATE case changeType: ",
+                event.payload.ChangeEventHeader.changeType
+              );
+              // only have invoice record id
+              break;
+            }
+            default: {
+              console.log("default case hit: ", JSON.stringify(event, null, 2));
+            }
           }
         }
       }

@@ -15,6 +15,7 @@
 		"form-data": "4.0.0",
 		"qs": "^6.11.2",
 		"salesforce-pubsub-api-client": "^2.4.3",
+		"stripe": "^13.10.0",
 		"ts-node": "^10.9.1",
 		"ts-node-dev": "^2.0.0"
 	},
