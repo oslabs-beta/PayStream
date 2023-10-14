@@ -1,4 +1,8 @@
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 export const salesforcePaid = async (stripeId) => {
 
     // query to fetch the salesforce record id based on the stripeId
@@ -27,8 +31,8 @@ export const salesforcePaid = async (stripeId) => {
       headers: { 
         'X-Chatter-Entity-Encoding': 'false', 
         'Content-Type': 'application/json', 
-        'Authorization': 'Bearer 00DEi000000QlCz!AQEAQEltXLzauMgv0LYH3ZbdQN9XCB9HvSLVDoPP_19ol8kiwIcGctz5cNnQjRqzBO._nJd.1CoBbbXzhw3uDJbl7R5.mWnY', 
-        'Cookie': 'BrowserId=Bda6AUedEe6auBt_rSvqKg; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1'
+        'Authorization': process.env.SALESFORCE_TOKEN, 
+        'Cookie': process.env.SALESFORCE_COOKIE_AUTH
       },
       data : fetchData
     };
@@ -57,8 +61,8 @@ export const salesforcePaid = async (stripeId) => {
     url: `https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/ui-api/records/${recordId}`,
     headers: { 
         'Content-Type': 'application/json', 
-        'Authorization': 'Bearer 00DEi000000QlCz!AQEAQEltXLzauMgv0LYH3ZbdQN9XCB9HvSLVDoPP_19ol8kiwIcGctz5cNnQjRqzBO._nJd.1CoBbbXzhw3uDJbl7R5.mWnY', 
-        'Cookie': 'BrowserId=Bda6AUedEe6auBt_rSvqKg; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1'
+        'Authorization': process.env.SALESFORCE_TOKEN, 
+        'Cookie': process.env.SALESFORCE_COOKIE_AUTH
     },
     data : payData
     };
