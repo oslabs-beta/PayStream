@@ -5,9 +5,8 @@ import {
   createStripeInvoice,
   updateSalesforceStripeId,
 } from "./fetchSalesforceAPI.js";
-// import { getOppRecordType } from "./controller";
+
 dotenv.config();
-// require("dotenv").config
 
 const {
   SALESFORCE_LOGIN_URL,
@@ -37,11 +36,16 @@ const recordTypes = [
 
 const salesforceController = {};
 
+/**
+ * PubSUbAPI - webhook for listening to Salesforce Payment record changes adn handling events based on their type
+ */
 salesforceController.run = async () => {
   try {
-    // console.log(process.env.SALESFORCE_LOGIN_URL);
     console.log("instanceUrl: ", SALESFORCE_LOGIN_URL);
+    //create new connection
     const client = new PubSubApiClient();
+
+    //open new connection
     await client.connectWithAuth(
       SALESFORCE_TOKEN,
       SALESFORCE_LOGIN_URL,
@@ -49,33 +53,22 @@ salesforceController.run = async () => {
       SALESFORCE_USERNAME
     );
 
+    //subscribe to data change events
     const eventEmitter = await client.subscribe(
       "/data/npe01__OppPayment__ChangeEvent",
       25
     );
 
     // Handle incoming events
-    /**
-     * info that we need from payment event
-     * record ID
-     * need to check if the event is an a consulting engagement or insitute opportunity
-     * identify change fields
-     * if it matches this criteria, it should create a an invoice in stripe
-     */
     eventEmitter.on("data", async (event) => {
       console.log(
         `Handling ${event.payload.ChangeEventHeader.entityName} change event ${event.replayId}`
       );
-      // console.log(event, null, 2);
-      // console.log(
-      //   "changed fields: ",
-      //   event.payload.ChangeEventHeader.changedFields
-      // );
 
-      // initialize variable to payment record ID
       if (event.payload.ChangeEventHeader.changeType !== "DELETE") {
-        // initialize oppType variable to the evaluated result of retrieveOppType function passing in recordId
+        // initialize variable to payment record ID
         const recordId = event.payload.ChangeEventHeader.recordIds[0];
+        // initialize opp variable to the evaluated result of retrieveOppType function passing in recordId
         const opportunity = await retreiveOppType(recordId);
 
         // if the opp type that corresponds to the updated payment record is in our record types array AND the payment type is cost to client; the switch statement should run

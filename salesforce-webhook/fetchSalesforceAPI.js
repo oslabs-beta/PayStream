@@ -1,16 +1,11 @@
 import axios from "axios";
 import Stripe from "stripe";
 // import { PaymentDetails } from "./type";
-/**
- * GET invoice id from stripe
- * use this to read the invoice, then can use this basically as helper functions in other functions
- */
 
 /**
- * GET opportunity record type from salesforce based on record number received from update
- * graphQL api call to salesforce for opportunity record type
- * @param string - invoice id from data change capture event
- * @return string - opportunity record type
+ * helper function - graphQL api call to salesforce for opportunity record ID
+ * @param string - payment record id from data change capture event
+ * @return string - opportunity record id
  */
 export const getOppRecordId = async (id) => {
   let data = JSON.stringify({
@@ -55,6 +50,12 @@ export const getOppRecordId = async (id) => {
 
   return oppId;
 };
+
+/**
+ * graphQL salesforce API call to retrive opportunity record type for payment record captured in data change event
+ * @param {*} id
+ * @returns object with opportunty type abbreviation, type - long form, and account name properties
+ */
 
 export const retreiveOppType = async (id) => {
   const fetchOppId = await getOppRecordId(id);
@@ -120,10 +121,7 @@ export const retreiveOppType = async (id) => {
 };
 
 /**
- *  POST invoice in stripe
- * where are we sending the data that we get from Sf?
- * 	stripe - primary contact email address to create
- * 	redis cache
+ * creates invoice in Stripe to match payment record received from salesforce
  * @param Object - data needed to create stripe invoice
  * @return stripe invoice ID
  */
@@ -148,8 +146,7 @@ export const createStripeInvoice = async (paymentInfo) => {
 
   /**
    * if account is not in stripe yet, create account and retrieve the customer id to send the invoice to
-   * and this requires an email address to set up
-   * will need to pass email from Salesforce - set-up route to connect that
+   * all invoices will be created with an ESCSC.org billing email for now - wil not send emails to clients from Stripe
    */
   if (!customerId) {
     // Create a new Customer
@@ -163,7 +160,7 @@ export const createStripeInvoice = async (paymentInfo) => {
   }
 
   /**
-   * create new invoice in stripe based on invoice information from salesforce
+   * create new invoice in stripe based on invoice information from salesforce (on paymentInfo arg)
    */
   const newInvoice = await stripe.invoices.create({
     customer: customerId,
@@ -176,7 +173,7 @@ export const createStripeInvoice = async (paymentInfo) => {
   console.log("new stripe invoice created in webhook route: ", newInvoice);
 
   /**
-   * need project type from salesforce/redis/props to create the "product type" and then assign a deafult price
+   * need project type from salesforce (passed in on arg object) to create the "product type" and then assign a default price (also on passed in object)
    */
   const product = await stripe.products.create({
     name: (paymentInfo.invoice_number, paymentInfo.project_type),
@@ -196,24 +193,9 @@ export const createStripeInvoice = async (paymentInfo) => {
   });
 
   /**
-   * retrieve final invoice from strip
+   * retrieve final invoice from stripe
    * */
   const finalInvoice = await stripe.invoices.finalizeInvoice(newInvoice.id);
-
-  console.log("final stripe invoice created in stripe route: ", finalInvoice);
-  //need to update saleforce record
-
-  //from salesforce graphQl route
-  // const stripeInvoiceId = await axios.request({
-  //   url: "http://localhost:3000/api/stripe",
-  //   method: "post",
-  //   data: {
-  //     amount: npe01__Payment_Amount__c.value,
-  //     customer: Opportunity_Account_Name__c.value,
-  //     due_date: npe01__Scheduled_Date__c.value,
-  //     invoice_number: Invoice__c.value,
-  //   },
-  // });
   return finalInvoice;
 };
 
@@ -246,11 +228,3 @@ export const updateSalesforceStripeId = async (recordId, stripeinvoiceId) => {
       console.log(error);
     });
 };
-
-/**
- * PATCH invoice in stripe
- */
-
-/**
- * DELETE invoice in stripe
- */
