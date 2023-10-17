@@ -9,7 +9,7 @@ app.use(express.json());
  * open salesforce pub-sub API connection
  */
 // await getToken();
-salesforceController.run();
+salesforceController();
 // app.use()
 
 app.listen(3030, () => console.log("server is listening on port 3030"));

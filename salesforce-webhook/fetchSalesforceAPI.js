@@ -2,6 +2,47 @@ import axios from "axios";
 import Stripe from "stripe";
 // import { PaymentDetails } from "./type";
 
+export const getPaymentType = async (id) => {
+  let clientPayment = false;
+  let data = JSON.stringify({
+    query: `query payments ($Id: ID) {
+		uiapi {
+			query {
+				npe01__OppPayment__c (where: { Id: { eq: $Id } }) {
+					edges {
+						node {
+							For_Chart__c {
+									value
+							}
+						}
+					}
+				}
+			}
+		}
+	}`,
+    variables: { Id: id },
+  });
+
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql",
+    headers: {
+      "X-Chatter-Entity-Encoding": "false",
+      "Content-Type": "application/json",
+      Authorization: process.env.SALESFORCE_TOKEN,
+      Cookie: process.env.SALESFORCE_COOKIE_AUTH,
+    },
+    data: data,
+  };
+  const fetchPaymentType = await axios.request(config);
+  const paymentType =
+    fetchPaymentType.data.data.uiapi.query.npe01__OppPayment__c.edges[0].node
+      .For_Chart__c.value;
+  if (paymentType === "Cost to Client") clientPayment = true;
+  return clientPayment;
+};
+
 /**
  * helper function - graphQL api call to salesforce for opportunity record ID
  * @param string - payment record id from data change capture event
@@ -106,6 +147,7 @@ export const retreiveOppType = async (id) => {
 
   const fetchOppType = await axios.request(config);
   const {
+    Id,
     Type,
     npsp__Primary_Contact__c,
     FOR_CONGA_Engagement_Type__c,
@@ -116,6 +158,7 @@ export const retreiveOppType = async (id) => {
     project_type: FOR_CONGA_Engagement_Type__c.value,
     // primary_contact_id: npsp__Primary_Contact__c.value,
     account_name: Account.Name.value,
+    sf_opp_id: Id,
   };
   return opportunity;
 };
