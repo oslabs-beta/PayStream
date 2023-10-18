@@ -6,7 +6,7 @@ function Profile() {
   const pathname = usePathname();
 
   return (
-    <div className='flex items-center space-x-2 text-white/90'>
+    <div className='flex items-center space-x-2 text-white/90 xl:pr-36'>
       <UserButton afterSignOutUrl={pathname} />
     </div>
   );

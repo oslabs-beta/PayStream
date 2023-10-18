@@ -1,4 +1,3 @@
-import { type } from "os";
 import { MouseEventHandler } from "react";
 
 export type CustButtonProps = {
@@ -60,3 +59,33 @@ export type InvoiceId = {
 export type Token = {
 	token: string;
   };
+
+export  type InvoiceProps = {
+	node: {
+	  Id: string,
+	  Invoice__c: {
+		value: string
+	  },
+	  Opportunity_18_Digit_ID__c: {
+		value: string | undefined
+	  }
+	  Invoice_Sent_Date__c: {
+		value: string | undefined
+	  },
+	  npe01__Payment_Amount__c: {
+		value: number
+	  },
+	  Opportunity_Account_Name__c: {
+		value: string
+	  },
+	  npe01__Payment_Method__c: {
+		value: string
+	  },
+	  npe01__Payment_Date__c: {
+		value: string | undefined
+	  },
+	  npe01__Scheduled_Date__c: {
+		value: string | undefined
+	  }
+	}
+}

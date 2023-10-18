@@ -6,6 +6,15 @@ import axios, { AxiosError } from 'axios';
 import Stripe from 'stripe';
 import InvoiceSection from '@/components/InvoiceSection';
 import { Token } from '@/lib/types';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+
+import { AlertCircle } from 'lucide-react';
 
 export default function StripeContainer({ token }: Token) {
   const [invoice, setInvoice] =
@@ -181,8 +190,20 @@ export default function StripeContainer({ token }: Token) {
     </main>
   ) : // only temporary, should be a skeleton instead of a loading div
   isError ? (
-    <div className='rounded-md bg-neutral-800 p-20 text-lg font-semibold'>
-      {isError}
+    <div className='flex h-full w-full flex-col items-center justify-center space-y-3 px-4 md:w-5/6 md:px-0 lg:w-4/6 xl:w-1/2'>
+      <AlertDialog open={true}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className='flex items-center gap-2 text-red-500'>
+              <AlertCircle className='h-4 w-4' />
+              Error
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              The invoice number provided doesn't exist. Please try again.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   ) : (
     <div>Loading...</div>
