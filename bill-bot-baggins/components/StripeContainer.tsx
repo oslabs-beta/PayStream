@@ -19,7 +19,7 @@ import { AlertCircle } from 'lucide-react';
 export default function StripeContainer({ token }: Token) {
   const [invoice, setInvoice] =
     useState<Stripe.Response<Stripe.Invoice> | null>(null);
-  const [isError, setIsError] = useState<string | null>(null);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchInvoice = async () => {
@@ -44,8 +44,7 @@ export default function StripeContainer({ token }: Token) {
       } catch (err) {
         // not sure if this is what we want to display if there is an error - need to revisit this with the team (RH)
         if (err instanceof AxiosError) {
-          setIsError(err.response?.data.error.raw.message);
-          console.log(err);
+          setIsError(true);
         }
       }
     };
