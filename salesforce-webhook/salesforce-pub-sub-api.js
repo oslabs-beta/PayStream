@@ -1,12 +1,7 @@
 import PubSubApiClient from "salesforce-pubsub-api-client";
 import dotenv from "dotenv";
-import {
-  retreiveOppType,
-  createStripeInvoice,
-  updateSalesforceStripeId,
-  getPaymentType,
-} from "./fetchSalesforceAPI.js";
-import eventHandler from "./salesforceEventHandler.js";
+
+import eventHandler from "./eventHandler.js";
 
 dotenv.config();
 
