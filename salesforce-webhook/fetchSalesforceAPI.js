@@ -26,7 +26,7 @@ export const getPaymentType = async (id) => {
   let config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: "https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql",
+    url: process.env.SALESFORCE_GRAPHQL_URI,
     headers: {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export const getOppRecordId = async (id) => {
   let config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: "https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql",
+    url: process.env.SALESFORCE_GRAPHQL_URI,
     headers: {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
@@ -135,7 +135,7 @@ export const retreiveOppType = async (id) => {
   let config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: "https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql",
+    url: process.env.SALESFORCE_GRAPHQL_URI,
     headers: {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
@@ -253,7 +253,7 @@ export const updateSalesforceStripeId = async (recordId, stripeinvoiceId) => {
   let config = {
     method: "patch",
     maxBodyLength: Infinity,
-    url: `https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/ui-api/records/${recordId}`,
+    url: `${process.env.SALESFORCE_API_URI}/${recordId}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: process.env.SALESFORCE_TOKEN,
