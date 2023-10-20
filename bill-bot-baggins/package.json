@@ -22,8 +22,10 @@
     "@stripe/stripe-js": "^2.1.0",
     "autoprefixer": "10.4.15",
     "axios": "^1.5.0",
+    "crypto": "^1.0.1",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
+    "form-data": "4.0.0",
     "graphql": "^16.8.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^5.8.1",
@@ -38,7 +40,8 @@
     "redis-cli": "^2.1.2",
     "stripe": "^13.8.0",
     "tailwindcss": "3.3.3",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "xhr": "^2.6.0"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.3",

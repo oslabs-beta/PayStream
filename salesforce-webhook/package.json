@@ -1,28 +1,35 @@
 {
 	"name": "bbb-pubsub-api",
 	"version": "1.0.0",
-	"main": "index.js",
-
+	"main": "server.js",
+	"type": "module",
 	"scripts": {
-		"start": "nodemon ./src/server/server.ts",
+		"start": "nodemon server.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
+		"axios": "^1.5.1",
+		"concurrently": "^8.2.1",
+		"crypto": "^1.0.1",
 		"express": "^4.17.2",
+		"form-data": "4.0.0",
+		"qs": "^6.11.2",
 		"salesforce-pubsub-api-client": "^2.4.3",
+		"stripe": "^13.10.0",
 		"ts-node": "^10.9.1",
 		"ts-node-dev": "^2.0.0"
 	},
 	"devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/preset-env": "^7.16.7",
-    "@babel/preset-react": "^7.16.7",
-    "@babel/preset-typescript": "^7.22.11",
-    "@types/express": "^4.17.13",
-    "@types/node": "^17.0.8",
-    "babel-loader": "^8.2.3",
-    "nodemon": "^2.0.15",
-    "ts-loader": "^9.2.6",
-    "typescript": "^5.2.2"
+		"@babel/core": "^7.16.7",
+		"@babel/preset-env": "^7.16.7",
+		"@babel/preset-react": "^7.16.7",
+		"@babel/preset-typescript": "^7.22.11",
+		"@types/express": "^4.17.13",
+		"@types/node": "^17.0.8",
+		"babel-loader": "^8.2.3",
+		"nodemon": "^2.0.15",
+		"redis": "^4.6.10",
+		"ts-loader": "^9.2.6",
+		"typescript": "^5.2.2"
 	}
 }
