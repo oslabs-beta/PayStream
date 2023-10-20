@@ -6,11 +6,20 @@ import axios, { AxiosError } from 'axios';
 import Stripe from 'stripe';
 import InvoiceSection from '@/components/InvoiceSection';
 import { Token } from '@/lib/types';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+
+import { AlertCircle } from 'lucide-react';
 
 export default function StripeContainer({ token }: Token) {
   const [invoice, setInvoice] =
     useState<Stripe.Response<Stripe.Invoice> | null>(null);
-  const [isError, setIsError] = useState<string | null>(null);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchInvoice = async () => {
@@ -35,8 +44,7 @@ export default function StripeContainer({ token }: Token) {
       } catch (err) {
         // not sure if this is what we want to display if there is an error - need to revisit this with the team (RH)
         if (err instanceof AxiosError) {
-          setIsError(err.response?.data.error.raw.message);
-          console.log(err);
+          setIsError(true);
         }
       }
     };
@@ -181,8 +189,20 @@ export default function StripeContainer({ token }: Token) {
     </main>
   ) : // only temporary, should be a skeleton instead of a loading div
   isError ? (
-    <div className='rounded-md bg-neutral-800 p-20 text-lg font-semibold'>
-      {isError}
+    <div className='flex h-full w-full flex-col items-center justify-center space-y-3 px-4 md:w-5/6 md:px-0 lg:w-4/6 xl:w-1/2'>
+      <AlertDialog open={true}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className='flex items-center gap-2 text-red-500'>
+              <AlertCircle className='h-4 w-4' />
+              Error
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              The invoice number provided doesn't exist. Please try again.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   ) : (
     <div>Loading...</div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StripeContainer } from '@/components';
+import StripeContainer from '@/components/StripeContainer';
 import { Token } from '@/lib/types';
 
 export default function InvoiceDisplay({ token }: Token) {

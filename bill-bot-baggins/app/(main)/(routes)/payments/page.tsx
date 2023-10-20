@@ -1,10 +1,12 @@
 'use client';
+
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { StripeContainer } from '@/components';
 import { PaymentProps, ServerResponse } from '@/lib/types';
+import base64url from 'base64url';
 import crypto from 'crypto';
-import FormData from 'form-data';
+import { getToken } from 'sf-jwt-token';
+
 /**
  * this componenet is currently housing buttons to test REST API routes for salesforce and redis.
  * the salesforce webhook works, so this code may need to be modularized and moved to other relevant components
@@ -75,6 +77,18 @@ const PaymentRecord = () => {
   // const payments = invoiceData();
   // console.log(payments);
 
+  const handleGetRefreshToken = async () => {
+    try {
+      const res = await fetch('/api/get-token');
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err);
+      }
+    }
+  };
+
   return (
     <div className='w-full max-w-sm lg:flex lg:max-w-full'>
       <button
@@ -90,7 +104,13 @@ const PaymentRecord = () => {
       >
         bill-bot-baggins x redis
       </button>
-      {/* <StripeContainer /> */}
+
+      <button
+        className='rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100'
+        onClick={handleGetRefreshToken}
+      >
+        Click to get new refresh token
+      </button>
       {/* <button onClick={webhook}>bill-bot-baggins x webhook ???</button> */}
     </div>
   );
