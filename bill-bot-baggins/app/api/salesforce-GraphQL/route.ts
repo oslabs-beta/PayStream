@@ -104,7 +104,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse | undefined> 
 
 		const data = await axios.request(config);
 		// retrieve all invoice information from salesforce graphql call
-		const paymentInfo = data.data.data.uiapi.query.npe01__OppPayment__c.edges[0];
+		const paymentInfo = data.data.data.uiapi.query.npe01__OppPayment__c.edges[2];
 
 		console.log("payment info: ", paymentInfo.node)
 		// destructure assignment for node object

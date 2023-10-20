@@ -1,11 +1,16 @@
-require("dotenv").config()
+
+import dotenv from "dotenv"
+import {salesforcePaid} from "./stripe_salesforce_fetch.js";
+import Stripe from "stripe";
+import express from "express";
+import bodyparser from "body-parser"
 
 //start stripe session with stripe specific key
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-const express = require('express');
+dotenv.config()
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 const app = express();
-const bodyparser = require('body-parser')
+
 
 // create the route that is going to be hit by Stripe when an event takes place
 // this will require stripe login and stripe listen --forward-to localhost:4242/webhook into the CLI
@@ -25,15 +30,12 @@ app.post('/webhook', bodyparser.raw({ type: 'application/json' }), async (reques
       return;
     }
   
-
-
-
     // Handle the event
     switch (event.type) {
       case 'invoice.paid':
         const invoicePaid = event.data.object;
         // this is where we would tap into the Salesforce webhook to update an invoice as paid (logic made just need to tie it in)
-        console.log(invoicePaid)
+        salesforcePaid(invoicePaid.id)
 
         break;
       // ... handle other event types
