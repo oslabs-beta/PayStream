@@ -19,22 +19,22 @@ export async function GET(req: NextRequest) {
 	try {
 		const { STRIPE_SECRET_KEY } = process.env
 		const token = req.nextUrl.searchParams.get("token"); // now a GET request so need this to get the invoiceId
-		
+
 		// check if there is a token in the search params
 		if (token) {
 			// verify the JWT
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
 			const stripe = new Stripe(STRIPE_SECRET_KEY, config);
 
-		    // The invoiceId from the req searchParams should be the ID in the URL sent to the client
-		    const invoice = await stripe.invoices.retrieve(decoded.invoiceId);
+			// The invoiceId from the req searchParams should be the ID in the URL sent to the client
+			const invoice = await stripe.invoices.retrieve(decoded.invoiceId);
 			return NextResponse.json(invoice)
 		}
 
-		return NextResponse.json({ error: "Not authorized"}, { status: 401 });
+		return NextResponse.json({ error: "Not authorized" }, { status: 401 });
 	} catch (err) {
-	  return NextResponse.json({ error: err }, { status: 500 });
+		return NextResponse.json({ error: err }, { status: 500 });
 	}
-	
+
 }
 
