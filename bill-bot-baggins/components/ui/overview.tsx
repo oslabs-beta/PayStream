@@ -11,11 +11,11 @@ import {
   YAxis,
 } from 'recharts';
 import useSWR from 'swr';
-import { monthNames, getMonthNameFromDueDate, fetcher } from '@/lib/utils';
 import {
   ValueType,
   NameType,
 } from 'recharts/types/component/DefaultTooltipContent';
+import { monthNames, getMonthNameFromDueDate, fetcher } from '@/lib/utils';
 
 const CustomTooltip = ({
   active,
@@ -42,12 +42,13 @@ const CustomTooltip = ({
 
 const Overview = () => {
   const [invoiceData, setInvoiceData] = useState<any[] | null>(null);
-  const { data, isLoading, error } = useSWR<any>(
+  // using SWR here to get back data, isLoading, and error state
+  const { data, isLoading, error } = useSWR(
     '/api/salesforce-GraphQL',
     (url: string) => fetcher(url, { method: 'POST' })
   );
 
-  // Should probably change this to handle errors better
+  // Should probably change this to handle errors more gracefully
   if (error) {
     console.log(error);
     return <div>Something went wrong...</div>;

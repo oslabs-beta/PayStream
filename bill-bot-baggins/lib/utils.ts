@@ -159,8 +159,13 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
 	  return invoices
   }
 
-  export const fetcher = async <T>(...args: FetcherArgs): Promise<FetcherResult<T>> => {
-    const response = await fetch(...args);
+  // export const fetcher = async (...args) => {
+  //   const response = await fetch(...args);
+  //   return response.json();
+  // };
+
+  export const fetcher = async (url: string, options?: RequestInit): Promise<any> => {
+    const response = await fetch(url, options);
     return response.json();
   };
 

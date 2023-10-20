@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -12,12 +11,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 function AdminDashboardPage() {
   return (
-    <div className='h-screen flex-1 space-y-4 p-8 pt-6 xl:h-5/6'>
+    <div className='h-screen flex-1 space-y-4 p-8 pt-6 xl:h-5/6 xl:px-36'>
       <div className='flex items-center justify-between space-y-2'>
         <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
-        <div className='flex items-center space-x-2'>
-          <Button>Download</Button>
-        </div>
       </div>
       <Tabs defaultValue='overview' className='space-y-4'>
         <TabsList>
@@ -55,14 +51,14 @@ function AdminDashboardPage() {
               <CardContent>
                 <div className='text-2xl font-bold'>$45,231.89</div>
                 <p className='text-xs text-muted-foreground'>
-                  +20.1% from last month
+                  +20.1% from last year
                 </p>
               </CardContent>
             </Card>
             <Card className='bg-neutral-900'>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>
-                  Subscriptions
+                  Opportunities
                 </CardTitle>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -147,9 +143,9 @@ function AdminDashboardPage() {
             </Card>
             <Card className='col-span-3 bg-neutral-900'>
               <CardHeader>
-                <CardTitle>Recent Sales</CardTitle>
+                <CardTitle>Recent Payments</CardTitle>
                 <CardDescription>
-                  You made 265 sales this month.
+                  There have been 5 recent payments.
                 </CardDescription>
               </CardHeader>
               <CardContent>{'Recent Sales'}</CardContent>
