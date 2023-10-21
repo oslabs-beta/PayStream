@@ -1,10 +1,11 @@
-import salesforceRouter from "./routers/salesforceRouter.js";
-import stripeRouter from "./routers/stripeRouter.js";
+const { salesforceRouter } = require("./routers/salesforceRouter.js");
+const { stripeRouter } = require("./routers/stripeRouter.js");
 
 const { retreiveOppType, updateSalesforceStripeId, getPaymentType } =
   salesforceRouter;
 
-const { createStripeInvoice, payStripeInvoice } = stripeRouter;
+const { createStripeInvoice, payStripeInvoice, voidStripeInvoice } =
+  stripeRouter;
 
 // List of opportunity record types from SAlesforce, would like to find a way to have this sent to the app, not manually updated
 const recordTypes = [
@@ -100,68 +101,31 @@ const eventHandler = async (event) => {
         if (clientPayment) paymentType = "Cost to Client";
       }
       console.log("UPDATE payment type: ", paymentType);
-      // if (updatedFields.includes(changedFields[1])) {
-      //map changedfields to object with their values
       const updates = {};
       changedFields.forEach((field) => {
         console.log("UPDATE change fields: ", changedFields);
         updates[field] = event.payload[field];
-        // console.log("mapping field value: ", updates);
       });
       console.log("UPDATE updates object: ", updates);
-      const {
-        npe01__Paid__c,
-        npe01__Payment_Method__c,
-        npe01__Payment_Amount__c,
-        npe01__Payment_Date__c,
-        npe01__Check_Reference_Number__c,
-        npe01__Written_Off__c,
-        OutsideFundingSource__c,
-      } = updates;
-
-      const stripeInvoiceDetails = {};
-      let paydate;
-      let paymethod;
-      let written_off;
-      let payamount;
+      const { npe01__Paid__c, npe01__Written_Off__c, OutsideFundingSource__c } =
+        updates;
 
       if (OutsideFundingSource__c) {
         console.log("OUTSIDE FUNDING SOURCE");
       }
       if (npe01__Written_Off__c) {
         console.log("MARK STRIPE INVOICE VOID");
+        const written_off = npe01__Written_Off__c;
+        written_off.boolean === true
+          ? voidStripeInvoice(recordId)
+          : console.log("invoice not marked void");
       }
       if (npe01__Paid__c) {
         const payobject = npe01__Paid__c;
         payobject.boolean === true
-          ? (stripeInvoiceDetails.paid = true)
-          : (stripeInvoiceDetails.paid = false);
+          ? payStripeInvoice(recordId)
+          : console.log("invoice not marked paid");
       }
-      //payment method assigned to stripe details object
-      if (npe01__Payment_Method__c) {
-        paymethod = npe01__Payment_Method__c;
-        stripeInvoiceDetails.payment_method = paymethod.string;
-      } else {
-        stripeInvoiceDetails.payment_method = "Payment Method Missing";
-      }
-
-      if (npe01__Payment_Date__c) {
-        paydate = npe01__Payment_Date__c;
-        console.log("paydate: ", paydate);
-        stripeInvoiceDetails.payment_date = paydate.long;
-      } else {
-        stripeInvoiceDetails.payment_date = "Payment Date Missing";
-      }
-
-      if (npe01__Payment_Amount__c) {
-        payamount = npe01__Payment_Amount__c;
-        stripeInvoiceDetails.payment_amount = payamount.double;
-      } else {
-        stripeInvoiceDetails.payment_amount = "Payment Amount Missing";
-      }
-      console.log("stripeInvoiceDetails: ", stripeInvoiceDetails);
-      // if object isn't empty, invoke update stripe invoice
-      //  updatePaidStripeInvoice(invoiceDetails);
       break;
     }
     case "DELETE": {
@@ -176,4 +140,4 @@ const eventHandler = async (event) => {
   }
 };
 
-export default eventHandler;
+module.exports = eventHandler;

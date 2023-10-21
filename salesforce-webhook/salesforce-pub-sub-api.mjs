@@ -1,10 +1,7 @@
 import PubSubApiClient from "salesforce-pubsub-api-client";
-import dotenv from "dotenv";
-
 import eventHandler from "./eventHandler.js";
-
+import dotenv from "dotenv";
 dotenv.config();
-
 //destructure assignemtn for env variables
 const {
   SALESFORCE_LOGIN_URL,
@@ -13,18 +10,21 @@ const {
   SALESFORCE_ORG_ID,
 } = process.env;
 
+import { getSalesForceAccessToken } from "./routers/authRouter.js";
+
 /**
  * PubSub API - webhook for listening to Salesforce Payment record changes adn handling events based on their type
  */
 const salesforceController = async () => {
   try {
+    const access_token = await getSalesForceAccessToken();
     const client = new PubSubApiClient();
-    console.log("instanceUrl: ", SALESFORCE_LOGIN_URL);
+    // console.log("instanceUrl: ", SALESFORCE_LOGIN_URL);
     //create new connection
 
     //open new connection
     await client.connectWithAuth(
-      SALESFORCE_TOKEN,
+      `Bearer ${access_token}`,
       SALESFORCE_LOGIN_URL,
       SALESFORCE_ORG_ID,
       SALESFORCE_USERNAME
@@ -50,5 +50,4 @@ const salesforceController = async () => {
 };
 
 // salesforceController.run();
-
 export default salesforceController;

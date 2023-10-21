@@ -1,10 +1,52 @@
-import axios from "axios";
+const axios = require("axios");
+const { getSalesForceAccessToken } = require("./authRouter.js");
 
 const salesforceRouter = {};
 
+salesforceRouter.getStripeId = async (recordId) => {
+  const access_token = await getSalesForceAccessToken();
+  const data = JSON.stringify({
+    query: `query payments ($Id: ID) {
+			uiapi {
+				query {
+					npe01__OppPayment__c (where: { Id: { eq: $Id } }) {
+						edges {
+							node {
+								Stripe_Invoice_ID__c {
+									value
+								}
+							}
+						}
+					}
+				}
+			}
+	}`,
+    variables: { Id: recordId },
+  });
+
+  const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: process.env.SALESFORCE_GRAPHQL_URI,
+    headers: {
+      "X-Chatter-Entity-Encoding": "false",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${access_token}`,
+      Cookie: process.env.SALESFORCE_COOKIE_AUTH,
+    },
+    data: data,
+  };
+  const fetchStripeId = await axios.request(config);
+  const stripeId =
+    fetchStripeId.data.data.uiapi.query.npe01__OppPayment__c.edges[0].node
+      .Stripe_Invoice_ID__c.value;
+  return stripeId;
+};
+
 salesforceRouter.getPaymentType = async (id) => {
+  const access_token = await getSalesForceAccessToken();
   let clientPayment = false;
-  let data = JSON.stringify({
+  const data = JSON.stringify({
     query: `query payments ($Id: ID) {
 		uiapi {
 			query {
@@ -22,19 +64,19 @@ salesforceRouter.getPaymentType = async (id) => {
 	}`,
     variables: { Id: id },
   });
-
-  let config = {
+  const config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: "https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql",
+    url: process.env.SALESFORCE_GRAPHQL_URI,
     headers: {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
-      Authorization: process.env.SALESFORCE_TOKEN,
+      Authorization: `Bearer ${access_token}`,
       Cookie: process.env.SALESFORCE_COOKIE_AUTH,
     },
     data: data,
   };
+
   const fetchPaymentType = await axios.request(config);
   const paymentType =
     fetchPaymentType.data.data.uiapi.query.npe01__OppPayment__c.edges[0].node
@@ -49,7 +91,8 @@ salesforceRouter.getPaymentType = async (id) => {
  * @return string - opportunity record id
  */
 salesforceRouter.getOppRecordId = async (id) => {
-  let data = JSON.stringify({
+  const access_token = await getSalesForceAccessToken();
+  const data = JSON.stringify({
     query: `query payments ($Id: ID) {
 		uiapi {
 			query {
@@ -71,14 +114,14 @@ salesforceRouter.getOppRecordId = async (id) => {
 	}`,
     variables: { Id: id },
   });
-  let config = {
+  const config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: "https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql",
+    url: process.env.SALESFORCE_GRAPHQL_URI,
     headers: {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
-      Authorization: process.env.SALESFORCE_TOKEN,
+      Authorization: `Bearer ${access_token}`,
       Cookie: process.env.SALESFORCE_COOKIE_AUTH,
     },
     data: data,
@@ -99,9 +142,10 @@ salesforceRouter.getOppRecordId = async (id) => {
  */
 
 salesforceRouter.retreiveOppType = async (id) => {
-  const fetchOppId = await getOppRecordId(id);
+  const access_token = await getSalesForceAccessToken();
+  const fetchOppId = await salesforceRouter.getOppRecordId(id);
 
-  let data = JSON.stringify({
+  const data = JSON.stringify({
     query: `query payments ($Id: ID) {
 		uiapi {
 			query {
@@ -131,20 +175,18 @@ salesforceRouter.retreiveOppType = async (id) => {
 	}`,
     variables: { Id: fetchOppId },
   });
-
-  let config = {
+  const config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: "https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql",
+    url: process.env.SALESFORCE_GRAPHQL_URI,
     headers: {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
-      Authorization: process.env.SALESFORCE_TOKEN,
+      Authorization: `Bearer ${access_token}`,
       Cookie: process.env.SALESFORCE_COOKIE_AUTH,
     },
     data: data,
   };
-
   const fetchOppType = await axios.request(config);
   const {
     Id,
@@ -167,20 +209,21 @@ salesforceRouter.updateSalesforceStripeId = async (
   recordId,
   stripeinvoiceId
 ) => {
-  let data = JSON.stringify({
+  const access_token = await getSalesForceAccessToken();
+  const data = JSON.stringify({
     allowSaveOnDuplicate: false,
     fields: {
       Stripe_Invoice_ID__c: stripeinvoiceId,
     },
   });
 
-  let config = {
+  const config = {
     method: "patch",
     maxBodyLength: Infinity,
-    url: `https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/ui-api/records/${recordId}`,
+    url: `${process.env.SALESFORCE_API_URI}/${recordId}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: process.env.SALESFORCE_TOKEN,
+      Authorization: `Bearer ${access_token}`,
       Cookie: process.env.SALESFORCE_COOKIE_AUTH,
     },
     data: data,
@@ -196,4 +239,4 @@ salesforceRouter.updateSalesforceStripeId = async (
     });
 };
 
-export default salesforceRouter;
+exports.salesforceRouter = salesforceRouter;

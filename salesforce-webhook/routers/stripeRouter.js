@@ -1,6 +1,7 @@
-import axios from "axios";
-import Stripe from "stripe";
-// import { PaymentDetails } from "./type";
+const Stripe = require("stripe");
+const { salesforceRouter } = require("./salesforceRouter.js");
+
+const { getStripeId } = salesforceRouter;
 
 const config = {
   apiVersion: "2023-08-16",
@@ -84,6 +85,30 @@ stripeRouter.createStripeInvoice = async (paymentInfo) => {
 /** look up invoice in stripe to see if exists */
 
 /**update invoice in stripe */
-stripeRouter.updatePaidStripeInvoice = async (payload) => {};
+stripeRouter.payStripeInvoice = async (recordId, stripeInvoiceDetails) => {
+  try {
+    const stripeInvoiceId = await getStripeId(recordId);
+    if (await stripe.invoices.retrieve(stripeInvoiceId)) {
+      const updatedInvoice = await stripe.invoices.pay(stripeInvoiceId, {
+        paid_out_of_band: true,
+      });
+      return updatedInvoice;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-export default stripeRouter;
+stripeRouter.voidStripeInvoice = async (recordId) => {
+  try {
+    const stripeInvoiceId = await getStripeId(recordId);
+    if (await stripe.invoices.retrieve(stripeInvoiceId)) {
+      const updatedInvoice = await stripe.invoices.voidInvoice(stripeInvoiceId);
+      return updatedInvoice;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.stripeRouter = stripeRouter;
