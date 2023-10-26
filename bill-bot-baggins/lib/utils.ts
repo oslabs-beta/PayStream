@@ -4,9 +4,6 @@ import { getToken } from "sf-jwt-token";
 import axios from "axios";
 import { InvoiceProps, PaymentProps } from "./types";
 
-type FetcherArgs = Parameters<typeof fetch>;
-type FetcherResult<T> = Promise<T>;
-
 const { TEST_CLIENT_ID, TEST_USERNAME, TEST_URL, BASE64_PRIVATE_KEY, SALESFORCE_GRAPHQL_URI, SALESFORCE_COOKIE_AUTH } = process.env;
 
 /*
@@ -135,6 +132,7 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
 
 	// retrieve all invoice information from salesforce graphql call
 	const paymentInfo = res.data.data.uiapi.query.npe01__OppPayment__c.edges;
+  
 	const invoices: PaymentProps[] = [];
 
 	paymentInfo.map((record: InvoiceProps) => {
@@ -150,7 +148,6 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
 			payment_method: npe01__Payment_Method__c.value,
 			project_name: Opportunity_18_Digit_ID__c.value,
 			account_name: Opportunity_Account_Name__c.value,
-			stripe_invoice_id: 'stripeInvoiceId.data',
 		}
 
 		invoices.push(invoice);
@@ -159,20 +156,39 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
 	  return invoices
   }
 
-  // export const fetcher = async (...args) => {
-  //   const response = await fetch(...args);
-  //   return response.json();
-  // };
-
-  export const fetcher = async (url: string, options?: RequestInit): Promise<any> => {
-    const response = await fetch(url, options);
-    return response.json();
-  };
-
    // helper function to get the month (ex. 'Jan') from the date we get from SF ('2023-10-19')
   export const getMonthNameFromDueDate = (due_date: string) => {
     const date = new Date(due_date);
     return monthNames[date.getMonth()];
   };
 
+
+  export const formatSalesForceData = (data: PaymentProps[] ) => {
+    // creates a map to hold every month's data
+    const revenueByMonth: Map<string, number> = new Map();
+
+    // loop through each month and set each month (ex 'Jan') on the Map and its revenue data to 0
+    for (const month of monthNames) {
+      revenueByMonth.set(month, 0);
+    }
+
+    // loop through the resulting data from the SF graphQL and add its data to the specific month
+    data.forEach((invoice) => {
+      const { invoice_due_date, amount } = invoice;
+
+      const month = getMonthNameFromDueDate(invoice_due_date as string);
+      const currentRevenue = revenueByMonth.get(month) || 0;
+
+      revenueByMonth.set(month, currentRevenue + amount);
+    });
+
+    // convert the map to an array
+    const mappedData = Array.from(revenueByMonth, ([name, revenue]) => ({
+      name,
+      revenue,
+    }));
+
+    // set the invoice data with the mappedData
+    return mappedData;
+  };
 

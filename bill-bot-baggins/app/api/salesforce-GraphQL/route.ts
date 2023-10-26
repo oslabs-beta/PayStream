@@ -7,17 +7,16 @@ import { getSalesForceAccessToken, getSalesForceInvoiceData } from "@/lib/utils"
 
 
 export const POST = async (req: NextRequest): Promise<NextResponse | undefined> => {
-	try {
-	// get a new (or the same one if it hasn't expired) accessToken from SalesForce - RH
-	const accessToken = await getSalesForceAccessToken();
-	// get invoice data from SalesForce using the accessToken as the authorization header - RH
-	const invoiceData = await getSalesForceInvoiceData(accessToken);
-	// return the invoice data as json
-	return NextResponse.json(invoiceData);
-}
-catch (err) {
-	return NextResponse.json("Internal Server Error", { status: 500 })
-}
+  try {
+    // get a new (or the same one if it hasn't expired) accessToken from SalesForce - RH
+    const accessToken = await getSalesForceAccessToken();
+    // get invoice data from SalesForce using the accessToken as the authorization header - RH
+    const invoiceData = await getSalesForceInvoiceData(accessToken);
+    // return the invoice data as json
+    return NextResponse.json(invoiceData);
+  } catch (err) {
+      return NextResponse.json("Internal Server Error", { status: 500 })
+    }
 }
 
 

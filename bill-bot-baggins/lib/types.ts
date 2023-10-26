@@ -8,7 +8,7 @@ export type CustButtonProps = {
 }
 
 export type PaymentProps = {
-	sf_unique_id?: string;
+	sf_unique_id: string;
 	account_name?: string;
 	project_name?: string;
 	payment_method?: string;
@@ -17,7 +17,6 @@ export type PaymentProps = {
 	payment_date?: string; //invoice_paid_date
 	amount: number;
 	invoice_id: string;
-	stripe_invoice_id: string;
 }
 
 export type PaymentContProps = {
