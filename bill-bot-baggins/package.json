@@ -9,11 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.23.5",
+    "@clerk/nextjs": "^4.26.1",
     "@clerk/themes": "^1.7.5",
     "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.3.2",
-    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@prisma/client": "^5.2.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-form": "^0.0.3",
@@ -26,7 +25,7 @@
     "@stripe/react-stripe-js": "^2.1.2",
     "@stripe/stripe-js": "^2.1.0",
     "autoprefixer": "10.4.15",
-    "axios": "^1.5.0",
+    "axios": "^1.6.0",
     "class-variance-authority": "^0.7.0",
     "crypto": "^1.0.1",
     "eslint": "8.47.0",
@@ -37,7 +36,7 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.287.0",
     "nanoid": "^4.0.2",
-    "next": "^13.5.6",
+    "next": "^14.0.0",
     "postcss": "8.4.28",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -52,8 +51,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.1",
     "xhr": "^2.6.0",
-    "zod": "^3.22.4",
-    "zustand": "^4.4.3"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.3",

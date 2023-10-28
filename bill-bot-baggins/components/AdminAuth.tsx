@@ -24,7 +24,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function AdminAuth({ className, ...props }: UserAuthFormProps) {
   const { isLoaded, signIn, setActive } = useSignIn();
-  // const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
@@ -33,6 +33,7 @@ export function AdminAuth({ className, ...props }: UserAuthFormProps) {
     }
 
     try {
+      setIsSubmitting(true);
       const result = await signIn.create({
         identifier: values.email,
         password: values.password,
@@ -41,13 +42,12 @@ export function AdminAuth({ className, ...props }: UserAuthFormProps) {
       if (result.status === 'complete') {
         console.log(result);
         await setActive({ session: result.createdSessionId });
-        // setIsSubmitting(false);
         router.push('/admin');
       } else {
         console.log(result);
       }
     } catch (err: any) {
-      // setIsSubmitting(false);
+      setIsSubmitting(false);
       console.error('error', err.errors[0].longMessage);
     }
   }
@@ -99,7 +99,7 @@ export function AdminAuth({ className, ...props }: UserAuthFormProps) {
           )}
         />
         <Button className='w-full transition-all active:scale-95' type='submit'>
-          Sign In
+          {isSubmitting ? 'Signing In...' : 'Sign In'}
         </Button>
       </form>
     </Form>

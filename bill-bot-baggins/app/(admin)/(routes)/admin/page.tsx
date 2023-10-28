@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PaymentProps } from '@/lib/types';
 import { formatSalesForceData } from '@/lib/utils';
 import { RecentSales } from '@/components/RecentSales';
+import Profile from '@/components/Profile';
 
 async function AdminDashboardPage() {
   const res = await fetch('http://localhost:3000/api/salesforce-GraphQL', {
@@ -32,9 +33,12 @@ async function AdminDashboardPage() {
   const mappedData = formatSalesForceData(data);
 
   return (
-    <div className='h-screen flex-1 space-y-4 p-8 pt-6 xl:h-5/6 xl:px-36'>
+    <div className='aspect-auto h-full flex-1 space-y-4 px-5 pt-12 xl:ml-36 xl:h-5/6 xl:pl-36'>
       <div className='flex items-center justify-between space-y-2'>
         <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
+        <div className='flex items-center space-x-2'>
+          <Profile />
+        </div>
       </div>
       <Tabs defaultValue='overview' className='space-y-4'>
         <TabsList>
@@ -182,6 +186,7 @@ async function AdminDashboardPage() {
           </div>
         </TabsContent>
       </Tabs>
+      <Card className='h-[2000px]'>Hello</Card>
     </div>
   );
 }

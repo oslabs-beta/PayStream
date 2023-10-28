@@ -74,7 +74,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 	 */
 	await stripe.invoiceItems.create({
 		customer: customerId,
-		price: product.default_price,
+		price: product.default_price as string,
 		invoice: newInvoice.id,
 	});
 
