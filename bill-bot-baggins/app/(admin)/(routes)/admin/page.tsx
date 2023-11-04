@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Overview from '@/components/ui/overview';
+import { PaidInvoices } from '@/components/PaidInvoices';
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -18,7 +19,7 @@ function AdminDashboardPage() {
       <Tabs defaultValue='overview' className='space-y-4'>
         <TabsList>
           <TabsTrigger value='overview'>Overview</TabsTrigger>
-          <TabsTrigger value='analytics' disabled>
+          <TabsTrigger value='analytics'>
             Analytics
           </TabsTrigger>
           <TabsTrigger value='reports' disabled>
@@ -151,6 +152,9 @@ function AdminDashboardPage() {
               <CardContent>{'Recent Sales'}</CardContent>
             </Card>
           </div>
+        </TabsContent>
+        <TabsContent value='analytics' className='space-y-4'>
+<PaidInvoices></PaidInvoices>
         </TabsContent>
       </Tabs>
     </div>
