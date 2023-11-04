@@ -39,7 +39,7 @@ export type SearchFilterProps = {
 
 export type SearchProps = {
 	invoice_ID: string;
-	setInvoice_ID: (account: string) => void;
+	setInvoice_ID: (invoice_ID: string) => void;
 }
 
 // declaring an interface to reassign AxiosResponse implicit "any" return to acess array properties
@@ -65,7 +65,7 @@ export  type InvoiceProps = {
 	  Invoice__c: {
 		value: string
 	  },
-	  Opportunity_18_Digit_ID__c: {
+	  Project_Number__c: {
 		value: string | undefined
 	  }
 	  Invoice_Sent_Date__c: {
@@ -88,3 +88,18 @@ export  type InvoiceProps = {
 	  }
 	}
 }
+
+export type InvoiceDatas = {
+	  "sf_unique_id": string,
+	  "invoice_id": string,
+	  "amount": number,
+	  "invoice_sent_date": string,
+	  "payment_date": string,
+	  "invoice_due_date": string, //YYYY-MM-DD
+	  "payment_method": string,
+	  "project_name": string,
+	  "account_name": string,
+	  "stripe_invoice_id": string
+	}
+
+export type DataArray =InvoiceDatas[];

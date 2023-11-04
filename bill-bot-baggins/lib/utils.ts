@@ -42,6 +42,9 @@ const data = JSON.stringify({
             Opportunity_18_Digit_ID__c {
                 value
             }
+            Project_Number__c {
+              value
+              }
             npe01__Payment_Method__c {
                 value
             }
@@ -136,7 +139,7 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
 	const invoices: PaymentProps[] = [];
 
 	paymentInfo.map((record: InvoiceProps) => {
-		const { Id, Invoice__c, Invoice_Sent_Date__c, npe01__Payment_Amount__c, Opportunity_Account_Name__c, Opportunity_18_Digit_ID__c, npe01__Payment_Method__c, npe01__Payment_Date__c, npe01__Scheduled_Date__c } = record.node
+		const { Id, Invoice__c, Invoice_Sent_Date__c, npe01__Payment_Amount__c, Opportunity_Account_Name__c, Project_Number__c, npe01__Payment_Method__c, npe01__Payment_Date__c, npe01__Scheduled_Date__c } = record.node
 
 		const invoice: PaymentProps = {
 			sf_unique_id: Id,
@@ -146,7 +149,7 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
 			payment_date: npe01__Payment_Date__c.value,
 			invoice_due_date: npe01__Scheduled_Date__c.value,
 			payment_method: npe01__Payment_Method__c.value,
-			project_name: Opportunity_18_Digit_ID__c.value,
+			project_name: Project_Number__c.value,
 			account_name: Opportunity_Account_Name__c.value,
 		}
 

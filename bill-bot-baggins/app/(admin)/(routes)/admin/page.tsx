@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Overview from '@/components/ui/overview';
+import { PaidInvoices } from '@/components/PaidInvoices';
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PaymentProps } from '@/lib/types';
@@ -43,7 +44,7 @@ async function AdminDashboardPage() {
       <Tabs defaultValue='overview' className='space-y-4'>
         <TabsList>
           <TabsTrigger value='overview'>Overview</TabsTrigger>
-          <TabsTrigger value='analytics' disabled>
+          <TabsTrigger value='analytics'>
             Analytics
           </TabsTrigger>
           <TabsTrigger value='reports' disabled>
@@ -184,6 +185,9 @@ async function AdminDashboardPage() {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+        <TabsContent value='analytics' className='space-y-4'>
+<PaidInvoices></PaidInvoices>
         </TabsContent>
       </Tabs>
       <Card className='h-[2000px]'>Hello</Card>
