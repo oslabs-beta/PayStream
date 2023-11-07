@@ -99,7 +99,7 @@ export type InvoiceDatas = {
 	  "payment_method": string,
 	  "project_name": string,
 	  "account_name": string,
-	  "stripe_invoice_id": string
+//	  "stripe_invoice_id": string
 	}
 
-export type DataArray =InvoiceDatas[];
+export type DataArray =PaymentProps[];

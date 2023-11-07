@@ -12,12 +12,12 @@ import {
   import { Button } from '@/components/ui/button';
 import useSWR from 'swr';
 import { SearchFilter } from '@/components/SearchFilter';
-import { SearchProps, DataArray } from "@/lib/types";
+import { PaymentProps, SearchProps, DataArray } from "@/lib/types";
 import { Input } from "@/components/ui/input";
-import { fetcher } from '@/lib/utils';
+//import { getSalesForceAccessToken, getSalesForceInvoiceData } from '@/lib/utils';
 
    
-  export function PaidInvoices() {
+  export function PaidInvoices(props: any) {
     // const fetcher = async (url: string, options?: RequestInit): Promise<any> => {
     //   const response = await fetch(url, options);
     //   const data = await response.json();
@@ -25,25 +25,30 @@ import { fetcher } from '@/lib/utils';
     const [invoice_ID, setInvoice_ID] = useState('');
     const [accountName, setAccountName] = useState('');
     const [filteredData, setFilteredData] = useState<DataArray>([]);
-    const { data, isLoading, error } = useSWR(
-      '/api/salesforce-GraphQL',
-      (url: string) => fetcher(url, { method: 'POST' })
-    );
-    useEffect(() => {setFilteredData(data);}, [data]);
-    if (error) {
-      console.log(error);
-      return <div>Something went wrong...</div>;
+    // const { data, isLoading, error } = useSWR(
+    //   '/api/salesforce-GraphQL',
+    //   (url: string) => fetcher(url, { method: 'POST' })
+    // );
+    useEffect(() => {setFilteredData(props.data)}, [props.data]);
+  //   const res = await fetch('http://localhost:3000/api/salesforce-GraphQL', {
+  //     method: 'POST',
+  // });
+  // const data: PaymentProps[] = await res.json();
+
+    // if (error) {
+    //   console.log(error);
+    //   return <div>Something went wrong...</div>;
       
-    }
-console.log(data);
+    // }
+//console.log(data);
     
 const searchFunction = () => {
   let dataArray;
   if (invoice_ID !== '') {
-    dataArray = SearchFilter(data, invoice_ID, 'invoice_id', '');
+    dataArray = SearchFilter(props.data, invoice_ID, 'invoice_id', '');
   }
   if (accountName !== '') {
-    dataArray = SearchFilter(dataArray || data, accountName, 'account_name', '');
+    dataArray = SearchFilter(dataArray || props.data, accountName, 'account_name', '');
   }  
   if (dataArray !== undefined) {
     setFilteredData(dataArray); 
@@ -77,7 +82,7 @@ const searchFunction = () => {
         }
       }}
     />
-    <Button onClick={() => setFilteredData(data)}>Clear</Button>
+    <Button onClick={() => setFilteredData(props.data)}>Clear</Button>
 
 <input
       type="text"
@@ -121,7 +126,7 @@ const searchFunction = () => {
               <TableCell>{datas.invoice_due_date}</TableCell>              
               <TableCell>{datas.payment_date}</TableCell>
               <TableCell>{datas.payment_method}</TableCell>
-              <TableCell className="text-right">{datas.stripe_invoice_id}</TableCell>
+              {/* <TableCell className="text-right">{datas.stripe_invoice_id}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>
