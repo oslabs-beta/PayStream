@@ -187,10 +187,9 @@ async function AdminDashboardPage() {
           </div>
         </TabsContent>
         <TabsContent value='analytics' className='space-y-4'>
-<PaidInvoices></PaidInvoices>
         </TabsContent>
       </Tabs>
-      <Card className='h-[2000px]'>Hello</Card>
+      <PaidInvoices data={data}/>
     </div>
   );
 }
