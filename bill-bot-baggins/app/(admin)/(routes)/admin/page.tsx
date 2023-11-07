@@ -9,12 +9,37 @@ import Overview from '@/components/ui/overview';
 import { PaidInvoices } from '@/components/PaidInvoices';
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { PaymentProps } from '@/lib/types';
+import { formatSalesForceData } from '@/lib/utils';
+import { RecentSales } from '@/components/RecentSales';
+import Profile from '@/components/Profile';
 
-function AdminDashboardPage() {
+async function AdminDashboardPage() {
+  const res = await fetch('http://localhost:3000/api/salesforce-GraphQL', {
+    method: 'POST',
+  });
+
+  const data: PaymentProps[] = await res.json();
+
+  let revenue = 0;
+  const payments: PaymentProps[] = [];
+
+  data.forEach((invoice) => {
+    if (invoice.payment_date) {
+      revenue += invoice.amount;
+      payments.push(invoice);
+    }
+  });
+
+  const mappedData = formatSalesForceData(data);
+
   return (
-    <div className='h-screen flex-1 space-y-4 p-8 pt-6 xl:h-5/6 xl:px-36'>
+    <div className='aspect-auto h-full flex-1 space-y-4 px-5 pt-12 xl:ml-36 xl:h-5/6 xl:pl-36'>
       <div className='flex items-center justify-between space-y-2'>
         <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
+        <div className='flex items-center space-x-2'>
+          <Profile />
+        </div>
       </div>
       <Tabs defaultValue='overview' className='space-y-4'>
         <TabsList>
@@ -50,7 +75,13 @@ function AdminDashboardPage() {
                 </svg>
               </CardHeader>
               <CardContent>
-                <div className='text-2xl font-bold'>$45,231.89</div>
+                <div className='text-2xl font-bold'>{`${revenue.toLocaleString(
+                  'en-US',
+                  {
+                    style: 'currency',
+                    currency: 'USD',
+                  }
+                )}`}</div>
                 <p className='text-xs text-muted-foreground'>
                   +20.1% from last year
                 </p>
@@ -139,17 +170,19 @@ function AdminDashboardPage() {
                 <CardTitle>Overview</CardTitle>
               </CardHeader>
               <CardContent className='pl-2'>
-                <Overview />
+                <Overview data={mappedData} />
               </CardContent>
             </Card>
             <Card className='col-span-3 bg-neutral-900'>
               <CardHeader>
                 <CardTitle>Recent Payments</CardTitle>
                 <CardDescription>
-                  There have been 5 recent payments.
+                  There have been {payments.length} recent payments.
                 </CardDescription>
               </CardHeader>
-              <CardContent>{'Recent Sales'}</CardContent>
+              <CardContent>
+                <RecentSales payments={payments} />
+              </CardContent>
             </Card>
           </div>
         </TabsContent>
@@ -157,6 +190,7 @@ function AdminDashboardPage() {
 <PaidInvoices></PaidInvoices>
         </TabsContent>
       </Tabs>
+      <Card className='h-[2000px]'>Hello</Card>
     </div>
   );
 }

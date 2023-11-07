@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 import { Badge, Box, Button, Flex } from '@radix-ui/themes';
 import axios, { AxiosError } from 'axios';
@@ -16,42 +14,9 @@ import {
 
 import { AlertCircle } from 'lucide-react';
 
-export default function StripeContainer({ token }: Token) {
-  const [invoice, setInvoice] =
-    useState<Stripe.Response<Stripe.Invoice> | null>(null);
-  const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    const fetchInvoice = async () => {
-      try {
-        // Refactored to be a GET request instead of POST (RH)
-        const { data }: { data: Stripe.Response<Stripe.Invoice> } =
-          await axios.get(
-            '/api/invoice',
-            // had to add params since this is now a GET request (RH)
-            {
-              params: {
-                token,
-              },
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-        console.log('data back from fetch invoice is: ', data);
-        // setting the invoice data so that it can be used to populate the data below (RH)
-        setInvoice(data);
-      } catch (err) {
-        // not sure if this is what we want to display if there is an error - need to revisit this with the team (RH)
-        if (err instanceof AxiosError) {
-          setIsError(true);
-        }
-      }
-    };
-    fetchInvoice();
-  }, [token]);
-
+export default async function StripeContainer({ invoice }: { invoice: any }) {
   // convert the dates from stripes format to human readable format (RH)
+
   let invoiceDate: string, dueDate: string;
 
   if (invoice) {
@@ -187,8 +152,9 @@ export default function StripeContainer({ token }: Token) {
         </div>
       </section>
     </main>
-  ) : // only temporary, should be a skeleton instead of a loading div
-  isError ? (
+  ) : (
+    // only temporary, should be a skeleton instead of a loading div
+    // isError ? (
     <div className='flex h-full w-full flex-col items-center justify-center space-y-3 px-4 md:w-5/6 md:px-0 lg:w-4/6 xl:w-1/2'>
       <AlertDialog open={true}>
         <AlertDialogContent>
@@ -204,7 +170,8 @@ export default function StripeContainer({ token }: Token) {
         </AlertDialogContent>
       </AlertDialog>
     </div>
-  ) : (
-    <div>Loading...</div>
   );
+  // ) : (
+  //   <div>Loading...</div>
+  // );
 }

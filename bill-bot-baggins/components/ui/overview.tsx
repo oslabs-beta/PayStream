@@ -10,12 +10,11 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import useSWR from 'swr';
+
 import {
   ValueType,
   NameType,
 } from 'recharts/types/component/DefaultTooltipContent';
-import { monthNames, getMonthNameFromDueDate, fetcher } from '@/lib/utils';
 
 const CustomTooltip = ({
   active,
@@ -40,56 +39,23 @@ const CustomTooltip = ({
   return null;
 };
 
-const Overview = () => {
-  const [invoiceData, setInvoiceData] = useState<any[] | null>(null);
-  // using SWR here to get back data, isLoading, and error state
-  const { data, isLoading, error } = useSWR(
-    '/api/salesforce-GraphQL',
-    (url: string) => fetcher(url, { method: 'POST' })
-  );
+type OverviewProps = {
+  data: {
+    name: string;
+    revenue: number;
+  }[];
+};
 
-  // Should probably change this to handle errors more gracefully
-  if (error) {
-    console.log(error);
-    return <div>Something went wrong...</div>;
-  }
-
-  const formatSalesForceData = () => {
-    // creates a map to hold every month's data
-    const revenueByMonth = new Map();
-
-    // loop through each month and set each month (ex 'Jan') on the Map and its revenue data to 0
-    for (const month of monthNames) {
-      revenueByMonth.set(month, 0);
-    }
-
-    // loop through the resulting data from the SF graphQL and add its data to the specific month
-    data.forEach((invoice: { invoice_due_date: string; amount: number }) => {
-      const { invoice_due_date, amount } = invoice;
-      const month = getMonthNameFromDueDate(invoice_due_date);
-      const currentRevenue = revenueByMonth.get(month) || 0;
-      revenueByMonth.set(month, currentRevenue + amount);
-    });
-
-    // convert the map to an array
-    const mappedData = Array.from(revenueByMonth, ([name, revenue]) => ({
-      name,
-      revenue,
-    }));
-
-    // set the invoice data with the mappedData
-    setInvoiceData(mappedData);
-  };
+const Overview = ({ data }: OverviewProps) => {
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (data) {
-      formatSalesForceData();
-    }
+    setIsLoading(false);
   }, [data]);
 
   return !isLoading ? (
     <ResponsiveContainer width='100%' height={350}>
-      <BarChart data={invoiceData as {}[]}>
+      <BarChart data={data}>
         <XAxis
           dataKey='name'
           stroke='#888888'
@@ -109,7 +75,16 @@ const Overview = () => {
       </BarChart>
     </ResponsiveContainer>
   ) : (
-    <div className='flex h-[350px] items-center justify-center'>Loading...</div>
+    <div className='flex h-[350px] items-center justify-center'>
+      <div
+        className='inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-orange-400 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]'
+        role='status'
+      >
+        <span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>
+          Loading...
+        </span>
+      </div>
+    </div>
   );
 };
 
