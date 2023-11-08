@@ -1,16 +1,17 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+
+import React, { useState } from 'react';
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table";
-  import { Button } from '@/components/ui/button';
-import useSWR from 'swr';
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { SearchFilter } from '@/components/SearchFilter';
 import { PaymentProps, SearchProps, DataArray } from "@/lib/types";
 import { Input } from "@/components/ui/input";
@@ -84,19 +85,20 @@ const searchFunction = () => {
     />
     <Button onClick={() => setFilteredData(props.data)}>Clear</Button>
 
-<input
-      type="text"
-      placeholder="Search by Account Name..."
-      value={accountName}
-      onChange={(e) => setAccountName(e.target.value)}
-      onKeyPress={(e) => {
-        if (e.key === 'Enter') {
-          searchFunction();
-        }
-      }}
-    />
+            <Input
+              type='text'
+              placeholder='Search by Account Name...'
+              value={accountName}
+              onChange={(e) => setAccountName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  searchFunction();
+                }
+              }}
+            />
+          </div>
 
-{/* <input
+          {/* <input
       type="text"
       placeholder="Search by Project Name..."
       value={projectName}
@@ -107,9 +109,8 @@ const searchFunction = () => {
         }
       }}
     /> */}
-
-          </TableRow>
-          {/* <TableRow>
+        </TableRow>
+        {/* <TableRow>
             <SearchFilter searchTerm={searchTerm} onSearchChange={handleSearchChange}></SearchFilter>
           </TableRow> */}
 
