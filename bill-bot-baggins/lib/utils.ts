@@ -179,10 +179,12 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
     data.forEach((invoice) => {
       const { invoice_due_date, amount } = invoice;
 
-      const month = getMonthNameFromDueDate(invoice_due_date as string);
-      const currentRevenue = revenueByMonth.get(month) || 0;
-
-      revenueByMonth.set(month, currentRevenue + amount);
+      if (invoice_due_date?.includes('2023')) {
+        const month = getMonthNameFromDueDate(invoice_due_date as string);
+        const currentRevenue = revenueByMonth.get(month) || 0;
+  
+        revenueByMonth.set(month, currentRevenue + amount);
+      }
     });
 
     // convert the map to an array
@@ -194,4 +196,3 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
     // set the invoice data with the mappedData
     return mappedData;
   };
-
