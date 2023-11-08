@@ -41,13 +41,6 @@ function SignInPage() {
             </p>
           </div>
           <AdminAuth />
-          <p className='px-2 text-center text-sm text-muted-foreground'>
-            Forgot password{' '}
-            <Link href='/terms' className='text-primary hover:text-primary/90'>
-              click here
-            </Link>
-            .
-          </p>
         </div>
       </div>
     </div>

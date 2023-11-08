@@ -18,7 +18,6 @@ import { Button } from './ui/button';
 import { useForm } from 'react-hook-form';
 import { useSignIn } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
