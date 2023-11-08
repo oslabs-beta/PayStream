@@ -6,7 +6,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className='bg-secondary/5'>
+    <section className='h-screen bg-neutral-950'>
       <Navbar />
       {children}
     </section>

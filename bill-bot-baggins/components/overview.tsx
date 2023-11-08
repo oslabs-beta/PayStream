@@ -71,7 +71,7 @@ const Overview = ({ data }: OverviewProps) => {
           tickFormatter={(value) => `$${value}`}
         />
         <Tooltip content={<CustomTooltip />} />
-        <Bar dataKey='revenue' fill='#e69d17' radius={[4, 4, 0, 0]} />
+        <Bar dataKey='revenue' fill='#EA580C' radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   ) : (

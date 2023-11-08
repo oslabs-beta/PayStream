@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Overview from '@/components/ui/overview';
+import Overview from '@/components/overview';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { columns } from '@/components/Columns';
 import React from 'react';
@@ -29,9 +29,10 @@ async function AdminDashboardPage() {
   */
   let revenue = 0;
   const payments: PaymentProps[] = [];
+  const currentYear = new Date().getFullYear().toString();
 
   data.forEach((invoice) => {
-    if (invoice.payment_date) {
+    if (invoice.payment_date && invoice.payment_date.includes(currentYear)) {
       revenue += invoice.amount;
       payments.push(invoice);
     }
@@ -52,7 +53,7 @@ async function AdminDashboardPage() {
         </TabsList>
         <TabsContent value='overview' className='space-y-4 pr-36'>
           <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
-            <Card className='bg-neutral-900'>
+            <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>
                   Revenue YTD
@@ -83,7 +84,7 @@ async function AdminDashboardPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card className='bg-neutral-900'>
+            <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>
                   Opportunities
@@ -110,7 +111,7 @@ async function AdminDashboardPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card className='bg-neutral-900'>
+            <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>Sales</CardTitle>
                 <svg
@@ -134,7 +135,7 @@ async function AdminDashboardPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card className='bg-neutral-900'>
+            <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>
                   Active Now
@@ -161,7 +162,7 @@ async function AdminDashboardPage() {
             </Card>
           </div>
           <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
-            <Card className='col-span-4 bg-neutral-900'>
+            <Card className='col-span-4'>
               <CardHeader>
                 <CardTitle>Overview</CardTitle>
               </CardHeader>
@@ -169,7 +170,7 @@ async function AdminDashboardPage() {
                 <Overview data={mappedData} />
               </CardContent>
             </Card>
-            <Card className='col-span-3 bg-neutral-900'>
+            <Card className='col-span-3'>
               <CardHeader>
                 <CardTitle>Recent Payments</CardTitle>
                 <CardDescription>
@@ -182,8 +183,7 @@ async function AdminDashboardPage() {
             </Card>
           </div>
         </TabsContent>
-        <TabsContent value='analytics' className='space-y-4 pr-36'>
-          {/* <PaidInvoices data={data} /> */}
+        <TabsContent value='analytics' className='pr-36'>
           <DataTable columns={columns} data={data} />
         </TabsContent>
       </Tabs>

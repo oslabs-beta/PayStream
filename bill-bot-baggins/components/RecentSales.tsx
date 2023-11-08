@@ -4,7 +4,7 @@ export function RecentSales({ payments }: { payments: PaymentProps[] }) {
   return (
     <div className='space-y-8'>
       {payments.map((payment) => (
-        <div className='flex items-center bg-neutral-900 p-1'>
+        <div key={payment.invoice_id} className='flex items-center p-1'>
           <div className='ml-4 space-y-1'>
             <p className='text-sm font-medium leading-none'>
               {payment.account_name}

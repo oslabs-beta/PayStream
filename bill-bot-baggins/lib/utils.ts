@@ -178,8 +178,9 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
     // loop through the resulting data from the SF graphQL and add its data to the specific month
     data.forEach((invoice) => {
       const { invoice_due_date, amount } = invoice;
+      const currentYear = new Date().getFullYear().toString();
 
-      if (invoice_due_date?.includes('2023')) {
+      if (invoice_due_date?.includes(currentYear)) {
         const month = getMonthNameFromDueDate(invoice_due_date as string);
         const currentRevenue = revenueByMonth.get(month) || 0;
   
