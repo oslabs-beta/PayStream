@@ -180,7 +180,7 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
       const { invoice_due_date, amount } = invoice;
       const currentYear = new Date().getFullYear().toString();
 
-      if (invoice_due_date?.includes(currentYear)) {
+      if (invoice.payment_date && invoice_due_date?.includes(currentYear)) {
         const month = getMonthNameFromDueDate(invoice_due_date as string);
         const currentRevenue = revenueByMonth.get(month) || 0;
   

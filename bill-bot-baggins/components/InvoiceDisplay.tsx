@@ -35,7 +35,7 @@ export default function InvoiceDisplay({
   }
   return invoice ? (
     <div className='flex h-full w-full flex-col items-center justify-center space-y-4'>
-      <main className='flex h-full w-full flex-col items-center justify-center space-y-3 px-4 md:w-5/6 md:px-0 lg:w-4/6 xl:w-1/2'>
+      <main className='flex h-full w-full max-w-[900px] flex-col items-center justify-center space-y-3 px-4'>
         <h1 className='flex w-full items-center gap-3 text-2xl font-bold'>
           Invoice
           {invoice.status === 'open' ? (
