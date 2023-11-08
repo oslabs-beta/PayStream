@@ -22,6 +22,8 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 <!-- PROJECT LOGO -->
@@ -123,29 +125,53 @@ Before using this application, make sure you have the following in place:
    ```sh
    npm install
    ```
-5. Enter your API in `.env`
+5. Enter your JWT Secret into the `.env` file:
    ```js
-   const API_KEY = 'ENTER YOUR API';
-   const API_KEY = 'ENTER YOUR API';
-   const API_KEY = 'ENTER YOUR API';
-   const API_KEY = 'ENTER YOUR API';
-   const API_KEY = 'ENTER YOUR API';
-   const API_KEY = 'ENTER YOUR API';
-   const API_KEY = 'ENTER YOUR API';
-   const API_KEY = 'ENTER YOUR API';
-   const API_KEY = 'ENTER YOUR API';
-   const API_KEY = 'ENTER YOUR API';
+     JWT_SECRET = 'ENTER YOUR JWT SECRET';
    ```
-
+6. Enter your Salesforce Authentication information into the `.env` file:
+   ```js
+    SALESFORCE_GRAPHQL_URI = '[YOUR SALESFORCE INSTANCE]/services/data/v58.0/graphql'
+    SALESFORCE_COOKIE_AUTH = 'ENTER YOUR SALEFORCE COOKING AUTHORIZATION'
+    SALESFORCE_LOGIN_URL = 'ENTER YOUR SALESFORCE LOGIN URL'
+    SALESFORCE_AUTH_TYPE = oauth-client-credentials
+    SALESFORCE_USERNAME = 'ENTER YOUR SALESFORCE USERNAME'
+    SALESFORCE_PASSWORD = 'ENTER YOUR SALESFORCE PASSWORD'
+    SALESFORCE_ORG_ID = 'ENTER YOUR SALESFORCE ORGANIZATION ID'
+    PUB_SUB_ENDPOINT = api.pubsub.salesforce.com:7443
+    SALESFORCE_CLIENT_ID = 'ENTER YOUR SALESFORCE CLIENT ID'
+    SALESFORCE_CLIENT_SECRET = 'ENTER YOUR SALESFORCE CLIENT SECRET'
+   ```
+   
+7. Enter your Stripe Authentication informatino into the `.env` file:
+   ```js
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = 'ENTER YOUR STRIPE PUBLIC KEY';
+   STRIPE_SECRET_KEY = 'ENTER YOUR STRIPE SECRET KEY';
+   STRIPE_ENDPOINT_SECRET = 'ENTER YOUR STRIPE ENDPOINT SECRET'
+   ```
+   
+8. Enter your Clerk Authentication informatino into the `.env` file:
+   ```js
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = 'ENTER YOUR CLERK PUBLIC KEY';
+    CLERK_SECRET_KEY = 'ENTER YOUR CLERK SECRET KEY';
+    
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+   ```
+   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Configuration
 1. **Stripe Integration:**
    - Go to your Stripe dashboard and obtain your API keys.
    - Update the `.env` file with your Stripe API keys.
+   - Go to [https://dashboard.stripe.com/test/apikeys](https://dashboard.stripe.com/test/webhooks) and generate your Stripe endpoint for your application. 
 2. **Salesforce Integration:**
    - Obtain Salesforce API credentials (Consumer Key, Consumer Secret, Username, and Password).
    - Update the `.env` file with your Salesforce API credentials.
+   - The queries are mapped to custom payment records for a specific client and will need to be refactored to your application specific needs. 
 3. **Webhook Setup:**
    - Configure webhooks in Stripe to send events to your application’s endpoint.
    - Use a service like ngrok to create a secure tunnel to your local server or set up SSL on your production server.
@@ -153,13 +179,9 @@ Before using this application, make sure you have the following in place:
    - Modify the application to match your nonprofit’s specific Salesforce objects, fields, and donation processing logic.
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Demo
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+USE THIS SPACE FOR DEMO OF PROJECT GIF
 
 
 <!-- CONTRIBUTING -->
