@@ -1,9 +1,11 @@
-import {
-  retreiveOppType,
-  createStripeInvoice,
-  updateSalesforceStripeId,
-  getPaymentType,
-} from "./fetchSalesforceAPI.js";
+const { salesforceRouter } = require("./routers/salesforceRouter.js");
+const { stripeRouter } = require("./routers/stripeRouter.js");
+
+const { retreiveOppType, updateSalesforceStripeId, getPaymentType } =
+  salesforceRouter;
+
+const { createStripeInvoice, payStripeInvoice, voidStripeInvoice } =
+  stripeRouter;
 
 // List of opportunity record types from SAlesforce, would like to find a way to have this sent to the app, not manually updated
 const recordTypes = [
@@ -24,15 +26,6 @@ const recordTypes = [
   "DDP",
 ];
 
-const updatedFields = [
-  "npe01__Paid__c",
-  "npe01__Payment_Amount__c",
-  "npe01__Payment_Method__c",
-  "npe01__Payment_Date__c",
-  "npe01__Check_Reference_Number__c",
-  "npe01__Written_Off__c",
-  "OutsideFundingSource__c",
-];
 //need to store salesforce and stripe ids so that when /if a payment is deleted, it can get voided/deleted in stripe key-value = salesforce-stripe
 
 const eventHandler = async (event) => {
@@ -43,7 +36,7 @@ const eventHandler = async (event) => {
   const { For_Chart__c, npe01__Payment_Amount__c, Name } = event.payload;
   const recordId = recordIds[0];
   // console.log("changedFields array: ", changedFields);
-
+  if (changedFields.length === 1) return;
   // if the opp type that corresponds to the updated payment record is in our record types array enter switch cases
 
   switch (changeType) {
@@ -81,6 +74,7 @@ const eventHandler = async (event) => {
           amount: paymentAmount.double,
           project_type: opportunity.project_type,
           invoice_number: invoice_number.string,
+          recordId: recordId,
         };
         //create invoice in stripe
         const stripeInvoice = await createStripeInvoice(paymentDetails);
@@ -97,6 +91,9 @@ const eventHandler = async (event) => {
     case "UPDATE": {
       //currently hitting UPDATE with stripe id is added, will need to make an array of changes that are acceptable and want to do
       //logic to see if stripe invoice ID exists, if not, can we make it hit that route
+      /**
+       * need to take record id, get stripe invoice id; if no stripe invoice id check opportunity type and make an invoice
+       */
       console.log("UPDATE case changeType: ", changeType);
       // only have invoice record id
       if (!For_Chart__c) {
@@ -104,10 +101,31 @@ const eventHandler = async (event) => {
         if (clientPayment) paymentType = "Cost to Client";
       }
       console.log("UPDATE payment type: ", paymentType);
-      if (updatedFields.includes(changedFields[1])) {
-        console.log("UPDATE change fields: ", changedFields[0]);
-      }
+      const updates = {};
+      changedFields.forEach((field) => {
+        console.log("UPDATE change fields: ", changedFields);
+        updates[field] = event.payload[field];
+      });
+      console.log("UPDATE updates object: ", updates);
+      const { npe01__Paid__c, npe01__Written_Off__c, OutsideFundingSource__c } =
+        updates;
 
+      if (OutsideFundingSource__c) {
+        console.log("OUTSIDE FUNDING SOURCE");
+      }
+      if (npe01__Written_Off__c) {
+        console.log("MARK STRIPE INVOICE VOID");
+        const written_off = npe01__Written_Off__c;
+        written_off.boolean === true
+          ? voidStripeInvoice(recordId)
+          : console.log("invoice not marked void");
+      }
+      if (npe01__Paid__c) {
+        const payobject = npe01__Paid__c;
+        payobject.boolean === true
+          ? payStripeInvoice(recordId)
+          : console.log("invoice not marked paid");
+      }
       break;
     }
     case "DELETE": {
@@ -117,7 +135,9 @@ const eventHandler = async (event) => {
     }
     default: {
       console.log("default case hit: ", JSON.stringify(event, null, 2));
+      break;
     }
   }
 };
-export default eventHandler;
+
+module.exports = eventHandler;
