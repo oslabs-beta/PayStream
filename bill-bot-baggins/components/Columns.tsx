@@ -3,16 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { PaymentProps } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ArrowDown, ArrowUp, ArrowUpDown, MoreHorizontal } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { ArrowDown, ArrowUp } from 'lucide-react';
 
 export const columns: ColumnDef<PaymentProps>[] = [
   {
@@ -121,9 +112,9 @@ export const columns: ColumnDef<PaymentProps>[] = [
         <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
           Payment Date
           {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4 text-green-500' />
+            <ArrowUp className='h-4 w-4' />
           ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4 text-green-500' />
+            <ArrowDown className='h-4 w-4' />
           ) : null}
         </Button>
       );
@@ -136,9 +127,9 @@ export const columns: ColumnDef<PaymentProps>[] = [
         <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
           Payment Method
           {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4 text-green-500' />
+            <ArrowUp className='h-4 w-4' />
           ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4 text-green-500' />
+            <ArrowDown className='h-4 w-4' />
           ) : null}
         </Button>
       );

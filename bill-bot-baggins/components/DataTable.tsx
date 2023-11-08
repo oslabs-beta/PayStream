@@ -53,17 +53,34 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className='flex items-center py-4'>
-        <Input
-          placeholder='Filter Invoice ID...'
-          value={
-            (table.getColumn('invoice_id')?.getFilterValue() as string) ?? ''
-          }
-          onChange={(event) =>
-            table.getColumn('invoice_id')?.setFilterValue(event.target.value)
-          }
-          className='max-w-sm'
-        />
+      <div className='flex space-x-4'>
+        <div className='flex items-center py-4'>
+          <Input
+            placeholder='Filter by Invoice ID'
+            value={
+              (table.getColumn('invoice_id')?.getFilterValue() as string) ?? ''
+            }
+            onChange={(event) =>
+              table.getColumn('invoice_id')?.setFilterValue(event.target.value)
+            }
+            className='max-w-sm'
+          />
+        </div>
+        <div className='flex items-center py-4'>
+          <Input
+            placeholder='Filter by Client'
+            value={
+              (table.getColumn('account_name')?.getFilterValue() as string) ??
+              ''
+            }
+            onChange={(event) =>
+              table
+                .getColumn('account_name')
+                ?.setFilterValue(event.target.value)
+            }
+            className='max-w-sm'
+          />
+        </div>
       </div>
       <div className='rounded-md border'>
         <Table>
