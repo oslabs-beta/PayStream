@@ -86,7 +86,7 @@ const ParticleEffect = () => {
             value: 80,
           },
           opacity: {
-            value: 0.5,
+            value: 1,
           },
           shape: {
             type: 'circle',
