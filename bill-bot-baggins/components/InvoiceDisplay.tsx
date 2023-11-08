@@ -165,7 +165,7 @@ export default function InvoiceDisplay({
               Error
             </CardTitle>
             <CardDescription>
-              The invoice number provided doesn't exist. Please try again.
+              Invalid payment link. Please check the link and try again.
             </CardDescription>
           </CardHeader>
         </CardContent>

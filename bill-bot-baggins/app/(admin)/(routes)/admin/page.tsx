@@ -6,23 +6,29 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Overview from '@/components/ui/overview';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PaidInvoices } from '@/components/PaidInvoices';
 import { columns } from '@/components/Columns';
 import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PaymentProps } from '@/lib/types';
-import { formatSalesForceData } from '@/lib/utils';
 import { RecentSales } from '@/components/RecentSales';
 import Profile from '@/components/Profile';
 import { DataTable } from '@/components/DataTable';
+import {
+  getSalesForceAccessToken,
+  getSalesForceInvoiceData,
+  formatSalesForceData,
+} from '@/lib/utils';
+
+import type { PaymentProps } from '@/lib/types';
 
 async function AdminDashboardPage() {
-  const res = await fetch('http://localhost:3000/api/salesforce-GraphQL', {
-    method: 'POST',
-  });
-
-  const data: PaymentProps[] = await res.json();
-
+  // get SF accessToken
+  const accessToken = await getSalesForceAccessToken();
+  // get SF invoice data using accessToken
+  const data = await getSalesForceInvoiceData(accessToken);
+  /*
+  Gets total amount of all payments to use as revenue data in the overview component 
+  */
   let revenue = 0;
   const payments: PaymentProps[] = [];
 
