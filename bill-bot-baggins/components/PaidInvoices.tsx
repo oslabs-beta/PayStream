@@ -76,7 +76,7 @@ export function PaidInvoices(props: any) {
           <TableHead>Payment Method</TableHead>
           <TableHead>Stripe ID</TableHead>
         </TableRow>
-        <TableRow>
+        <TableRow className='flex'>
           <Input
             type='text'
             placeholder='Search by Invoice ID...'

@@ -1,3 +1,4 @@
+import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
 
 export default function AdminLayout({
@@ -6,8 +7,8 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className='flex bg-secondary/5'>
-      <Sidebar />
+    <section className='bg-secondary/5'>
+      <Navbar />
       {children}
     </section>
   );

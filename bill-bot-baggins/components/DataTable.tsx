@@ -66,6 +66,7 @@ export function DataTable<TData, TValue>({
             className='max-w-sm'
           />
         </div>
+        <Button onClick={() => setColumnFilters([])}>Clear</Button>
         <div className='flex items-center py-4'>
           <Input
             placeholder='Filter by Client'

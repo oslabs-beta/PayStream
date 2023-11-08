@@ -7,11 +7,9 @@ import {
 } from '@/components/ui/card';
 import Overview from '@/components/ui/overview';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PaidInvoices } from '@/components/PaidInvoices';
 import { columns } from '@/components/Columns';
 import React from 'react';
 import { RecentSales } from '@/components/RecentSales';
-import Profile from '@/components/Profile';
 import { DataTable } from '@/components/DataTable';
 import {
   getSalesForceAccessToken,
@@ -42,11 +40,10 @@ async function AdminDashboardPage() {
   const mappedData = formatSalesForceData(data);
 
   return (
-    <div className='aspect-auto h-full flex-1 space-y-4 px-5 pt-4 xl:ml-36 xl:h-5/6 xl:pl-36'>
+    <div className='aspect-auto h-full flex-1 space-y-4 pt-4 xl:h-5/6 xl:pl-36'>
       <div className='flex items-center justify-between space-y-2'>
         <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
         <div className='flex items-center space-x-2'></div>
-        <Profile />
       </div>
       <Tabs defaultValue='overview' className='space-y-4'>
         <TabsList>
