@@ -6,7 +6,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className='flex h-screen flex-col bg-secondary/5'>
+    <section className='flex h-screen flex-col bg-[url("/bg-pattern.jpeg")]'>
       <Navbar />
       {children}
       <Footer />

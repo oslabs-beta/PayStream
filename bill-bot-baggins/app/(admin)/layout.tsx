@@ -1,4 +1,4 @@
-import Sidebar from '@/components/Sidebar';
+import Navbar from '@/components/Navbar';
 
 export default function AdminLayout({
   children, // will be a page or nested layout
@@ -6,8 +6,8 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className='flex bg-secondary/5'>
-      <Sidebar />
+    <section className='h-screen bg-neutral-950'>
+      <Navbar />
       {children}
     </section>
   );
