@@ -29,14 +29,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/oslabs-beta/PayStream">
+  <a href="https://pay-stream-git-dev-pay-stream.vercel.app/">
     <img src="big-logo.png" alt="Logo">
   </a>
 
 <h3 align="center">PayStream</h3>
 
   <p align="center">
-    Paystream is a Next.js application designed to streamline financial management for a non-profit client.
+    PayStream is a Next.js application designed to streamline financial management for a non-profit client.
     <br />
     <a href="https://github.com/oslabs-beta/PayStream"><strong>Explore the docs »</strong></a>
     <br />
