@@ -64,78 +64,78 @@ const data = JSON.stringify({
 });
 
 export const monthNames = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
+	'Jan',
+	'Feb',
+	'Mar',
+	'Apr',
+	'May',
+	'Jun',
+	'Jul',
+	'Aug',
+	'Sep',
+	'Oct',
+	'Nov',
+	'Dec',
 ];
 
 export const updateSearchParams = (type: string, value: string) => {
-  // Get the current URL search params
-  const searchParams = new URLSearchParams(window.location.search);
+	// Get the current URL search params
+	const searchParams = new URLSearchParams(window.location.search);
 
-  // Set the specified search parameter to the given value
-  searchParams.set(type, value);
+	// Set the specified search parameter to the given value
+	searchParams.set(type, value);
 
-  // Set the specified search parameter to the given value
-  const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
+	// Set the specified search parameter to the given value
+	const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
 
-  return newPathname;
+	return newPathname;
 };
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+	return twMerge(clsx(inputs))
 }
 
 export const getSalesForceAccessToken = async () => {
-    // convert the base64 private key into a string
-    const privateKey = Buffer.from(BASE64_PRIVATE_KEY, 'base64').toString('utf8');
+	// convert the base64 private key into a string
+	const privateKey = Buffer.from(BASE64_PRIVATE_KEY, 'base64').toString('utf8');
 
-    try {
-      // gets a new (if it hasn't expired it will send the still active token) access token from sales force
-      const jwtTokenResponse = await getToken({
-        iss: TEST_CLIENT_ID,
-        sub: TEST_USERNAME,
-        aud: TEST_URL,
-        privateKey: privateKey,
-      });
+	try {
+		// gets a new (if it hasn't expired it will send the still active token) access token from sales force
+		const jwtTokenResponse = await getToken({
+			iss: TEST_CLIENT_ID,
+			sub: process.env.SALESFORCE_USERNAME!,
+			aud: TEST_URL,
+			privateKey: privateKey,
+		});
 
-      return jwtTokenResponse.access_token;
-      }
-     catch (error) {
-      if (error instanceof Error) {
-          console.error('Error fetching token:', error);
-      }
-	  throw Error;
-    }
+		return jwtTokenResponse.access_token;
+	}
+	catch (error) {
+		if (error instanceof Error) {
+			console.error('Error fetching token:', error);
+		}
+		throw Error;
+	}
 }
 
 export const getSalesForceInvoiceData = async (accessToken: string) => {
-	
+
 	const res = await axios.request({
-	  method: 'post',
-	  maxBodyLength: Infinity,
-	  url: SALESFORCE_GRAPHQL_URI,
-	  headers: {
-		'X-Chatter-Entity-Encoding': 'false',
-		'Content-Type': 'application/json',
-		'Authorization': `Bearer ${accessToken}`,
-		'Cookie': SALESFORCE_COOKIE_AUTH,
-	  },
-	  data: data,
+		method: 'post',
+		maxBodyLength: Infinity,
+		url: SALESFORCE_GRAPHQL_URI,
+		headers: {
+			'X-Chatter-Entity-Encoding': 'false',
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${accessToken}`,
+			'Cookie': SALESFORCE_COOKIE_AUTH,
+		},
+		data: data,
 	});
 
 	// retrieve all invoice information from salesforce graphql call
 	const paymentInfo = res.data.data.uiapi.query.npe01__OppPayment__c.edges;
-  
+
 	const invoices: PaymentProps[] = [];
 
 	paymentInfo.map((record: InvoiceProps) => {
@@ -155,45 +155,45 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
 
 		invoices.push(invoice);
 
-	  })
-	  return invoices
-  }
+	})
+	return invoices
+}
 
-   // helper function to get the month (ex. 'Jan') from the date we get from SF ('2023-10-19')
-  export const getMonthNameFromDueDate = (due_date: string) => {
-    const date = new Date(due_date);
-    return monthNames[date.getMonth()];
-  };
+// helper function to get the month (ex. 'Jan') from the date we get from SF ('2023-10-19')
+export const getMonthNameFromDueDate = (due_date: string) => {
+	const date = new Date(due_date);
+	return monthNames[date.getMonth()];
+};
 
 
-  export const formatSalesForceData = (data: PaymentProps[] ) => {
-    // creates a map to hold every month's data
-    const revenueByMonth: Map<string, number> = new Map();
+export const formatSalesForceData = (data: PaymentProps[]) => {
+	// creates a map to hold every month's data
+	const revenueByMonth: Map<string, number> = new Map();
 
-    // loop through each month and set each month (ex 'Jan') on the Map and its revenue data to 0
-    for (const month of monthNames) {
-      revenueByMonth.set(month, 0);
-    }
+	// loop through each month and set each month (ex 'Jan') on the Map and its revenue data to 0
+	for (const month of monthNames) {
+		revenueByMonth.set(month, 0);
+	}
 
-    // loop through the resulting data from the SF graphQL and add its data to the specific month
-    data.forEach((invoice) => {
-      const { payment_date, amount } = invoice;
-      const currentYear = new Date().getFullYear().toString();
+	// loop through the resulting data from the SF graphQL and add its data to the specific month
+	data.forEach((invoice) => {
+		const { payment_date, amount } = invoice;
+		const currentYear = new Date().getFullYear().toString();
 
-      if (payment_date && payment_date?.includes(currentYear)) {
-        const month = getMonthNameFromDueDate(payment_date as string);
-        const currentRevenue = revenueByMonth.get(month) || 0;
-  
-        revenueByMonth.set(month, currentRevenue + amount);
-      }
-    });
+		if (payment_date && payment_date?.includes(currentYear)) {
+			const month = getMonthNameFromDueDate(payment_date as string);
+			const currentRevenue = revenueByMonth.get(month) || 0;
 
-    // convert the map to an array
-    const mappedData = Array.from(revenueByMonth, ([name, revenue]) => ({
-      name,
-      revenue,
-    }));
+			revenueByMonth.set(month, currentRevenue + amount);
+		}
+	});
 
-    // set the invoice data with the mappedData
-    return mappedData;
-  };
+	// convert the map to an array
+	const mappedData = Array.from(revenueByMonth, ([name, revenue]) => ({
+		name,
+		revenue,
+	}));
+
+	// set the invoice data with the mappedData
+	return mappedData;
+};
