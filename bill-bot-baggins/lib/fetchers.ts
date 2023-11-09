@@ -16,6 +16,6 @@ export async function getInvoiceData(token: string) {
       return res.json();
     } catch (err) {
       console.log(err);
-      return err;
+      return undefined;
     }
   }
