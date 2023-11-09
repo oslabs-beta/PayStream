@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/oslabs-beta/PayStream">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="big-logo.png" alt="Logo">
   </a>
 
 <h3 align="center">PayStream</h3>
@@ -141,6 +141,8 @@ Before using this application, make sure you have the following in place:
     PUB_SUB_ENDPOINT = api.pubsub.salesforce.com:7443
     SALESFORCE_CLIENT_ID = 'ENTER YOUR SALESFORCE CLIENT ID'
     SALESFORCE_CLIENT_SECRET = 'ENTER YOUR SALESFORCE CLIENT SECRET'
+    SALESFORCE_URL = 'https://test.salesforce.com'
+    BASE64_PRIVATE_KEY = 'ENTER YOUR BASE64 PRIVATE KEY'
    ```
    
 7. Enter your Stripe Authentication informatino into the `.env` file:
@@ -156,9 +158,7 @@ Before using this application, make sure you have the following in place:
     CLERK_SECRET_KEY = 'ENTER YOUR CLERK SECRET KEY';
     
     NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
     NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
    ```
    
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -249,7 +249,7 @@ Project Link: [https://github.com/oslabs-beta/PayStream](https://github.com/osla
 [license-shield]: https://img.shields.io/github/license/oslabs-beta/PayStream.svg?style=for-the-badge
 [license-url]: https://github.com/oslabs-beta/PayStream/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/company/pay-stream-dev
 [product-screenshot]: images/screenshot.png
 [React.js]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
 [React-url]: https://reactjs.org/
