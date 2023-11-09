@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <>
       <div className='flex items-center space-x-4'>
         <div className='flex items-center'>
           <Input
@@ -160,6 +160,6 @@ export function DataTable<TData, TValue>({
           Next
         </Button>
       </div>
-    </div>
+    </>
   );
 }

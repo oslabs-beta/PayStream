@@ -4,7 +4,7 @@ import { getToken } from "sf-jwt-token";
 import axios from "axios";
 import { InvoiceProps, PaymentProps } from "./types";
 
-const { TEST_CLIENT_ID, TEST_USERNAME, TEST_URL, BASE64_PRIVATE_KEY, SALESFORCE_GRAPHQL_URI, SALESFORCE_COOKIE_AUTH } = process.env;
+const { SALESFORCE_CLIENT_ID, SALESFORCE_USERNAME, SALESFORCE_URL, BASE64_PRIVATE_KEY, SALESFORCE_GRAPHQL_URI, SALESFORCE_COOKIE_AUTH } = process.env;
 
 /*
 overview of API field names and what they reference
@@ -102,9 +102,9 @@ export const getSalesForceAccessToken = async () => {
     try {
       // gets a new (if it hasn't expired it will send the still active token) access token from sales force
       const jwtTokenResponse = await getToken({
-        iss: TEST_CLIENT_ID,
-        sub: TEST_USERNAME,
-        aud: TEST_URL,
+        iss: SALESFORCE_CLIENT_ID as string,
+        sub: SALESFORCE_USERNAME as string,
+        aud: SALESFORCE_URL as string,
         privateKey: privateKey,
       });
 
