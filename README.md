@@ -128,6 +128,7 @@ Before using this application, make sure you have the following in place:
 5. Enter your JWT Secret into the `.env` file:
    ```js
      JWT_SECRET = 'ENTER YOUR JWT SECRET';
+
    ```
 6. Enter your Salesforce Authentication information into the `.env` file:
    ```js
@@ -141,6 +142,7 @@ Before using this application, make sure you have the following in place:
     PUB_SUB_ENDPOINT = api.pubsub.salesforce.com:7443
     SALESFORCE_CLIENT_ID = 'ENTER YOUR SALESFORCE CLIENT ID'
     SALESFORCE_CLIENT_SECRET = 'ENTER YOUR SALESFORCE CLIENT SECRET'
+    BASE64_PRIVATE_KEY = 'ENTER YOUR BASE64 PRIVATE KEY'
    ```
    
 7. Enter your Stripe Authentication informatino into the `.env` file:
@@ -156,9 +158,7 @@ Before using this application, make sure you have the following in place:
     CLERK_SECRET_KEY = 'ENTER YOUR CLERK SECRET KEY';
     
     NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
     NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
    ```
    
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
