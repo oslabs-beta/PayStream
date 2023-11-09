@@ -53,8 +53,8 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className='flex space-x-4'>
-        <div className='flex items-center py-4'>
+      <div className='flex items-center space-x-4'>
+        <div className='flex items-center'>
           <Input
             placeholder='Filter by Invoice ID'
             value={
@@ -66,6 +66,7 @@ export function DataTable<TData, TValue>({
             className='max-w-sm'
           />
         </div>
+
         <div className='flex items-center py-4'>
           <Input
             placeholder='Filter by Client'
@@ -81,6 +82,15 @@ export function DataTable<TData, TValue>({
             className='max-w-sm'
           />
         </div>
+
+        <Button
+          disabled={!columnFilters.length}
+          className='transition-all active:scale-95'
+          size={'sm'}
+          onClick={() => setColumnFilters([])}
+        >
+          Clear
+        </Button>
       </div>
       <div className='rounded-md border'>
         <Table>

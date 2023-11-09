@@ -12,7 +12,6 @@ async function getInvoiceData(token: string) {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/invoice?token=${token}`,
     // had to add params since this is now a GET request (RH)
     {
-      cache: 'no-cache',
       signal,
       method: 'GET',
       headers: {

@@ -44,6 +44,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
     "react-hot-toast": "^2.4.1",
+    "react-particles": "^2.12.2",
     "react-router-dom": "^6.15.0",
     "recharts": "^2.8.0",
     "redis-cli": "^2.1.2",
@@ -52,6 +53,7 @@
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.1",
+    "tsparticles": "^2.12.0",
     "xhr": "^2.6.0",
     "zod": "^3.22.4"
   },

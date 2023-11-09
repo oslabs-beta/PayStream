@@ -5,29 +5,34 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Overview from '@/components/ui/overview';
-import { PaidInvoices } from '@/components/PaidInvoices';
+import Overview from '@/components/overview';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { columns } from '@/components/Columns';
 import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PaymentProps } from '@/lib/types';
-import { formatSalesForceData } from '@/lib/utils';
 import { RecentSales } from '@/components/RecentSales';
-import Profile from '@/components/Profile';
 import { DataTable } from '@/components/DataTable';
+import {
+  getSalesForceAccessToken,
+  getSalesForceInvoiceData,
+  formatSalesForceData,
+} from '@/lib/utils';
+
+import type { PaymentProps } from '@/lib/types';
 
 async function AdminDashboardPage() {
-  const res = await fetch('http://localhost:3000/api/salesforce-GraphQL', {
-    method: 'POST',
-  });
-
-  const data: PaymentProps[] = await res.json();
-
+  // get SF accessToken
+  const accessToken = await getSalesForceAccessToken();
+  // get SF invoice data using accessToken
+  const data = await getSalesForceInvoiceData(accessToken);
+  /*
+  Gets total amount of all payments to use as revenue data in the overview component 
+  */
   let revenue = 0;
   const payments: PaymentProps[] = [];
+  const currentYear = new Date().getFullYear().toString();
 
   data.forEach((invoice) => {
-    if (invoice.payment_date) {
+    if (invoice.payment_date && invoice.payment_date.includes(currentYear)) {
       revenue += invoice.amount;
       payments.push(invoice);
     }
@@ -36,11 +41,10 @@ async function AdminDashboardPage() {
   const mappedData = formatSalesForceData(data);
 
   return (
-    <div className='aspect-auto h-full flex-1 space-y-4 px-5 pt-4 xl:ml-36 xl:h-5/6 xl:pl-36'>
+    <div className='aspect-auto h-full flex-1 space-y-4 pt-4 xl:h-5/6 xl:pl-36'>
       <div className='flex items-center justify-between space-y-2'>
         <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
         <div className='flex items-center space-x-2'></div>
-        <Profile />
       </div>
       <Tabs defaultValue='overview' className='space-y-4'>
         <TabsList>
@@ -49,10 +53,10 @@ async function AdminDashboardPage() {
         </TabsList>
         <TabsContent value='overview' className='space-y-4 pr-36'>
           <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
-            <Card className='bg-neutral-900'>
+            <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>
-                  Total Revenue
+                  Revenue YTD
                 </CardTitle>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -80,7 +84,7 @@ async function AdminDashboardPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card className='bg-neutral-900'>
+            <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>
                   Opportunities
@@ -107,7 +111,7 @@ async function AdminDashboardPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card className='bg-neutral-900'>
+            <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>Sales</CardTitle>
                 <svg
@@ -131,7 +135,7 @@ async function AdminDashboardPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card className='bg-neutral-900'>
+            <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>
                   Active Now
@@ -158,15 +162,15 @@ async function AdminDashboardPage() {
             </Card>
           </div>
           <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
-            <Card className='col-span-4 bg-neutral-900'>
+            <Card className='col-span-4'>
               <CardHeader>
-                <CardTitle>Overview</CardTitle>
+                <CardTitle>{`Overview of ${currentYear}`}</CardTitle>
               </CardHeader>
               <CardContent className='pl-2'>
                 <Overview data={mappedData} />
               </CardContent>
             </Card>
-            <Card className='col-span-3 bg-neutral-900'>
+            <Card className='col-span-3'>
               <CardHeader>
                 <CardTitle>Recent Payments</CardTitle>
                 <CardDescription>
@@ -179,8 +183,7 @@ async function AdminDashboardPage() {
             </Card>
           </div>
         </TabsContent>
-        <TabsContent value='analytics' className='space-y-4 pr-36'>
-          {/* <PaidInvoices data={data} /> */}
+        <TabsContent value='analytics' className='pr-36'>
           <DataTable columns={columns} data={data} />
         </TabsContent>
       </Tabs>

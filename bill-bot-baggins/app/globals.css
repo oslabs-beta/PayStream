@@ -48,7 +48,6 @@
     --ring: 20.5 90.2% 48.2%;
   }
 }
-
  
 @layer base {
   * {
@@ -56,5 +55,11 @@
   }
   body {
     @apply bg-background text-foreground;
+
+
   }
+}
+
+body::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }

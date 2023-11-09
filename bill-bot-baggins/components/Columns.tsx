@@ -3,7 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { PaymentProps } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
 export const columns: ColumnDef<PaymentProps>[] = [
   {
@@ -13,10 +13,12 @@ export const columns: ColumnDef<PaymentProps>[] = [
         <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
           Invoice ID
           {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4' />
+            <ArrowUp className='ml-2 h-4 w-4' />
           ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4' />
-          ) : null}
+            <ArrowDown className='ml-2 h-4 w-4' />
+          ) : (
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          )}
         </Button>
       );
     },
@@ -28,10 +30,12 @@ export const columns: ColumnDef<PaymentProps>[] = [
         <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
           Client
           {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4' />
+            <ArrowUp className='ml-2 h-4 w-4' />
           ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4' />
-          ) : null}
+            <ArrowDown className='ml-2 h-4 w-4' />
+          ) : (
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          )}
         </Button>
       );
     },
@@ -43,10 +47,12 @@ export const columns: ColumnDef<PaymentProps>[] = [
         <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
           Project
           {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4' />
+            <ArrowUp className='ml-2 h-4 w-4' />
           ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4' />
-          ) : null}
+            <ArrowDown className='ml-2 h-4 w-4' />
+          ) : (
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          )}
         </Button>
       );
     },
@@ -58,10 +64,12 @@ export const columns: ColumnDef<PaymentProps>[] = [
         <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
           Amount
           {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4' />
+            <ArrowUp className='ml-2 h-4 w-4' />
           ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4' />
-          ) : null}
+            <ArrowDown className='ml-2 h-4 w-4' />
+          ) : (
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          )}
         </Button>
       );
     },
@@ -72,7 +80,7 @@ export const columns: ColumnDef<PaymentProps>[] = [
         currency: 'USD',
       }).format(amount);
 
-      return <div className='text-right font-medium'>{formatted}</div>;
+      return <div className='font-medium'>{formatted}</div>;
     },
   },
   {
@@ -82,10 +90,12 @@ export const columns: ColumnDef<PaymentProps>[] = [
         <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
           Invoice Sent Date
           {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4' />
+            <ArrowUp className='ml-2 h-4 w-4' />
           ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4' />
-          ) : null}
+            <ArrowDown className='ml-2 h-4 w-4' />
+          ) : (
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          )}
         </Button>
       );
     },
@@ -97,42 +107,22 @@ export const columns: ColumnDef<PaymentProps>[] = [
         <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
           Invoice Due Date
           {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4' />
+            <ArrowUp className='ml-2 h-4 w-4' />
           ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4' />
-          ) : null}
+            <ArrowDown className='ml-2 h-4 w-4' />
+          ) : (
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          )}
         </Button>
       );
     },
   },
   {
     accessorKey: 'payment_date',
-    header: ({ column }) => {
-      return (
-        <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
-          Payment Date
-          {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4' />
-          ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4' />
-          ) : null}
-        </Button>
-      );
-    },
+    header: 'Payment Date',
   },
   {
     accessorKey: 'payment_method',
-    header: ({ column }) => {
-      return (
-        <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
-          Payment Method
-          {column.getIsSorted() === 'asc' ? (
-            <ArrowUp className='h-4 w-4' />
-          ) : column.getIsSorted() === 'desc' ? (
-            <ArrowDown className='h-4 w-4' />
-          ) : null}
-        </Button>
-      );
-    },
+    header: 'Payment Method',
   },
 ];

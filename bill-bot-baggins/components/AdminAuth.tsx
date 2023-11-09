@@ -57,6 +57,7 @@ export function AdminAuth({ className, ...props }: UserAuthFormProps) {
       // if there was an error logging in (wrong password/email)
       // sets an error so that it will be displayed to the user
     } catch (err: any) {
+      console.log(err);
       setIsSubmitting(false);
       setIsError(true);
     }
