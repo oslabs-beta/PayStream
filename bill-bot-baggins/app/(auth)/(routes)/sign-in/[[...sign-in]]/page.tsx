@@ -25,7 +25,7 @@ function SignInPage() {
         <div className='relative z-20 mt-auto'>
           <blockquote className='space-y-2'>
             <p className='text-lg'>
-              &ldquo;BillBotBaggins: Where your payments journey begins, and
+              &ldquo;PayStream: Where your payments journey begins, and
               financial adventures never feel like a quest.&rdquo;
             </p>
             <footer className='text-sm'>Bobby Tables</footer>
