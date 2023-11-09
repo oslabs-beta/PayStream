@@ -9,7 +9,7 @@ const secretKey = process.env.JWT_SECRET;
 async function getInvoiceData(token: string) {
   const { signal } = new AbortController();
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/invoice?token=${token}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/invoice?token=${token}`,
     // had to add params since this is now a GET request (RH)
     {
       signal,
