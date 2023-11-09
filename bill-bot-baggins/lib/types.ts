@@ -1,4 +1,3 @@
-import { type } from "os";
 import { MouseEventHandler } from "react";
 
 export type CustButtonProps = {
@@ -9,7 +8,7 @@ export type CustButtonProps = {
 }
 
 export type PaymentProps = {
-	sf_unique_id?: string;
+	sf_unique_id: string;
 	account_name?: string;
 	project_name?: string;
 	payment_method?: string;
@@ -18,7 +17,6 @@ export type PaymentProps = {
 	payment_date?: string; //invoice_paid_date
 	amount: number;
 	invoice_id: string;
-	stripe_invoice_id: string;
 }
 
 export type PaymentContProps = {
@@ -41,7 +39,7 @@ export type SearchFilterProps = {
 
 export type SearchProps = {
 	invoice_ID: string;
-	setInvoice_ID: (account: string) => void;
+	setInvoice_ID: (invoice_ID: string) => void;
 }
 
 // declaring an interface to reassign AxiosResponse implicit "any" return to acess array properties
@@ -60,3 +58,48 @@ export type InvoiceId = {
 export type Token = {
 	token: string;
   };
+
+export  type InvoiceProps = {
+	node: {
+	  Id: string,
+	  Invoice__c: {
+		value: string
+	  },
+	  Project_Number__c: {
+		value: string | undefined
+	  }
+	  Invoice_Sent_Date__c: {
+		value: string | undefined
+	  },
+	  npe01__Payment_Amount__c: {
+		value: number
+	  },
+	  Opportunity_Account_Name__c: {
+		value: string
+	  },
+	  npe01__Payment_Method__c: {
+		value: string
+	  },
+	  npe01__Payment_Date__c: {
+		value: string | undefined
+	  },
+	  npe01__Scheduled_Date__c: {
+		value: string | undefined
+	  }
+	}
+}
+
+export type InvoiceDatas = {
+	  "sf_unique_id": string,
+	  "invoice_id": string,
+	  "amount": number,
+	  "invoice_sent_date": string,
+	  "payment_date": string,
+	  "invoice_due_date": string, //YYYY-MM-DD
+	  "payment_method": string,
+	  "project_name": string,
+	  "account_name": string,
+//	  "stripe_invoice_id": string
+	}
+
+export type DataArray =PaymentProps[];

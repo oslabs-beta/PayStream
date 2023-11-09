@@ -1,5 +1,4 @@
 import '@/app/globals.css';
-import { Footer, Header } from '@/components';
 
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
@@ -31,9 +30,7 @@ export default async function RootLayout({
         <head>
           <link rel='icon' href='/favicon.ico' />
         </head>
-        <body
-          className={`bg-[url("/bg-pattern.jpeg")] bg-cover bg-no-repeat ${font.className}`}
-        >
+        <body className={`${font.className}`}>
           <Theme
             appearance='dark'
             accentColor='iris'
@@ -43,9 +40,7 @@ export default async function RootLayout({
             scaling='90%'
             className='h-screen'
           >
-            <Header />
             {children}
-            <Footer />
             <Toaster />
           </Theme>
         </body>
