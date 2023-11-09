@@ -24,6 +24,8 @@ async function AdminDashboardPage() {
   const accessToken = await getSalesForceAccessToken();
   // get SF invoice data using accessToken
   const data = await getSalesForceInvoiceData(accessToken);
+
+  console.log(data);
   /*
   Gets total amount of all payments to use as revenue data in the overview component 
   */
