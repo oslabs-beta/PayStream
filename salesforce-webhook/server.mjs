@@ -1,7 +1,7 @@
 import express from "express";
 
 import salesforceController from "./salesforce-pub-sub-api.mjs";
-
+const port = process.env.PORT || 4242;
 const app = express();
 app.use(express.json());
 
@@ -12,4 +12,4 @@ app.use(express.json());
 salesforceController();
 // app.use()
 
-app.listen(3030, () => console.log("server is listening on port 3030"));
+app.listen(port, () => console.log("server is listening on port 3030"));
