@@ -36,7 +36,7 @@ async function Home() {
                   with OS Labs.
                 </p>
                 <Button className='my-3 mr-3 rounded-full bg-green-200 text-lg font-bold text-black hover:bg-green-200/90'>
-                  <Link href='https://pay-stream-git-dev-pay-stream.vercel.app/'>
+                  <Link href='https://pay-stream-git-dev-pay-stream.vercel.app/admin'>
                     Experience PayStream
                   </Link>
                 </Button>
