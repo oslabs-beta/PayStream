@@ -177,9 +177,15 @@ Before using this application, make sure you have the following in place:
    - Modify the application to match your nonprofit’s specific Salesforce objects, fields, and donation processing logic.
 
 <!-- USAGE EXAMPLES -->
-## Demo
+## Screenshots
 
-USE THIS SPACE FOR DEMO OF PROJECT GIF
+<div align="center">
+  <a href="https://pay-stream-git-dev-pay-stream.vercel.app/">
+    <img src="bill-bot-baggins/public/splashpage.png" alt="splash">
+    <img src="bill-bot-baggins/public/invoice.png" alt="invoice">
+    <img src="bill-bot-baggins/public/dashboard.png" alt="dashboard">
+  </a>
+</div>
 
 
 <!-- CONTRIBUTING -->
