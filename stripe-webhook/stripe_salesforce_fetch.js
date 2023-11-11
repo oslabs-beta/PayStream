@@ -3,6 +3,21 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const createConfig = (method, url, data) => {
+    return {
+      method,
+      maxBodyLength: Infinity,
+      url,
+      headers: { 
+        'X-Chatter-Entity-Encoding': 'false', 
+        'Content-Type': 'application/json', 
+        'Authorization': process.env.SALESFORCE_TOKEN, 
+        'Cookie': process.env.SALESFORCE_COOKIE_AUTH
+      },
+      data
+    }
+}
+
 export const salesforcePaid = async (stripeId) => {
 
     // query to fetch the salesforce record id based on the stripeId
@@ -24,18 +39,7 @@ export const salesforcePaid = async (stripeId) => {
         variables: {"stripeId":stripeId}
     });
     
-    let fetchConfig = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql',
-      headers: { 
-        'X-Chatter-Entity-Encoding': 'false', 
-        'Content-Type': 'application/json', 
-        'Authorization': process.env.SALESFORCE_TOKEN, 
-        'Cookie': process.env.SALESFORCE_COOKIE_AUTH
-      },
-      data : fetchData
-    };
+    let fetchConfig = createConfig('post', `https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/graphql`, fetchData)
     
     const fetchedRecordData = await axios.request(fetchConfig)
 
@@ -55,18 +59,7 @@ export const salesforcePaid = async (stripeId) => {
         }
     });
 
-    let config = {
-    method: 'patch',
-    maxBodyLength: Infinity,
-    url: `https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/ui-api/records/${recordId}`,
-    headers: { 
-        'Content-Type': 'application/json', 
-        'Authorization': process.env.SALESFORCE_TOKEN, 
-        'Cookie': process.env.SALESFORCE_COOKIE_AUTH
-    },
-    data : payData
-    };
-
+    let config = createConfig('patch', `https://escsocal--lc001.sandbox.my.salesforce.com/services/data/v58.0/ui-api/records/${recordId}`, payData)
     const resultant = await axios.request(config);
 
 }
