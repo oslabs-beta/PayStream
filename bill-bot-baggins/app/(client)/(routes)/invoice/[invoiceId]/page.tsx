@@ -10,7 +10,6 @@ async function getInvoiceData(token: string) {
   const { signal } = new AbortController();
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/invoice?token=${token}`,
-    // had to add params since this is now a GET request (RH)
     {
       signal,
       method: 'GET',
@@ -28,11 +27,6 @@ async function InvoicePage({ params }: { params: InvoiceId }) {
 
   // creates the JWT using the invoiceId in the params and a secretKey
   const token = jwt.sign({ invoiceId }, secretKey, { expiresIn: '1h' });
-  /**
-   * renders invoice display component that holds invoice information from stripe
-   * invoice display component hold stripe container that uses search params to query relevant client invoice
-   * 09/27/2023 test link: http://localhost:3000/invoice/in_1Nv2UoHT7cVdV2e0iJEYuirV
-   */
   const data = await getInvoiceData(token);
 
   return (
