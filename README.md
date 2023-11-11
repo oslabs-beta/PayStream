@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://pay-stream-git-dev-pay-stream.vercel.app/">
-    <img src="big-logo.png" alt="Logo">
+    <img src="bill-bot-baggins/public/big-logo.png" alt="Logo">
   </a>
 
 <h3 align="center">PayStream</h3>
