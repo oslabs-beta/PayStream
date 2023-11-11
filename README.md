@@ -41,8 +41,6 @@
     <a href="https://github.com/oslabs-beta/PayStream"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/oslabs-beta/PayStream">View Demo</a>
-    ·
     <a href="https://github.com/oslabs-beta/PayStream/issues">Report Bug</a>
     ·
     <a href="https://github.com/oslabs-beta/PayStream/issues">Request Feature</a>
