@@ -3,6 +3,9 @@ import { twMerge } from "tailwind-merge"
 import { getToken } from "sf-jwt-token";
 import axios from "axios";
 import { InvoiceProps, PaymentProps } from "./types";
+import jwt from 'jsonwebtoken';
+import Stripe from 'stripe';
+
 
 const { SALESFORCE_CLIENT_ID, SALESFORCE_USERNAME, SALESFORCE_URL, BASE64_PRIVATE_KEY, SALESFORCE_GRAPHQL_URI, SALESFORCE_COOKIE_AUTH } = process.env;
 
@@ -197,3 +200,32 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
     // set the invoice data with the mappedData
     return mappedData;
   };
+
+
+  // added typescript option to the stripe config so we have types for the stripe objects (RH)
+  const config: Stripe.StripeConfig = {
+    apiVersion: '2023-08-16',
+    typescript: true,
+  };
+
+  // this was necessary for typescript issue I was having (RH)
+  type JwtPayload = {
+    invoiceId: string;
+  };
+
+  export async function getStripeInvoiceData(token: string) {
+    const { STRIPE_SECRET_KEY } = process.env;
+  
+    const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
+    const stripe = new Stripe(STRIPE_SECRET_KEY, config);
+    try {
+      // The invoiceId from the req searchParams should be the ID in the URL sent to the client
+      const invoice = await stripe.invoices.retrieve(decoded.invoiceId);
+      console.log("Invoice data: ", invoice);
+      return invoice;
+    } catch (err) {
+      console.log(typeof err);
+      console.log("Invoice Error: ", err);
+      return undefined
+    }
+  }
