@@ -7,7 +7,6 @@ const { retreiveOppType, updateSalesforceStripeId, getPaymentType } =
 const { createStripeInvoice, payStripeInvoice, voidStripeInvoice } =
   stripeRouter;
 
-// List of opportunity record types from SAlesforce, would like to find a way to have this sent to the app, not manually updated
 const recordTypes = [
   "SP",
   "BD",
@@ -26,8 +25,6 @@ const recordTypes = [
   "DDP",
 ];
 
-//need to store salesforce and stripe ids so that when /if a payment is deleted, it can get voided/deleted in stripe key-value = salesforce-stripe
-
 const eventHandler = async (event) => {
   let opportunity;
   let paymentType = {};
@@ -35,20 +32,10 @@ const eventHandler = async (event) => {
     event.payload.ChangeEventHeader;
   const { For_Chart__c, npe01__Payment_Amount__c, Name } = event.payload;
   const recordId = recordIds[0];
-  // console.log("changedFields array: ", changedFields);
+  
   if (changedFields.length === 1) return;
-  // if the opp type that corresponds to the updated payment record is in our record types array enter switch cases
 
   switch (changeType) {
-    /**
-     *  if changeType is "create" AND payment type is cost to clientneed to create object for stripe invoice details:
-     * customer name
-     * customer email
-     * payment invoice number
-     * payment amount
-     *
-     * creates invoice in stripe
-     */
 
     case "CREATE": {
       console.log("CREATE case changeType: ", changeType);
@@ -66,9 +53,6 @@ const eventHandler = async (event) => {
         const invoice_number = Name;
         console.log("payment amount: ", paymentAmount.double);
 
-        // console.log("CREATE id: ", oppType);
-        // if (paymentType.string === "Cost to Client") {
-        // }
         const paymentDetails = {
           account_name: opportunity.account_name,
           amount: paymentAmount.double,
@@ -84,23 +68,16 @@ const eventHandler = async (event) => {
       }
       break;
     }
-    /**
-     * if changeType is "update" /**
-     * use changed fields to identify which properties to data capture and then find relevant invoice in stripe to update
-     */
+
     case "UPDATE": {
-      //currently hitting UPDATE with stripe id is added, will need to make an array of changes that are acceptable and want to do
-      //logic to see if stripe invoice ID exists, if not, can we make it hit that route
-      /**
-       * need to take record id, get stripe invoice id; if no stripe invoice id check opportunity type and make an invoice
-       */
+
       console.log("UPDATE case changeType: ", changeType);
-      // only have invoice record id
+
       if (!For_Chart__c) {
         const clientPayment = getPaymentType(recordId);
         if (clientPayment) paymentType = "Cost to Client";
       }
-      console.log("UPDATE payment type: ", paymentType);
+      // console.log("UPDATE payment type: ", paymentType);
       const updates = {};
       changedFields.forEach((field) => {
         console.log("UPDATE change fields: ", changedFields);
