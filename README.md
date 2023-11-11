@@ -145,14 +145,14 @@ Before using this application, make sure you have the following in place:
     BASE64_PRIVATE_KEY = 'ENTER YOUR BASE64 PRIVATE KEY'
    ```
    
-7. Enter your Stripe Authentication informatino into the `.env` file:
+7. Enter your Stripe Authentication information into the `.env` file:
    ```js
    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = 'ENTER YOUR STRIPE PUBLIC KEY';
    STRIPE_SECRET_KEY = 'ENTER YOUR STRIPE SECRET KEY';
    STRIPE_ENDPOINT_SECRET = 'ENTER YOUR STRIPE ENDPOINT SECRET'
    ```
    
-8. Enter your Clerk Authentication informatino into the `.env` file:
+8. Enter your Clerk Authentication information into the `.env` file:
    ```js
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = 'ENTER YOUR CLERK PUBLIC KEY';
     CLERK_SECRET_KEY = 'ENTER YOUR CLERK SECRET KEY';
