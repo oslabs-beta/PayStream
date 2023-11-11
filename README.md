@@ -181,9 +181,9 @@ Before using this application, make sure you have the following in place:
 
 <div align="center">
   <a href="https://pay-stream-git-dev-pay-stream.vercel.app/">
-    <img src="bill-bot-baggins/public/splashpage.png" alt="splash">
-    <img src="bill-bot-baggins/public/invoice.png" alt="invoice">
-    <img src="bill-bot-baggins/public/dashboard.png" alt="dashboard">
+    <img width="750" src="bill-bot-baggins/public/splashpage.png" alt="splash">
+    <img width="750" src="bill-bot-baggins/public/invoice.png" alt="invoice">
+    <img width="750" src="bill-bot-baggins/public/dashboard-2.png" alt="dashboard">
   </a>
 </div>
 
