@@ -24,6 +24,7 @@ async function AdminDashboardPage() {
   const accessToken = await getSalesForceAccessToken();
   // get SF invoice data using accessToken
   const data = await getSalesForceInvoiceData(accessToken);
+
   /*
   Gets total amount of all payments to use as revenue data in the overview component 
   */
@@ -34,32 +35,55 @@ async function AdminDashboardPage() {
   let pastyearrevenue = 0;
   const payments: PaymentProps[] = [];
   const currentYear = new Date().getFullYear().toString();
-  const pastYear = ((new Date().getFullYear()) - 1).toString();
-  const currentMonth = ((new Date().getMonth()) + 1).toString();
-  const pastMonth = ((new Date().getMonth())).toString();
+  const pastYear = (new Date().getFullYear() - 1).toString();
+  const currentMonth = (new Date().getMonth() + 1).toString();
+  const pastMonth = new Date().getMonth().toString();
   const currentDate = new Date();
 
+  // gets 5 payments to display in the recent payments (need to change this to be only the most recent 5 payments)
+  for (let i = 0; i < data.length && i < 5; i++) {
+    if (data[i].payment_date && data[i].payment_date?.includes(currentYear)) {
+      payments.push(data[i]);
+    }
+  }
+
+  // get the total revenue to display
   data.forEach((invoice) => {
     if (invoice.payment_date && invoice.payment_date.includes(currentYear)) {
       revenue += invoice.amount;
-      payments.push(invoice);
     }
+  });
 
+  data.forEach((invoice) => {
     if (invoice.payment_date && invoice.payment_date.includes(pastYear)) {
       pastyearrevenue += invoice.amount;
     }
-    if (invoice.payment_date && invoice.payment_date.slice(5,7).includes(currentMonth)) {
+    if (
+      invoice.payment_date &&
+      invoice.payment_date.slice(5, 7).includes(currentMonth)
+    ) {
       monthrevenue += invoice.amount;
     }
-    if (invoice.payment_date && invoice.payment_date.slice(5,7).includes(pastMonth)) {
+    if (
+      invoice.payment_date &&
+      invoice.payment_date.slice(5, 7).includes(pastMonth)
+    ) {
       pastmonthrevenue += invoice.amount;
     }
-    if (invoice.invoice_due_date && (new Date(invoice.invoice_due_date) < currentDate) && (invoice.payment_date == undefined)) {
-      outstandingInvoices+=1;
-    }   
+    if (
+      invoice.invoice_due_date &&
+      new Date(invoice.invoice_due_date) < currentDate &&
+      invoice.payment_date == undefined
+    ) {
+      outstandingInvoices += 1;
+    }
   });
-  const monthrevenuegrowth = (monthrevenue/pastmonthrevenue < Infinity) ? monthrevenue/pastmonthrevenue : 100;
-  const yearrevenuegrowth = (revenue/pastyearrevenue < Infinity) ? revenue/pastyearrevenue : 100;
+  const monthrevenuegrowth =
+    monthrevenue / pastmonthrevenue < Infinity
+      ? monthrevenue / pastmonthrevenue
+      : 100;
+  const yearrevenuegrowth =
+    revenue / pastyearrevenue < Infinity ? revenue / pastyearrevenue : 100;
 
   const mappedData = formatSalesForceData(data);
 
@@ -103,7 +127,7 @@ async function AdminDashboardPage() {
                   }
                 )}`}</div>
                 <p className='text-xs text-muted-foreground'>
-                +{`${yearrevenuegrowth}`}% from last year
+                  +{`${yearrevenuegrowth}`}% from last year
                 </p>
               </CardContent>
             </Card>
@@ -128,7 +152,7 @@ async function AdminDashboardPage() {
                 </svg>
               </CardHeader>
               <CardContent>
-              <div className='text-2xl font-bold'>{`${monthrevenue.toLocaleString(
+                <div className='text-2xl font-bold'>{`${monthrevenue.toLocaleString(
                   'en-US',
                   {
                     style: 'currency',
@@ -142,7 +166,9 @@ async function AdminDashboardPage() {
             </Card>
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle className='text-sm font-medium'># of Outstanding Invoices</CardTitle>
+                <CardTitle className='text-sm font-medium'>
+                  # of Outstanding Invoices
+                </CardTitle>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 24 24'
@@ -159,7 +185,7 @@ async function AdminDashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className='text-2xl font-bold'>
-                {`${outstandingInvoices}`}
+                  {`${outstandingInvoices}`}
                 </div>
                 {/* <p className='text-xs text-muted-foreground'>
                 {`${outstand}`}
@@ -251,7 +277,7 @@ export default AdminDashboardPage;
 //   // get SF invoice data using accessToken
 //   const data = await getSalesForceInvoiceData(accessToken);
 //   /*
-//   Gets total amount of all payments to use as revenue data in the overview component 
+//   Gets total amount of all payments to use as revenue data in the overview component
 //   */
 //   let revenue = 0;
 //   const payments: PaymentProps[] = [];
@@ -418,4 +444,3 @@ export default AdminDashboardPage;
 // }
 
 // export default AdminDashboardPage;
-
