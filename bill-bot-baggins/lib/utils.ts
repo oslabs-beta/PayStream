@@ -221,10 +221,8 @@ export const getSalesForceInvoiceData = async (accessToken: string) => {
     try {
       // The invoiceId from the req searchParams should be the ID in the URL sent to the client
       const invoice = await stripe.invoices.retrieve(decoded.invoiceId);
-      console.log("Invoice data: ", invoice);
       return invoice;
     } catch (err) {
-      console.log(typeof err);
       console.log("Invoice Error: ", err);
       return undefined
     }

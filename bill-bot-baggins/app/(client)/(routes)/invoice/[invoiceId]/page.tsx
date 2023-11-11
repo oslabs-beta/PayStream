@@ -15,7 +15,6 @@ async function InvoicePage({ params }: { params: InvoiceId }) {
   const token = jwt.sign({ invoiceId }, secretKey, { expiresIn: '1h' });
   const data: Stripe.Response<Stripe.Invoice> | undefined =
     await getStripeInvoiceData(token);
-  console.log('Invoice data: ', data);
 
   return (
     <section className='flex h-5/6 w-full flex-col items-center justify-center'>
