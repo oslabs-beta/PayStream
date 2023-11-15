@@ -11,9 +11,10 @@ import { columns } from '@/components/Columns';
 import React from 'react';
 import { RecentSales } from '@/components/RecentSales';
 import DataTable from '@/components/DataTable';
+import { getSalesForceAccessToken, getSalesForceInvoiceData } from '@/lib/api';
 import {
-  getSalesForceAccessToken,
-  getSalesForceInvoiceData,
+  getRevenueData,
+  getMonthlyRevenueData,
   formatSalesForceData,
 } from '@/lib/utils';
 
