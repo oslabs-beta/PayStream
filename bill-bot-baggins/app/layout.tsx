@@ -1,6 +1,5 @@
 import '@/app/globals.css';
 
-import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
