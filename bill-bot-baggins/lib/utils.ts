@@ -25,7 +25,7 @@ export const getMonthlyRevenueData = (data: PaymentProps[] ) => {
 
     if (payment_date && payment_date?.includes(currentYear)) {
       const month = Number(payment_date.slice(5, 7));
-      revenueByMonth[month].revenue += amount;
+      revenueByMonth[month - 1].revenue += amount;
     }
   });
 
