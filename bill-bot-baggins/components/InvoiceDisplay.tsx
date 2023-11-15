@@ -13,8 +13,10 @@ import Stripe from 'stripe';
 
 export default function InvoiceDisplay({
   invoice,
+  error,
 }: {
   invoice: Stripe.Response<Stripe.Invoice> | undefined;
+  error?: string;
 }) {
   let invoiceDate: string, dueDate: string;
 
@@ -33,7 +35,7 @@ export default function InvoiceDisplay({
       year: 'numeric',
     });
   }
-  return invoice ? (
+  return invoice && !error ? (
     <div className='flex h-full w-full flex-col items-center justify-center space-y-4'>
       <main className='flex h-full w-full max-w-[900px] flex-col items-center justify-center space-y-3 px-4'>
         <h1 className='flex w-full items-center gap-3 text-2xl font-bold'>
