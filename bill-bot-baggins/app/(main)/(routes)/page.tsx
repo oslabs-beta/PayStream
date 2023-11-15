@@ -50,9 +50,9 @@ async function Home() {
               </div>
             </footer>
           </div>
-          <div className='absolute bottom-10 '>
-            <h1 className='pb-4 text-xl font-semibold tracking-tight sm:text-3xl'>
-              Meet the <span className='tracking-wider'>T e a m</span>
+          <div className='absolute bottom-10'>
+            <h1 className='pb-4 text-xl tracking-tight sm:text-3xl'>
+              Meet the <span className='pl-2 font-bold'>T e a m</span>
             </h1>
             <footer className='flex gap-4'>
               <TeamMember

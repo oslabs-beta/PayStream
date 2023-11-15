@@ -11,15 +11,14 @@ type TeamMemberProps = {
 
 const TeamMember = ({ href, email, firstName, lastName }: TeamMemberProps) => {
   return (
-    <div className='flex flex-col items-center space-y-2'>
+    <div className='flex flex-col items-center justify-center space-y-2'>
       <Link href={href}>
         <Image
           src='/github-mark-white.png'
           alt='GitHub Invertocat logo'
-          width={20}
-          height={20}
+          width={30}
+          height={30}
           quality={95}
-          className='w-auto content-center object-contain'
         />
       </Link>
       <Link href={`mailto:${email}`}>
