@@ -1,7 +1,6 @@
 import React from 'react';
-import { Badge, Box, Flex } from '@radix-ui/themes';
+import Stripe from 'stripe';
 import InvoiceSection from '@/components/InvoiceSection';
-import { AlertCircle } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -10,8 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Stripe from 'stripe';
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { AlertCircle } from 'lucide-react';
 
 export default function InvoiceDisplay({
   invoice,
