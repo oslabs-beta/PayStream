@@ -21,7 +21,7 @@ const Navbar = async () => {
           />
         </Link>
       </div>
-      {user && <Profile />}
+      {user ? <Profile /> : null}
     </header>
   );
 };

@@ -8,10 +8,7 @@ import { getStripeInvoiceData } from '@/lib/api';
 async function InvoicePage({ params }: { params: InvoiceId }) {
   const { invoiceId } = params;
 
-  const data:
-    | Stripe.Response<Stripe.Invoice>
-    | Stripe.errors.StripeError
-    | undefined = await getStripeInvoiceData(invoiceId);
+  const data = await getStripeInvoiceData(invoiceId);
 
   return (
     <section className='flex h-full w-full flex-col items-center justify-center'>
