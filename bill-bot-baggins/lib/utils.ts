@@ -71,7 +71,10 @@ export const getRevenueData = (data: PaymentProps[] | undefined) => {
   const pastMonth = new Date().getMonth().toString();
   const currentDate = new Date();
 
+  sortDataByPaymentDate(data);
+
   if (data) {
+    // get 5 most recent payments (array is now sorted by most recent payment)
     for (let i = 0; i < data.length && i < 5; i++) {
       if (data[i].payment_date && data[i].payment_date?.includes(currentYear)) {
         results.payments.push(data[i]);
@@ -121,4 +124,17 @@ const getRevenueGrowth = (pastRevenue: number, currentRevenue: number) => {
       : currentRevenue === 0
       ? 0
       : 100;
+}
+
+const sortDataByPaymentDate = (paymentArray: PaymentProps[] | undefined) => {
+
+  // sort the data array by payment_date, which allows for the 5 most recent sales to be shown
+  if (paymentArray) {
+    paymentArray.sort((a, b) => {
+      const dateA = a.payment_date ? new Date(a.payment_date).getTime() : 0;
+      const dateB = b.payment_date ? new Date(b.payment_date).getTime() : 0;
+      
+      return dateB - dateA;
+    });
+  }
 }

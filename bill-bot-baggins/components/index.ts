@@ -1,9 +1,9 @@
-import Navbar from './Navbar';
-import Footer from './Footer';
-import Overview from './overview';
-import { RecentSales } from './RecentSales';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import Overview from '@/components/overview';
+import RecentSales from '@/components/RecentSales';
+import DataTable from '@/components/DataTable';
 import { columns }from '@/components/Columns';
-import DataTable from './DataTable';
 
 
 export {
@@ -11,6 +11,6 @@ export {
     Footer,
     Overview,
     RecentSales,
-    columns,
     DataTable,
+    columns,
 };

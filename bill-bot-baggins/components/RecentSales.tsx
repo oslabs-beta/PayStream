@@ -1,6 +1,10 @@
 import { PaymentProps } from '@/lib/types';
 
-export function RecentSales({ payments }: { payments: PaymentProps[] }) {
+export default function RecentSales({
+  payments,
+}: {
+  payments: PaymentProps[];
+}) {
   return (
     <div className='space-y-8'>
       {payments.map((payment) => (
