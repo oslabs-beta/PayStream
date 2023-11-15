@@ -3,7 +3,6 @@ import '@/app/globals.css';
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
-import { Theme } from '@radix-ui/themes';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 const font = Open_Sans({ subsets: ['latin'] });
@@ -28,19 +27,7 @@ export default async function RootLayout({
         <head>
           <link rel='icon' href='/favicon.ico' />
         </head>
-        <body className={`${font.className}`}>
-          <Theme
-            appearance='dark'
-            accentColor='iris'
-            grayColor='sand'
-            panelBackground='solid'
-            radius='full'
-            scaling='90%'
-            className='h-screen'
-          >
-            {children}          
-          </Theme>
-        </body>
+        <body className={`${font.className} dark h-screen`}>{children}</body>
       </html>
     </ClerkProvider>
   );
