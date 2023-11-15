@@ -136,7 +136,23 @@ export const columns: ColumnDef<PaymentProps>[] = [
   },
   {
     accessorKey: 'payment_date',
-    header: 'Payment Date',
+    header: ({ column }) => {
+      return (
+        <div
+          className='flex cursor-pointer select-none hover:text-white'
+          onClick={() => column.toggleSorting()}
+        >
+          Payment Date
+          {column.getIsSorted() === 'asc' ? (
+            <ArrowUp className='ml-2 h-4 w-4' />
+          ) : column.getIsSorted() === 'desc' ? (
+            <ArrowDown className='ml-2 h-4 w-4' />
+          ) : (
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          )}
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'payment_method',

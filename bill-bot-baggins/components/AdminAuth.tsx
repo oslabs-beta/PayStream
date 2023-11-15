@@ -4,6 +4,10 @@ import React, { useState } from 'react';
 
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSignIn } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { AlertTriangle } from 'lucide-react';
 import {
   Form,
   FormControl,
@@ -12,13 +16,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { loginFormSchema } from '@/lib/validations/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useForm } from 'react-hook-form';
-import { useSignIn } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
-import { AlertTriangle } from 'lucide-react';
+import { loginFormSchema } from '@/lib/validations/form';
+import { cn } from '@/lib/utils';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -76,7 +77,7 @@ export function AdminAuth({ className, ...props }: UserAuthFormProps) {
   return (
     <div className='flex flex-col space-y-4'>
       {isError && (
-        <div className='flex space-x-2 rounded-md bg-red-400/30 p-4'>
+        <div className='flex space-x-2 rounded-md border border-red-400/20 bg-red-400/30 p-4 text-sm shadow-md'>
           <AlertTriangle className='h-6 w-6' />
           <p>Invalid username or password. Please try again.</p>
         </div>
@@ -119,7 +120,10 @@ export function AdminAuth({ className, ...props }: UserAuthFormProps) {
             )}
           />
           <Button
-            className='w-full transition-all active:scale-95'
+            className={cn(
+              'w-full gap-4 transition-all active:scale-95',
+              isSubmitting && 'animate-pulse'
+            )}
             type='submit'
           >
             {isSubmitting ? 'Signing In...' : 'Sign In'}
