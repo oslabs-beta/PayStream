@@ -158,7 +158,7 @@ export default function InvoiceDisplay({
       </main>
     </div>
   ) : (
-    <div className='absolute flex h-[100%] w-full items-center justify-center bg-neutral-950/60 backdrop-blur-sm'>
+    <div className='absolute top-0 flex h-[100%] w-full items-center justify-center bg-neutral-950/60 backdrop-blur-sm'>
       <Card className='bg-neutral-900'>
         <CardContent>
           <CardHeader>
