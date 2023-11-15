@@ -28,9 +28,9 @@ const recordTypes = [
 
 //need to store salesforce and stripe ids so that when /if a payment is deleted, it can get voided/deleted in stripe key-value = salesforce-stripe
 
-const eventHandler = async (event) => {
+const eventHandler = async (event, error) => {
   let opportunity;
-  let paymentType = {};
+  let paymentType;
   const { changeType, recordIds, changedFields } =
     event.payload.ChangeEventHeader;
   const { For_Chart__c, npe01__Payment_Amount__c, Name } = event.payload;
@@ -40,40 +40,33 @@ const eventHandler = async (event) => {
   // if the opp type that corresponds to the updated payment record is in our record types array enter switch cases
 
   switch (changeType) {
-    /**
-     *  if changeType is "create" AND payment type is cost to clientneed to create object for stripe invoice details:
-     * customer name
-     * customer email
-     * payment invoice number
-     * payment amount
-     *
-     * creates invoice in stripe
-     */
-
     case "CREATE": {
       console.log("CREATE case changeType: ", changeType);
-      // initialize variable to payment record ID
       paymentType = For_Chart__c;
-      // assign opp variable to the evaluated result of retrieveOppType function passing in recordId
-      if (paymentType.string == "Cost to Client")
+      console.log("payment type: ", paymentType);
+      if (paymentType === "Cost to Client") {
         opportunity = await retreiveOppType(recordId);
-      else
+        console.log("CREATE cost to client opportunity.type: ", opportunity);
+      } else {
         console.log(
-          "This event does not meet the requirements for creatings a stripe invoice"
+          "This event does not meet the requirements for creating a Stripe invoice",
+          error
         );
+        break;
+      }
       if (recordTypes.includes(opportunity.type)) {
         const paymentAmount = npe01__Payment_Amount__c;
         const invoice_number = Name;
-        console.log("payment amount: ", paymentAmount.double);
+        console.log("payment amount: ", paymentAmount);
 
         // console.log("CREATE id: ", oppType);
         // if (paymentType.string === "Cost to Client") {
         // }
         const paymentDetails = {
           account_name: opportunity.account_name,
-          amount: paymentAmount.double,
+          amount: paymentAmount,
           project_type: opportunity.project_type,
-          invoice_number: invoice_number.string,
+          invoice_number: invoice_number,
           recordId: recordId,
         };
         //create invoice in stripe
@@ -116,13 +109,13 @@ const eventHandler = async (event) => {
       if (npe01__Written_Off__c) {
         console.log("MARK STRIPE INVOICE VOID");
         const written_off = npe01__Written_Off__c;
-        written_off.boolean === true
+        written_off === true
           ? voidStripeInvoice(recordId)
           : console.log("invoice not marked void");
       }
       if (npe01__Paid__c) {
         const payobject = npe01__Paid__c;
-        payobject.boolean === true
+        payobject === true
           ? payStripeInvoice(recordId)
           : console.log("invoice not marked paid");
       }

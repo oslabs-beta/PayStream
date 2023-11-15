@@ -1,7 +1,7 @@
 import express from "express";
 
 import salesforceController from "./salesforce-pub-sub-api.mjs";
-const port = process.env.PORT || 4242;
+const port = process.env.PORT || 3030;
 const app = express();
 app.use(express.json());
 

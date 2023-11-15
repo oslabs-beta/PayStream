@@ -50,4 +50,4 @@ app.post(
   }
 );
 
-app.listen(port, () => console.log("Running on port 4242"));
+app.listen(port, () => console.log(`Running on port ${port}`));

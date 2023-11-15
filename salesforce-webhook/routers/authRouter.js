@@ -7,7 +7,6 @@ const getSalesForceAccessToken = async () => {
   const {
     BASE64_PRIVATE_KEY,
     SALESFORCE_CLIENT_ID,
-    TEST_CLIENT_ID,
     SALESFORCE_USERNAME,
     TEST_URL,
   } = process.env;

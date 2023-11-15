@@ -3,12 +3,8 @@ import eventHandler from "./eventHandler.js";
 import dotenv from "dotenv";
 dotenv.config();
 //destructure assignemtn for env variables
-const {
-  SALESFORCE_LOGIN_URL,
-  SALESFORCE_TOKEN,
-  SALESFORCE_USERNAME,
-  SALESFORCE_ORG_ID,
-} = process.env;
+const { SALESFORCE_LOGIN_URL, SALESFORCE_USERNAME, SALESFORCE_ORG_ID } =
+  process.env;
 
 import { getSalesForceAccessToken } from "./routers/authRouter.js";
 
@@ -37,6 +33,16 @@ const salesforceController = async () => {
     );
 
     // Handle incoming events
+    eventEmitter.on("error", (error) => {
+      if (typeof error === EventParseError) {
+        // Handle event parsing error
+        const replayId = error.replayId;
+        console.log(replayId); // ...
+        keepalive();
+      } else {
+        // Generic gRPC stream error
+      }
+    });
     eventEmitter.on("data", async (event) => {
       console.log(
         `Handling ${event.payload.ChangeEventHeader.entityName} change event ${event.replayId}`
