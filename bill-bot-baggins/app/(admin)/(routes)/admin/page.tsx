@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { columns } from '@/components/Columns';
 import React from 'react';
 import { RecentSales } from '@/components/RecentSales';
-import { DataTable } from '@/components/DataTable';
+import DataTable from '@/components/DataTable';
 import {
   getSalesForceAccessToken,
   getSalesForceInvoiceData,
@@ -52,9 +52,6 @@ async function AdminDashboardPage() {
     if (invoice.payment_date && invoice.payment_date.includes(currentYear)) {
       revenue += invoice.amount;
     }
-  });
-
-  data.forEach((invoice) => {
     if (invoice.payment_date && invoice.payment_date.includes(pastYear)) {
       pastyearrevenue += invoice.amount;
     }
@@ -187,7 +184,6 @@ async function AdminDashboardPage() {
                 <div className='text-2xl font-bold'>
                   {`${outstandingInvoices}`}
                 </div>
-        
               </CardContent>
             </Card>
           </div>

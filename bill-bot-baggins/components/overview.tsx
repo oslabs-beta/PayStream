@@ -41,7 +41,7 @@ const CustomTooltip = ({
 
 type OverviewProps = {
   data: {
-    name: string;
+    month: string;
     revenue: number;
   }[];
 };
