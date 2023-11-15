@@ -2,7 +2,6 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import { PaymentProps } from '@/lib/types';
-import { Button } from '@/components/ui/button';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
 export const columns: ColumnDef<PaymentProps>[] = [
@@ -10,7 +9,10 @@ export const columns: ColumnDef<PaymentProps>[] = [
     accessorKey: 'invoice_id',
     header: ({ column }) => {
       return (
-        <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
+        <div
+          className='flex cursor-pointer select-none hover:text-white'
+          onClick={() => column.toggleSorting()}
+        >
           Invoice ID
           {column.getIsSorted() === 'asc' ? (
             <ArrowUp className='ml-2 h-4 w-4' />
@@ -19,7 +21,7 @@ export const columns: ColumnDef<PaymentProps>[] = [
           ) : (
             <ArrowUpDown className='ml-2 h-4 w-4' />
           )}
-        </Button>
+        </div>
       );
     },
   },
@@ -27,7 +29,10 @@ export const columns: ColumnDef<PaymentProps>[] = [
     accessorKey: 'account_name',
     header: ({ column }) => {
       return (
-        <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
+        <div
+          className='flex cursor-pointer select-none hover:text-white'
+          onClick={() => column.toggleSorting()}
+        >
           Client
           {column.getIsSorted() === 'asc' ? (
             <ArrowUp className='ml-2 h-4 w-4' />
@@ -36,7 +41,7 @@ export const columns: ColumnDef<PaymentProps>[] = [
           ) : (
             <ArrowUpDown className='ml-2 h-4 w-4' />
           )}
-        </Button>
+        </div>
       );
     },
   },
@@ -44,7 +49,10 @@ export const columns: ColumnDef<PaymentProps>[] = [
     accessorKey: 'project_name',
     header: ({ column }) => {
       return (
-        <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
+        <div
+          className='flex cursor-pointer select-none hover:text-white'
+          onClick={() => column.toggleSorting()}
+        >
           Project
           {column.getIsSorted() === 'asc' ? (
             <ArrowUp className='ml-2 h-4 w-4' />
@@ -53,7 +61,7 @@ export const columns: ColumnDef<PaymentProps>[] = [
           ) : (
             <ArrowUpDown className='ml-2 h-4 w-4' />
           )}
-        </Button>
+        </div>
       );
     },
   },
@@ -61,7 +69,10 @@ export const columns: ColumnDef<PaymentProps>[] = [
     accessorKey: 'amount',
     header: ({ column }) => {
       return (
-        <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
+        <div
+          className='flex cursor-pointer select-none hover:text-white'
+          onClick={() => column.toggleSorting()}
+        >
           Amount
           {column.getIsSorted() === 'asc' ? (
             <ArrowUp className='ml-2 h-4 w-4' />
@@ -70,7 +81,7 @@ export const columns: ColumnDef<PaymentProps>[] = [
           ) : (
             <ArrowUpDown className='ml-2 h-4 w-4' />
           )}
-        </Button>
+        </div>
       );
     },
     cell: ({ row }) => {
@@ -87,7 +98,10 @@ export const columns: ColumnDef<PaymentProps>[] = [
     accessorKey: 'invoice_sent_date',
     header: ({ column }) => {
       return (
-        <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
+        <div
+          className='flex cursor-pointer select-none hover:text-white'
+          onClick={() => column.toggleSorting()}
+        >
           Invoice Sent Date
           {column.getIsSorted() === 'asc' ? (
             <ArrowUp className='ml-2 h-4 w-4' />
@@ -96,7 +110,7 @@ export const columns: ColumnDef<PaymentProps>[] = [
           ) : (
             <ArrowUpDown className='ml-2 h-4 w-4' />
           )}
-        </Button>
+        </div>
       );
     },
   },
@@ -104,7 +118,10 @@ export const columns: ColumnDef<PaymentProps>[] = [
     accessorKey: 'invoice_due_date',
     header: ({ column }) => {
       return (
-        <Button variant={'ghost'} onClick={() => column.toggleSorting()}>
+        <div
+          className='flex cursor-pointer select-none hover:text-white'
+          onClick={() => column.toggleSorting()}
+        >
           Invoice Due Date
           {column.getIsSorted() === 'asc' ? (
             <ArrowUp className='ml-2 h-4 w-4' />
@@ -113,7 +130,7 @@ export const columns: ColumnDef<PaymentProps>[] = [
           ) : (
             <ArrowUpDown className='ml-2 h-4 w-4' />
           )}
-        </Button>
+        </div>
       );
     },
   },
