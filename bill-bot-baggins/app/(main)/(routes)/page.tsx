@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import TeamMember from '@/components/TeamMember';
 
 function Home() {
@@ -16,6 +15,7 @@ function Home() {
               alt='PayStream logo'
               width={400}
               height={40}
+              priority={true}
               className='relative flex justify-center'
             />
           </Link>

@@ -17,6 +17,7 @@ function SignInPage() {
               width={240}
               height={25}
               quality={95}
+              priority={true}
               className='w-auto object-contain'
             />
           </Link>
@@ -36,10 +37,11 @@ function SignInPage() {
           <Link href='/'>
             <Image
               src='/logo.png'
-              alt='Billbot Baggins logo'
+              alt='PayStream logo'
               width={240}
               height={25}
               quality={95}
+              priority={true}
               className='h-[60px] w-auto object-contain'
             />
           </Link>
