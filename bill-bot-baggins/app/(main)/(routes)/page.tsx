@@ -7,13 +7,10 @@ import TeamMember from '@/components/TeamMember';
 function Home() {
   return (
     <div className='relative grid h-full justify-center lg:max-w-none lg:grid-cols-2 lg:px-0'>
-      <div
-        data-testid='background-image'
-        className='absolute inset-0 bg-[url("/ales-nesetril-background.jpg")] bg-cover bg-left'
-      />
-      <div className='container relative flex h-full max-w-2xl flex-col'>
+      <div className='absolute inset-0 bg-[url("/ales-nesetril-background.jpg")] bg-cover bg-left' />
+      <div className='container relative flex h-full max-w-2xl flex-col gap-3'>
         <div className='relative z-20 flex items-center pt-10 text-lg font-medium'>
-          <Link href='/'>
+          <Link className='-translate-x-4' href='/'>
             <Image
               src='/logo.png'
               alt='PayStream logo'
@@ -23,7 +20,7 @@ function Home() {
             />
           </Link>
         </div>
-        <div className='text-slate-25 pt-10 text-4xl sm:text-6xl'>
+        <div className='text-slate-25 pt-10 text-3xl sm:text-6xl'>
           <p>Real-time updates,</p>
           <p>Well-informed decisions</p>
         </div>
@@ -39,15 +36,15 @@ function Home() {
                   PayStream is an Open Source product developed in collaboration
                   with OS Labs.
                 </p>
-                <div className='flex gap-3 pt-4'>
+                <div className='flex flex-col gap-3 pt-4 sm:flex-row'>
                   <Link
-                    className='rounded-full bg-green-200 px-4 py-2 text-sm font-bold text-black transition-all hover:bg-green-200/90 sm:text-lg'
+                    className='text-md flex items-center justify-center rounded-full bg-green-200 px-4 py-2 font-bold text-black transition-all hover:bg-green-200/90 active:scale-95 sm:text-lg'
                     href='/admin'
                   >
                     Experience PayStream
                   </Link>
                   <Link
-                    className='sm:text-md rounded-full border-2 border-green-200 px-4 py-2 text-sm text-green-200 transition-all hover:bg-green-200/90 hover:text-black'
+                    className='sm:text-md flex items-center justify-center rounded-full border-2 border-green-200 px-4 py-2 text-sm text-green-200 transition-all hover:bg-green-200/90 hover:text-black active:scale-95'
                     href='https://github.com/oslabs-beta/PayStream'
                   >
                     Learn more
@@ -58,7 +55,7 @@ function Home() {
           </div>
           <div className='absolute bottom-10'>
             <h1 className='pb-4 text-xl tracking-tight sm:text-3xl'>
-              Meet the <span className='pl-2 font-bold'>T e a m</span>
+              Meet the <span className='font-bold tracking-widest'>Team</span>
             </h1>
             <footer className='flex gap-4'>
               <TeamMember
