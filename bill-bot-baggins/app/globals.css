@@ -63,3 +63,13 @@
 body::-webkit-scrollbar {
   display: none; /* for Chrome, Safari, and Opera */
 }
+
+
+/* This will get rid of the default white background when you select an autofill for an input*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+}

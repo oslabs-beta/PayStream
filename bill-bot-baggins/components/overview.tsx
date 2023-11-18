@@ -11,7 +11,7 @@ import {
   YAxis,
 } from 'recharts';
 
-import {
+import type {
   ValueType,
   NameType,
 } from 'recharts/types/component/DefaultTooltipContent';
@@ -41,7 +41,7 @@ const CustomTooltip = ({
 
 type OverviewProps = {
   data: {
-    name: string;
+    month: string;
     revenue: number;
   }[];
 };
@@ -57,7 +57,7 @@ const Overview = ({ data }: OverviewProps) => {
     <ResponsiveContainer width='100%' height={350}>
       <BarChart data={data}>
         <XAxis
-          dataKey='name'
+          dataKey='month'
           stroke='#888888'
           fontSize={12}
           tickLine={false}

@@ -1,10 +1,16 @@
-import Navbar from './Navbar';
-import CustButton from './CustButton';
-import Footer from './Footer';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import Overview from '@/components/overview';
+import RecentSales from '@/components/RecentSales';
+import DataTable from '@/components/DataTable';
+import { columns }from '@/components/Columns';
 
 
 export {
     Navbar,
-    CustButton,
     Footer,
+    Overview,
+    RecentSales,
+    DataTable,
+    columns,
 };

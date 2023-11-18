@@ -34,8 +34,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "components/FormRow.jsx", "stripe-webhook/route.js"  ],
+    ".next/types/**/*.ts", 
+    "stripe-webhook/route.js"
+  ],
   "exclude": [
     "node_modules"
   ]

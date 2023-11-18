@@ -1,12 +1,3 @@
-import { MouseEventHandler } from "react";
-
-export type CustButtonProps = {
-	btnType?: "button" | "submit";
-	title: string;
-	containerStyles?: string;
-	handleClick?: MouseEventHandler<HTMLButtonElement>;
-}
-
 export type PaymentProps = {
 	sf_unique_id: string;
 	account_name?: string;
@@ -17,38 +8,6 @@ export type PaymentProps = {
 	payment_date?: string; //invoice_paid_date
 	amount: number;
 	invoice_id: string;
-}
-
-export type PaymentContProps = {
-
-	payment_date: string;
-	amount: number;
-}
-
-
-export type OptionProps = {
-	title: string;
-	value: string;
-}
-
-export type SearchFilterProps = {
-	title: string;
-	options: OptionProps[];
-        onFilter: (value: string) => void;
-}
-
-export type SearchProps = {
-	invoice_ID: string;
-	setInvoice_ID: (invoice_ID: string) => void;
-}
-
-// declaring an interface to reassign AxiosResponse implicit "any" return to acess array properties
-
-export type ServerResponse = {
-	data: ServerData | PaymentProps | null;
-}
-type ServerData = {
-	node: string;
 }
 
 export type InvoiceId = {
@@ -88,18 +47,3 @@ export  type InvoiceProps = {
 	  }
 	}
 }
-
-export type InvoiceDatas = {
-	  "sf_unique_id": string,
-	  "invoice_id": string,
-	  "amount": number,
-	  "invoice_sent_date": string,
-	  "payment_date": string,
-	  "invoice_due_date": string, //YYYY-MM-DD
-	  "payment_method": string,
-	  "project_name": string,
-	  "account_name": string,
-//	  "stripe_invoice_id": string
-	}
-
-export type DataArray =PaymentProps[];
