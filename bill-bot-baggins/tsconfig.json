@@ -36,7 +36,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts", 
     "stripe-webhook/route.js"
-  ],
+, "lib/renderWithRouter.js"  ],
   "exclude": [
     "node_modules"
   ]
